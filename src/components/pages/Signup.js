@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import './Signup.css'
-import {Button} from "../Button";
+import Button from "../Button";
 
 const Signup = () => {
     const [step, setStep] = useState(1)
@@ -77,7 +77,7 @@ const Signup = () => {
                             <div className={'input-field'}>
                                 <div>
                                     <select>
-                                        <option disabled selected={true} hidden>Area</option>
+                                        <option disabled selected hidden>Area</option>
                                         <option value={'Jinnah Garden, Islamabad'}>Jinnah Garden, Islamabad</option>
                                         <option value={'River Garden, Islamabad'}>River Garden, Islamabad</option>
                                         <option value={'wan Garden, Islamabad'}>Swan Garden, Islamabad</option>

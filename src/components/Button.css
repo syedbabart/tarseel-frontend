@@ -8,6 +8,8 @@
     outline: none;
     border: none;
     cursor: pointer;
+    text-decoration: none;
+    text-align: center;
 }
 
 .btn--primary{

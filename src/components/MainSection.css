@@ -18,3 +18,7 @@
     margin-bottom: 20px;
     text-align: center;
 }
+
+.hero-container > .buttons {
+    width: 200px;
+}
