@@ -57,6 +57,13 @@
     width: 45%;
     border: none;
     border-bottom: 2px solid #ffffff;
+    transition: 0.3s;
+}
+
+
+.input-field:focus-within {
+    transition: 0.3s;
+    border-bottom: 2px solid deepskyblue;
 }
 
 .input-field > i {

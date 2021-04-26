@@ -83,11 +83,14 @@
 }
 
 .login-button {
-    /*width: 100%;*/
-    /*display: flex;*/
-    /*flex-direction: row-reverse;*/
-    /*justify-content: right;*/
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
     margin-top: 20px;
+}
+
+.login-button > button {
+    width: fit-content;
 }
 
 @media screen and (max-width: 960px) {
