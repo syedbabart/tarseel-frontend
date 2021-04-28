@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import './Login.css'
+import {Link} from "react-router-dom";
 
 const Login = () => {
     const [loginForm, setLoginForm] = useState({
@@ -37,10 +38,15 @@ const Login = () => {
                                 <i className="fas fa-lock"/>
                             </div>
                         </div>
-                        <div className={'login-button'}>
-                            <button className={'btn btn--medium btn--outline'} onClick={loginUser}><i
-                                className="fas fa-arrow-right"/></button>
+
+                        <div className={'login-bottom'}>
+                            <span>Don't have an account? <Link to={'/sign-up'}>Get Registered</Link></span>
+                            <div className={'login-button'}>
+                                <button className={'btn btn--medium btn--outline'} onClick={loginUser}><i
+                                    className="fas fa-arrow-right"/></button>
+                            </div>
                         </div>
+
                     </div>
                 </div>
             </div>

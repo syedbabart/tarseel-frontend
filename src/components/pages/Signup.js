@@ -1,9 +1,12 @@
 import React, {useState} from 'react'
 import './Signup.css'
 import Button from "../Button";
+import MapView from "../MapView";
+import {Link} from "react-router-dom";
 
 const Signup = () => {
     const [step, setStep] = useState(1)
+    const [isMapOpen, setIsMapOpen] = useState(false)
     const [signupForm, setSignupForm] = useState({
         userType: '',
         name: null,
@@ -12,14 +15,22 @@ const Signup = () => {
         password: '',
         area: '',
         address: '',
+        latitude: '',
+        longitude: '',
         ntn: '',
         strn: '',
         regNumber: '',
         regAddress: ''
     })
 
-    const openMap = () => {
-        console.log('Address Input clicked')
+    const confirmMarkedAddress = (coords, address) => {
+        console.log(address)
+        setSignupForm({
+            ...signupForm,
+            longitude: coords.longitude,
+            latitude: coords.latitude
+        })
+        setIsMapOpen(false)
     }
 
     const handleUserType = (type) => {
@@ -27,17 +38,17 @@ const Signup = () => {
             userType: type
         })
         setStep(2)
-        console.log(signupForm.userType)
     }
 
     const submitBioData = () => {
-
         console.log(JSON.stringify(signupForm))
     }
 
     const nextForm = () => {
-        if (step < 3) {
-            setStep(step + 1)
+        if (signupForm.userType === 'corporate') {
+            setStep(3)
+        } else {
+            submitBioData()
         }
     }
 
@@ -48,7 +59,7 @@ const Signup = () => {
     return (
         <>
             <div className={'signup-container'}>
-                <div className={'card'}>
+                {!isMapOpen && <div className={'card'}>
                     <div className={'card-header'}>
                         <span>Sign up</span>
                     </div>
@@ -63,6 +74,7 @@ const Signup = () => {
                         <Button buttonStyle={'btn--outline'} onClick={() => handleUserType('employee')}>Sign up as
                             Employee <i
                                 className="fas fa-chevron-right"/></Button>
+                        <span>Already have an account? <Link to={'/login'}>Login</Link></span>
                     </div>}
 
                     {step === 2 && <div className={'card-content'}>
@@ -82,7 +94,7 @@ const Signup = () => {
                             <div className={'input-field'}>
                                 <input type={'text'} placeholder={'Phone'} value={signupForm.phNumber || ''}
                                        onChange={e => setSignupForm({...signupForm, phNumber: e.target.value})}/>
-                                <i className="fas fa-phone"/>
+                                <i className="fas fa-phone-alt"/>
                             </div>
                             <div className={'input-field'}>
                                 <input type={'password'} placeholder={'Password'} value={signupForm.password || ''}
@@ -106,14 +118,18 @@ const Signup = () => {
                                 <i className="far fa-address-card"/>
                             </div>
                             <div className={'input-field'}>
-                                <input type={'text'} placeholder={'Address'} onFocus={openMap}/>
+                                <input type={'text'} placeholder={'Address'}
+                                       // value={`Lat: ${signupForm.latitude}, Long: ${signupForm.longitude}` || ''}
+                                       onChange={e => setSignupForm({...signupForm, address: e.target.value})}
+                                       onFocus={() => setIsMapOpen(true)}/>
                                 <i className="fas fa-map-marker-alt"/>
                             </div>
                         </div>
+
                         <div className={'row button'}>
                             <Button buttonStyle={'btn--outline'} onClick={prevForm}><i
                                 className="fas fa-arrow-left"/></Button>
-                            <Button buttonStyle={'btn--outline'} onClick={submitBioData}><i
+                            <Button buttonStyle={'btn--outline'} onClick={nextForm}><i
                                 className="fas fa-arrow-right"/></Button>
                         </div>
                     </div>}
@@ -139,14 +155,22 @@ const Signup = () => {
                                 <i className="fas fa-map-marker-alt"/>
                             </div>
                         </div>
+
                         <div className={'row button'}>
                             <Button buttonStyle={'btn--outline'} onClick={prevForm}><i
                                 className="fas fa-arrow-left"/></Button>
-                            <Button buttonStyle={'btn--outline'} onClick={nextForm}><i className="fas fa-arrow-right"/></Button>
+                            <Button buttonStyle={'btn--outline'} onClick={submitBioData}><i
+                                className="fas fa-arrow-right"/></Button>
                         </div>
                     </div>}
+                </div>}
 
-                </div>
+                {isMapOpen && <div className={'card'}>
+                    <div className={'map-container'}>
+                        <MapView mapHandler={confirmMarkedAddress}/>
+                    </div>
+                </div>}
+
             </div>
         </>
     )

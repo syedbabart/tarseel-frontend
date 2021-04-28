@@ -1,0 +1,54 @@
+/*.map {*/
+/*    position: absolute;*/
+/*    left: 50%;*/
+/*    top: 100px;*/
+/*    transform: translate(-50%, 0);*/
+/*    box-sizing: content-box;*/
+/*    background: black;*/
+/*    padding: 30px;*/
+/*    z-index: 1000;*/
+/*}*/
+
+.map-outer-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /*width: 70vw;*/
+    width: calc(100%);
+    height: 70vh;
+    z-index: 1000;
+}
+
+.map-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.map-header > button {
+    width: max-content;
+}
+
+.geocoder-container {
+    display: flex;
+    justify-content: center;
+    /*width: 70vw;*/
+    z-index: 1;
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.mapboxgl-ctrl-geocoder.mapboxgl-ctrl {
+    min-width: 100%;
+    background: none;
+    border-bottom: 2px solid #ffffff;
+    border-radius: 0;
+    color: #ffffff;
+}
+
+.mapboxgl-ctrl-geocoder.mapboxgl-ctrl input {
+    color: #ffffff;
+    outline: none;
+}

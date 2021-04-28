@@ -82,10 +82,12 @@
     width: 100%;
 }
 
-.login-button {
-    width: 100%;
+.login-bottom {
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
     margin-top: 20px;
 }
 

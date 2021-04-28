@@ -6,3 +6,9 @@ body {
     box-sizing: border-box;
     font-family: 'PT Sans', sans-serif;
 }
+
+.mapboxgl-ctrl-geocoder--icon.mapboxgl-ctrl-geocoder--icon-close {
+    height: 0;
+    width: 0;
+    display: none;
+}
