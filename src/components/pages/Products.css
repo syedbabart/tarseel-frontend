@@ -1,0 +1,105 @@
+.product-hero-container {
+    background: url('../../assets/products.jpg') center center/cover no-repeat;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.5);
+    object-fit: contain;
+    padding: 50px;
+}
+
+.product-hero-container > span {
+    font-size: 50px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.product-hero-container > .buttons {
+    width: 200px;
+}
+
+.product-content-container {
+    padding: 50px;
+    background: #fafafa;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-title {
+    color: rgba(37, 116, 169, 1);
+}
+
+.product-table-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 50px;
+}
+
+.pt-header, .pt-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 70%;
+    margin: auto;
+}
+
+.pt-header {
+    border-radius: 5px;
+    border: 1px solid rgba(37, 116, 169, 1);
+    background: rgba(37, 116, 169, 0.2);
+    margin-bottom: 10px;
+    color: rgba(37, 116, 169, 1);
+}
+
+.pt-cell, .item-cell {
+    padding: 10px 20px;
+    width: 70%;
+    text-align: left;
+}
+
+.p-sr, .p-price {
+    width: 15%;
+    text-align: center;
+}
+
+.pt-item {
+    border: 1px solid rgba(37, 116, 169, 1);
+    border-radius: 5px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    -webkit-transition: 0.3s all ease-in-out;
+    -moz-transition: 0.3s all ease-in-out;
+    transition: 0.3s all ease-in-out;
+    background: #ffffff;
+}
+
+.pt-item:hover {
+    box-shadow: 5px 5px 5px rgba(0,0,0,0.3);
+    -webkit-transform: scale(1.04);
+    -webkit-transition: 0.3s all ease-in-out;
+    -moz-transition: 0.3s all ease-in-out;
+    transition: 0.3s all ease-in-out;
+    background: rgba(37, 116, 169, 0.05);
+
+}
+
+
+@media screen and (max-width: 960px){
+    .pt-header, .pt-item {
+        width: 100%;
+    }
+
+    .pt-cell, .item-cell {
+        width: 50%;
+    }
+
+}
