@@ -1,16 +1,24 @@
 import React, {useState} from "react";
 import './Products.css'
-import {Modal} from "react-responsive-modal";
 import Popup from "../Popup";
 
 const Product = () => {
 
     const [open, setOpen] = useState(false);
+    const [currentProduct, setCurrentProduct] = useState({
+        // id: '',
+        // name: '',
+        // price: ''
+    })
 
     const [productDescription, setProductDescription] = useState('')
 
-    const onOpenModal = (description) => {
-        setProductDescription(description)
+    const onOpenModal = (id, name, price) => {
+        setCurrentProduct({...currentProduct,
+            id: id,
+            name: name,
+            price: price
+    })
         setOpen(true)
     };
     const onCloseModal = () => setOpen(false);
@@ -24,7 +32,7 @@ const Product = () => {
     ]
 
     const productList = products.map((product) =>
-        <div className={'pt-item'} onClick={() => onOpenModal(product.name)}>
+        <div className={'pt-item'} onClick={() => onOpenModal(product.id, product.name, product.price)}>
             <div className={'item-cell p-sr'}>{product.id}</div>
             <div className={'item-cell p-name'}>{product.name}</div>
             <div className={'item-cell p-price'}>{product.price}</div>
@@ -47,7 +55,7 @@ const Product = () => {
                 {productList}
             </section>
 
-            <Popup open = {open} onClose = {onCloseModal}  productDescription = {productDescription}/>
+            <Popup open = {open} onClose = {onCloseModal}  currentProduct = {currentProduct}/>
 
         </>
     )

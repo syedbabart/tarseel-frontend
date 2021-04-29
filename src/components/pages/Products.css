@@ -101,5 +101,8 @@
     .pt-cell, .item-cell {
         width: 50%;
     }
+    .product-content-container {
+        padding: 20px;
+    }
 
 }
