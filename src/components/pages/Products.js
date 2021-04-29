@@ -1,7 +1,19 @@
-import React from "react";
+import React, {useState} from "react";
 import './Products.css'
+import {Modal} from "react-responsive-modal";
+import Popup from "../Popup";
 
 const Product = () => {
+
+    const [open, setOpen] = useState(false);
+
+    const [productDescription, setProductDescription] = useState('')
+
+    const onOpenModal = (description) => {
+        setProductDescription(description)
+        setOpen(true)
+    };
+    const onCloseModal = () => setOpen(false);
 
     const products = [
         {id: 1, name: 'Aquafina (12-Liter Bottle)', price: 160},
@@ -12,7 +24,7 @@ const Product = () => {
     ]
 
     const productList = products.map((product) =>
-        <div className={'pt-item'}>
+        <div className={'pt-item'} onClick={() => onOpenModal(product.name)}>
             <div className={'item-cell p-sr'}>{product.id}</div>
             <div className={'item-cell p-name'}>{product.name}</div>
             <div className={'item-cell p-price'}>{product.price}</div>
@@ -32,10 +44,12 @@ const Product = () => {
                     <div className={'pt-cell p-name'}>Product Name</div>
                     <div className={'pt-cell p-price'}>Price</div>
                 </div>
-                { productList }
+                {productList}
             </section>
+
+            <Popup open = {open} onClose = {onCloseModal}  productDescription = {productDescription}/>
+
         </>
     )
 }
-
 export default Product;
