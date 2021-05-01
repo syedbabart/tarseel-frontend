@@ -1,6 +1,5 @@
 import React from 'react'
 import './MainSection.css'
-import {Link} from "react-router-dom";
 
 const MainSection = () => {
     return (

@@ -6,12 +6,10 @@ const Product = () => {
 
     const [open, setOpen] = useState(false);
     const [currentProduct, setCurrentProduct] = useState({
-        // id: '',
-        // name: '',
-        // price: ''
+        id: '',
+        name: '',
+        price: ''
     })
-
-    const [productDescription, setProductDescription] = useState('')
 
     const onOpenModal = (id, name, price) => {
         setCurrentProduct({...currentProduct,
@@ -32,7 +30,7 @@ const Product = () => {
     ]
 
     const productList = products.map((product) =>
-        <div className={'pt-item'} onClick={() => onOpenModal(product.id, product.name, product.price)}>
+        <div className={'pt-item'} key={product.id} onClick={() => onOpenModal(product.id, product.name, product.price)}>
             <div className={'item-cell p-sr'}>{product.id}</div>
             <div className={'item-cell p-name'}>{product.name}</div>
             <div className={'item-cell p-price'}>{product.price}</div>
