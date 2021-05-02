@@ -1,7 +1,14 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import './Orders.css'
 
+function useForceUpdate(){
+    const [value, setValue] = useState(0); // integer state
+    return () => setValue(value => value + 1); // update the state to force render
+}
+
 const Orders = () => {
+
+    const forceUpdate = useForceUpdate();
 
     const products = [
         {id: 1, name: 'Aquafina (12-Liter Bottle)', price: 160},
@@ -11,56 +18,50 @@ const Orders = () => {
         {id: 5, name: 'Aquafina (6-Liter Bottle)', price: 80},
     ]
 
-    const productList = products.map((product) =>
-        <div className={'pt-item'} key={product.id}>
-            <div className={'item-cell p-sr'}>{product.id}</div>
-            <div className={'item-cell p-name'}>{product.name}</div>
-            <div className={'item-cell p-price'}>{product.price}</div>
-        </div>
+    const productList = products.map((product) => {
+            if (localStorage.getItem(product.name)) {
+                return (
+                    <div className={'cart-item'} key={product.name}>
+                        <div className={'item-info'}>
+                            <div>{product.name}</div>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
+                                pulvinar risus non risus hendrerit venenatis. Pellentesque sit amet
+                                hendrerit risus, sed porttitor quam.
+                            </p>
+                            <span>Rs. {product.price}</span>
+                        </div>
+                        <div className={'item-quantity'}>
+                            <div>Quantity</div>
+                            <p>{localStorage.getItem(product.name)}</p>
+                        </div>
+                        <div className={'total'}>
+                            <div>Total</div>
+                            <p>Rs. {product.price * (JSON.parse(localStorage.getItem(product.name)))}</p>
+                        </div>
+                        <div className={'delete-item'} onClick={() => deleteItem(product.name)}><i
+                            className="fas fa-trash-alt"/></div>
+                        <div className={'confirm-order'}>Confirm Order</div>
+                    </div>
+                )
+            }
+        }
     )
+
+
+
+
+    const deleteItem = (name) => {
+        localStorage.removeItem(name)
+        // getCartProducts()
+        forceUpdate()
+    }
 
     return (
         <section className={'cart-section-container'}>
-            <hr/>
-            <h2>Shopping Cart</h2>
-            <hr/>
+            <h1 className={'product-title'}>Shopping Cart</h1>
 
-            {/*<div className={'pt-header'}>*/}
-            {/*    <div className={'pt-cell p-sr'}>ID</div>*/}
-            {/*    <div className={'pt-cell p-name'}>Product Name</div>*/}
-            {/*    <div className={'pt-cell p-price'}>Price</div>*/}
-            {/*</div>*/}
-            {/*{productList}*/}
-
-            <div className={'cart-item'}>
-                <div className={'item-info'}>
-                    <div>Aquafina (19-Liter Bottle)</div>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-                        pulvinar risus non risus hendrerit venenatis. Pellentesque sit amet
-                        hendrerit risus, sed porttitor quam.
-                    </p>
-                    <span>Rs. 200</span>
-
-                </div>
-                <div className={'item-quantity'}>
-                    <div>Quantity</div>
-                    <p>3</p>
-                </div>
-
-                <div className={'total'}>
-                    <div>Total</div>
-                    <p>Rs. 600</p>
-                </div>
-
-                <div className={'delete-item'}>
-                    <i className="fas fa-trash-alt"/>
-                </div>
-
-                <div className={'confirm-order'}>
-                    Confirm Order
-                </div>
-            </div>
+            {productList}
 
         </section>
     )

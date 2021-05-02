@@ -17,7 +17,7 @@ const Popup = (props) => {
 
     useEffect(() => {
         console.log(props.currentProduct.name)
-        setCurrentQuantity(JSON.parse(localStorage.getItem(props.currentProduct.id)))
+        setCurrentQuantity(JSON.parse(localStorage.getItem(props.currentProduct.name)))
     }, [props.currentProduct])
 
     useEffect(() => {
@@ -38,9 +38,9 @@ const Popup = (props) => {
         } else {
             quantity = 1
         }
-        localStorage.setItem(props.currentProduct.id, quantity)
+        localStorage.setItem(props.currentProduct.name, quantity)
         setIsProductAdded(true)
-        console.log(localStorage.getItem((props.currentProduct.id)))
+        console.log(localStorage.getItem((props.currentProduct.name)))
     }
 
     const navigateToCart = () => {

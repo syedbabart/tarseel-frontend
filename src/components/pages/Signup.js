@@ -71,9 +71,9 @@ const Signup = () => {
                         <Button buttonStyle={'btn--outline'} onClick={() => handleUserType('corporate')}>Sign up as
                             Corporate <i
                                 className="fas fa-chevron-right"/></Button>
-                        <Button buttonStyle={'btn--outline'} onClick={() => handleUserType('employee')}>Sign up as
-                            Employee <i
-                                className="fas fa-chevron-right"/></Button>
+                        {/*<Button buttonStyle={'btn--outline'} onClick={() => handleUserType('employee')}>Sign up as*/}
+                        {/*    Employee <i*/}
+                        {/*        className="fas fa-chevron-right"/></Button>*/}
                         <span>Already have an account? <Link to={'/login'}>Login</Link></span>
                     </div>}
 
