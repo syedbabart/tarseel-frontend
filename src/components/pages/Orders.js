@@ -33,7 +33,33 @@ const Orders = () => {
             {/*{productList}*/}
 
             <div className={'cart-item'}>
+                <div className={'item-info'}>
+                    <div>Aquafina (19-Liter Bottle)</div>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
+                        pulvinar risus non risus hendrerit venenatis. Pellentesque sit amet
+                        hendrerit risus, sed porttitor quam.
+                    </p>
+                    <span>Rs. 200</span>
 
+                </div>
+                <div className={'item-quantity'}>
+                    <div>Quantity</div>
+                    <p>3</p>
+                </div>
+
+                <div className={'total'}>
+                    <div>Total</div>
+                    <p>Rs. 600</p>
+                </div>
+
+                <div className={'delete-item'}>
+                    <i className="fas fa-trash-alt"/>
+                </div>
+
+                <div className={'confirm-order'}>
+                    Confirm Order
+                </div>
             </div>
 
         </section>

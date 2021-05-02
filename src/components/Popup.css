@@ -10,6 +10,11 @@
     margin: 10px 0;
 }
 
+p {
+    font-size: 15px;
+    font-weight: normal;
+}
+
 .quantity-input {
     width: 50px;
     margin: 0 10px;

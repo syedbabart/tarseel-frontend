@@ -38,15 +38,9 @@ const Popup = (props) => {
         } else {
             quantity = 1
         }
-        let product = {
-            id: props.currentProduct.id,
-            name: props.currentProduct.name,
-            price: props.currentProduct.price,
-            quantity: quantity
-        }
         localStorage.setItem(props.currentProduct.id, quantity)
         setIsProductAdded(true)
-        console.log(localStorage.getItem(props.currentProduct.id))
+        console.log(localStorage.getItem((props.currentProduct.id)))
     }
 
     const navigateToCart = () => {
