@@ -1,8 +1,8 @@
 import React, {useState} from 'react'
 import './Signup.css'
 import Button from "../Button";
-import MapView from "../MapView";
 import {Link} from "react-router-dom";
+import Map from "../Map";
 
 const Signup = () => {
     const [step, setStep] = useState(1)
@@ -22,6 +22,10 @@ const Signup = () => {
         regNumber: '',
         regAddress: ''
     })
+
+    const onMapClose = () => {
+        setIsMapOpen(false)
+    }
 
     const confirmMarkedAddress = (coords, address) => {
         console.log(address)
@@ -71,9 +75,6 @@ const Signup = () => {
                         <Button buttonStyle={'btn--outline'} onClick={() => handleUserType('corporate')}>Sign up as
                             Corporate <i
                                 className="fas fa-chevron-right"/></Button>
-                        {/*<Button buttonStyle={'btn--outline'} onClick={() => handleUserType('employee')}>Sign up as*/}
-                        {/*    Employee <i*/}
-                        {/*        className="fas fa-chevron-right"/></Button>*/}
                         <span>Already have an account? <Link to={'/login'}>Login</Link></span>
                     </div>}
 
@@ -119,7 +120,7 @@ const Signup = () => {
                             </div>
                             <div className={'input-field'}>
                                 <input type={'text'} placeholder={'Address'}
-                                       // value={`Lat: ${signupForm.latitude}, Long: ${signupForm.longitude}` || ''}
+                                    // value={`Lat: ${signupForm.latitude}, Long: ${signupForm.longitude}` || ''}
                                        onChange={e => setSignupForm({...signupForm, address: e.target.value})}
                                        onFocus={() => setIsMapOpen(true)}/>
                                 <i className="fas fa-map-marker-alt"/>
@@ -165,15 +166,10 @@ const Signup = () => {
                     </div>}
                 </div>}
 
-                {isMapOpen && <div className={'card'}>
-                    <div className={'map-container'}>
-                        <MapView mapHandler={confirmMarkedAddress}/>
-                    </div>
-                </div>}
+                <Map open={isMapOpen} onClose={onMapClose} modalTitle={"Mark your address"} modalButton={"Submit"}/>
 
             </div>
         </>
     )
 }
-
 export default Signup;

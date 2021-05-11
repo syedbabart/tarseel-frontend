@@ -1,0 +1,8 @@
+.processContainer {
+    padding: 100px;
+    background: #fafafa;
+}
+
+.step {
+    display: flex;
+}

@@ -1,14 +1,21 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import './Orders.css'
+import Map from "../Map";
 
-function useForceUpdate(){
-    const [value, setValue] = useState(0); // integer state
-    return () => setValue(value => value + 1); // update the state to force render
+function useForceUpdate() {
+    const [value, setValue] = useState(0);
+    return () => setValue(value => value + 1);
 }
 
 const Orders = () => {
 
     const forceUpdate = useForceUpdate();
+
+    const[open, setOpen] = useState(false);
+
+    const onMapClose = () => {
+        setOpen(false)
+    }
 
     const products = [
         {id: 1, name: 'Aquafina (12-Liter Bottle)', price: 160},
@@ -41,7 +48,7 @@ const Orders = () => {
                         </div>
                         <div className={'delete-item'} onClick={() => deleteItem(product.name)}><i
                             className="fas fa-trash-alt"/></div>
-                        <div className={'confirm-order'}>Confirm Order</div>
+                        <div className={'confirm-order'} onClick={() => onCheckOut()}>Check out</div>
                     </div>
                 )
             }
@@ -49,19 +56,25 @@ const Orders = () => {
     )
 
 
-
-
     const deleteItem = (name) => {
         localStorage.removeItem(name)
-        // getCartProducts()
         forceUpdate()
+    }
+
+    const onCheckOut = () => {
+        setOpen(true)
     }
 
     return (
         <section className={'cart-section-container'}>
-            <h1 className={'product-title'}>Shopping Cart</h1>
+            <h1 className={'product-title'}>Cart</h1>
 
             {productList}
+            {!productList && <div className={'cart-item'}>
+                Cart is empty
+            </div>}
+
+            <Map open={open} onClose={onMapClose} modalTitle={"Confirm delivery address"} modalButton={"Place Order"} />
 
         </section>
     )

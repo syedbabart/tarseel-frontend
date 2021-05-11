@@ -12,3 +12,17 @@ body {
     width: 0;
     display: none;
 }
+
+
+.mapboxgl-ctrl-geocoder.mapboxgl-ctrl {
+    min-width: 100%;
+    background: none;
+    border-bottom: 2px solid #ffffff;
+    border-radius: 0;
+    color: #242424;
+}
+
+.mapboxgl-ctrl-geocoder.mapboxgl-ctrl input {
+    color: #242424;
+    outline: none;
+}
