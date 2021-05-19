@@ -47,8 +47,8 @@ const Product = () => {
                 <h1 className={'product-title'}>Available Products</h1>
                 <div className={'pt-header'}>
                     <div className={'pt-cell p-sr'}>ID</div>
-                    <div className={'pt-cell p-name'}>Product Name</div>
-                    <div className={'pt-cell p-price'}>Price</div>
+                    <div className={'pt-cell p-name'}>NAME</div>
+                    <div className={'pt-cell p-price'}>PRICE</div>
                 </div>
                 {productList}
             </section>

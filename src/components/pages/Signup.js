@@ -27,8 +27,7 @@ const Signup = () => {
         setIsMapOpen(false)
     }
 
-    const confirmMarkedAddress = (coords, address) => {
-        console.log(address)
+    const confirmMarkedAddress = (coords) => {
         setSignupForm({
             ...signupForm,
             longitude: coords.longitude,
@@ -166,7 +165,7 @@ const Signup = () => {
                     </div>}
                 </div>}
 
-                <Map open={isMapOpen} onClose={onMapClose} modalTitle={"Mark your address"} modalButton={"Submit"}/>
+                <Map open={isMapOpen} onClose={onMapClose} modalTitle={"Mark your address"} modalButton={"Submit"} onConfirm={confirmMarkedAddress}/>
 
             </div>
         </>

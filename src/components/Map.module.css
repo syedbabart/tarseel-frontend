@@ -39,6 +39,15 @@
     margin-bottom: 5px;
 }
 
+.location {
+    color: white;
+    font-size: 25px;
+}
+
+.location > i {
+    box-shadow: 0 4px 2px -2px gray;
+}
+
 @media screen and (max-width: 980px) {
     .map {
         width: 80vw;

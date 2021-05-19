@@ -17,7 +17,7 @@ const Map = (props) => {
     const [viewport, setViewport] = useState({
         latitude: 33.6844,
         longitude: 73.0479,
-        zoom: 10
+        zoom: 11
     });
 
     useEffect(() => {
@@ -46,6 +46,7 @@ const Map = (props) => {
         latitude: viewport.latitude,
         longitude: viewport.longitude
     });
+    // eslint-disable-next-line no-unused-vars
     const [events, logEvents] = useState({});
 
     const onMarkerDragStart = useCallback(event => {
@@ -71,7 +72,7 @@ const Map = (props) => {
                 <div className={styles.map}>
                     <div className={styles.mapHeader}>
                         <span>{props.modalTitle}</span>
-                        <button className={'btn btn--small'}>{props.modalButton} <i
+                        <button className={'btn btn--small'} onClick={() => props.onConfirm(marker)}>{props.modalButton} <i
                             className="fas fa-arrow-right"/></button>
                     </div>
                     <div className={styles.mapOuterContainer}>
@@ -104,7 +105,7 @@ const Map = (props) => {
                                 onDragStart={onMarkerDragStart}
                                 onDrag={onMarkerDrag}
                                 onDragEnd={onMarkerDragEnd}
-                            ><i className="fas fa-map-marker-alt"/>
+                            ><div className={styles.location}><i className="fas fa-map-marker-alt "/></div>
                             </Marker>
                         </MapGL>
                     </div>

@@ -1,8 +1,11 @@
 import React, {useState} from "react";
 import './Orders.css'
 import Map from "../Map";
+// import Fade from "react-reveal/Fade";
 
 function useForceUpdate() {
+
+    // eslint-disable-next-line no-unused-vars
     const [value, setValue] = useState(0);
     return () => setValue(value => value + 1);
 }
@@ -11,10 +14,14 @@ const Orders = () => {
 
     const forceUpdate = useForceUpdate();
 
-    const[open, setOpen] = useState(false);
+    const [open, setOpen] = useState(false);
 
     const onMapClose = () => {
         setOpen(false)
+    }
+
+    const onPlaceOrder = () => {
+        console.log("Order has been placed.")
     }
 
     const products = [
@@ -25,31 +32,34 @@ const Orders = () => {
         {id: 5, name: 'Aquafina (6-Liter Bottle)', price: 80},
     ]
 
-    const productList = products.map((product) => {
+    // eslint-disable-next-line array-callback-return
+    const productList = products.map(product => {
             if (localStorage.getItem(product.name)) {
                 return (
-                    <div className={'cart-item'} key={product.name}>
-                        <div className={'item-info'}>
-                            <div>{product.name}</div>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-                                pulvinar risus non risus hendrerit venenatis. Pellentesque sit amet
-                                hendrerit risus, sed porttitor quam.
-                            </p>
-                            <span>Rs. {product.price}</span>
+                    // <Fade bottom>
+                        <div className={'cart-item'} key={product.name}>
+                            <div className={'item-info'}>
+                                <div>{product.name}</div>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
+                                    pulvinar risus non risus hendrerit venenatis. Pellentesque sit amet
+                                    hendrerit risus, sed porttitor quam.
+                                </p>
+                                <span>Rs. {product.price}</span>
+                            </div>
+                            <div className={'item-quantity'}>
+                                <div>Quantity</div>
+                                <p>{localStorage.getItem(product.name)}</p>
+                            </div>
+                            <div className={'total'}>
+                                <div>Total</div>
+                                <p>Rs. {product.price * (JSON.parse(localStorage.getItem(product.name)))}</p>
+                            </div>
+                            <div className={'delete-item'} onClick={() => deleteItem(product.name)}><i
+                                className="fas fa-trash-alt"/></div>
+                            <div className={'confirm-order'} onClick={() => onCheckOut()}>Check out</div>
                         </div>
-                        <div className={'item-quantity'}>
-                            <div>Quantity</div>
-                            <p>{localStorage.getItem(product.name)}</p>
-                        </div>
-                        <div className={'total'}>
-                            <div>Total</div>
-                            <p>Rs. {product.price * (JSON.parse(localStorage.getItem(product.name)))}</p>
-                        </div>
-                        <div className={'delete-item'} onClick={() => deleteItem(product.name)}><i
-                            className="fas fa-trash-alt"/></div>
-                        <div className={'confirm-order'} onClick={() => onCheckOut()}>Check out</div>
-                    </div>
+                    // </Fade>
                 )
             }
         }
@@ -70,11 +80,12 @@ const Orders = () => {
             <h1 className={'product-title'}>Cart</h1>
 
             {productList}
+
             {!productList && <div className={'cart-item'}>
                 Cart is empty
             </div>}
 
-            <Map open={open} onClose={onMapClose} modalTitle={"Confirm delivery address"} modalButton={"Place Order"} />
+            <Map open={open} onClose={onMapClose} modalTitle={"Confirm delivery address"} modalButton={"Place Order"} onConfirm={onPlaceOrder}/>
 
         </section>
     )
