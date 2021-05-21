@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import './Login.css'
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import axios from "axios";
 import Snackbar from "../Snackbar";
 import {rootUrl} from "../../App";
@@ -12,6 +12,7 @@ const Login = () => {
     })
     const [openSnackbar, setOpenSnackbar] = useState(false)
     const [message, setMessage] = useState('')
+    const history = useHistory()
 
     const loginUser = (event) => {
         event.preventDefault()
@@ -30,6 +31,7 @@ const Login = () => {
                     response => {
                         console.log(response)
                         localStorage.setItem('token', response.data.token)
+                        history.push('/')
                     },
                     error => {
                         console.log(error.body)

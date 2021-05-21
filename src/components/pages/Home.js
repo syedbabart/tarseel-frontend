@@ -13,7 +13,6 @@ const Home = () => {
 
                 </div>
             </section>
-            <Snackbar message={'Snackbar'}/>
         </>
     )
 }
