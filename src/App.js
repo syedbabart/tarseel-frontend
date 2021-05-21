@@ -9,6 +9,8 @@ import Products from "./components/pages/Products";
 import ScrollToTop from "./components/ScrollToTop";
 import Orders from "./components/pages/Orders";
 
+export const rootUrl = "http://localhost:3000/api/"
+
 function App() {
     return (
             <Router>

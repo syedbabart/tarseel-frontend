@@ -17,7 +17,12 @@ const Popup = (props) => {
 
     useEffect(() => {
         console.log(props.currentProduct.name)
-        setCurrentQuantity(JSON.parse(localStorage.getItem(props.currentProduct.name)))
+        let q = JSON.parse(localStorage.getItem(props.currentProduct.name))
+        if (q) {
+            setCurrentQuantity(q)
+        } else {
+            setCurrentQuantity(1)
+        }
     }, [props.currentProduct])
 
     useEffect(() => {
@@ -31,13 +36,12 @@ const Popup = (props) => {
     };
 
     const addToCart = () => {
-
         let quantity;
-        if (currentQuantity) {
+        if (currentQuantity)
             quantity = currentQuantity
-        } else {
+        else
             quantity = 1
-        }
+
         localStorage.setItem(props.currentProduct.name, quantity)
         setIsProductAdded(true)
         console.log(localStorage.getItem((props.currentProduct.name)))
@@ -63,7 +67,7 @@ const Popup = (props) => {
                         Quantity:
                         <button className={'quantity-button'}
                                 onClick={() => setCurrentQuantity(currentQuantity - 1)}>-</button>
-                        <input className={'quantity-input'} type={'number'} value={currentQuantity || 1}
+                        <input className={'quantity-input'} type={'number'} value={currentQuantity}
                                onChange={e => setCurrentQuantity(parseInt(e.target.value))}/>
                         <button className={'quantity-button'} onClick={() => setCurrentQuantity(currentQuantity + 1)}>+
                         </button>
@@ -75,13 +79,14 @@ const Popup = (props) => {
                             className="fas fa-cart-plus"/>
                         </button>
                     </div>
-                </section> }
+                </section>}
 
                 {isProductAdded && <section className={'product-success-container'}>
                     <h1>Product successfully added to cart</h1>
                     <div className={'modal-footer'}>
                         <button className={'modal-button'} onClick={onCloseModal}>Cancel</button>
-                        <button className={'modal-button'} onClick={navigateToCart}>Go to Cart <i className="fas fa-shopping-cart"/></button>
+                        <button className={'modal-button'} onClick={navigateToCart}>Go to Cart <i
+                            className="fas fa-shopping-cart"/></button>
                     </div>
                 </section>}
             </Modal>

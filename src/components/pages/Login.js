@@ -1,16 +1,59 @@
 import React, {useState} from "react";
 import './Login.css'
 import {Link} from "react-router-dom";
+import axios from "axios";
+import Snackbar from "../Snackbar";
+import {rootUrl} from "../../App";
 
 const Login = () => {
     const [loginForm, setLoginForm] = useState({
-        username: '',
+        email: '',
         password: ''
     })
+    const [openSnackbar, setOpenSnackbar] = useState(false)
+    const [message, setMessage] = useState('')
 
-    const loginUser = () => {
-        console.log('Logged in')
-        console.log(JSON.stringify(loginForm))
+    const loginUser = (event) => {
+        event.preventDefault()
+        console.log(loginForm)
+        if (isFormInvalid()) {
+            onOpenSnackbar('Please fill all the fields!')
+        } else {
+            const url = rootUrl + 'user/login'
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+            axios.post(url, loginForm, config)
+                .then(
+                    response => {
+                        console.log(response)
+                        localStorage.setItem('token', response.data.token)
+                    },
+                    error => {
+                        console.log(error.body)
+                        if (error.request.status === 401) {
+                            onOpenSnackbar('Invalid Credentials!')
+                        } else if (error.request.status === 500) {
+                            onOpenSnackbar('Something went wrong! Please try again.')
+                        }
+
+                    })
+        }
+    }
+
+    const onOpenSnackbar = (message) => {
+        setOpenSnackbar(true)
+        setMessage(message)
+        setTimeout(
+            () => setOpenSnackbar(false),
+            3000
+        )
+    }
+
+    const isFormInvalid = () => {
+        return (loginForm.email.length === 0 || loginForm.password.length === 0)
     }
 
     return (
@@ -24,9 +67,9 @@ const Login = () => {
                     <div className={'card-content'}>
                         <div className={'row'}>
                             <div className={'input-field'}>
-                                <input type={'text'} placeholder={'Username'} value={loginForm.username || ''}
+                                <input type={'email'} placeholder={'Email'} value={loginForm.email || ''}
                                        onChange={
-                                           e => (setLoginForm({...loginForm, username: e.target.value}))
+                                           e => (setLoginForm({...loginForm, email: e.target.value}))
                                        }/>
                                 <i className="far fa-user"/>
                             </div>
@@ -50,8 +93,8 @@ const Login = () => {
                     </div>
                 </div>
             </div>
+            {openSnackbar && <Snackbar message={message}/>}
         </>
     )
 }
-
 export default Login;
