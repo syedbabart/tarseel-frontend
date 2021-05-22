@@ -1,3 +1,7 @@
+.navbar * {
+    font-weight: 700;
+}
+
 .navbar {
     /*background: linear-gradient(90deg, rgba(28, 27, 27, 0.5) 0%, rgba(26, 23, 23, 0.5) 100%);*/
     /*background: rgba(0, 0, 0, 0.6);*/

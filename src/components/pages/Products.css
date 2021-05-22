@@ -12,6 +12,10 @@
     padding: 50px;
 }
 
+.product-content-container * {
+    font-weight: 200;
+}
+
 .product-hero-container > span {
     font-size: 50px;
     margin-bottom: 20px;

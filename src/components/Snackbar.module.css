@@ -7,10 +7,11 @@
     background: rgba(0,0,0,0.8);
     color: white;
     padding: 5px 15px;
-    box-shadow: 0 0 5px 1px rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 2px 1px rgba(255, 255, 255, 0.5);
     animation: fade-in 0.1s ease-in-out;
     width: max-content;
     max-width: calc(100vw - 30px);
+    font-weight: 100;
 }
 
 @keyframes fade-in {

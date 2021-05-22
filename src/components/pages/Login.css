@@ -73,6 +73,11 @@
     width: calc(100% - 30px);
 }
 
+.input-field > input:active, .input-field > input:-webkit-autofill {
+    background: none;
+    outline: none;
+}
+
 .input-field > div {
     width: calc(100% - 30px);
 }

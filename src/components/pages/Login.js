@@ -18,8 +18,12 @@ const Login = () => {
         event.preventDefault()
         console.log(loginForm)
         if (isFormInvalid()) {
-            onOpenSnackbar('Please fill all the fields!')
-        } else {
+            onOpenSnackbar('Please fill in all the fields!')
+        }
+        else if (!(loginForm.email.includes('@'))) {
+            onOpenSnackbar('Please enter valid email address!')
+        }
+        else {
             const url = rootUrl + 'user/login'
             const config = {
                 headers: {
@@ -34,7 +38,7 @@ const Login = () => {
                         history.push('/')
                     },
                     error => {
-                        console.log(error.body)
+                        console.log(error)
                         if (error.request.status === 401) {
                             onOpenSnackbar('Invalid Credentials!')
                         } else if (error.request.status === 500) {

@@ -89,7 +89,7 @@ const Signup = () => {
     const submitCorporateForm = () => {
         console.log(signupForm)
         if (signupForm.ntn === undefined || signupForm.strn === undefined || signupForm.regNumber === undefined || signupForm.regAddress === undefined) {
-            onOpenSnackbar('Please fill in all fields!')
+            onOpenSnackbar('Please fill in all the fields!')
         } else {
             submitBioData()
         }
@@ -151,14 +151,14 @@ const Signup = () => {
                             </div>
                             <div className={'row'}>
                                 <div className={'input-field'}>
-                                    <input type={'text'} placeholder={'Phone'} value={signupForm.phoneNumber || ''}
-                                           onChange={onNumberChangeHandler}/>
-                                    <i className="fas fa-phone-alt"/>
-                                </div>
-                                <div className={'input-field'}>
                                     <input type={'password'} placeholder={'Password'} value={signupForm.password || ''}
                                            onChange={e => setSignupForm({...signupForm, password: e.target.value})}/>
                                     <i className="fas fa-lock"/>
+                                </div>
+                                <div className={'input-field'}>
+                                    <input type={'text'} placeholder={'Phone'} value={signupForm.phoneNumber || ''}
+                                           onChange={onNumberChangeHandler}/>
+                                    <i className="fas fa-phone-alt"/>
                                 </div>
                             </div>
                             <div className={'row'}>
