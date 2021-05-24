@@ -106,4 +106,4 @@ const MapView = (props) => {
     );
 };
 
-export default MapView
+// export default MapView

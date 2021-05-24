@@ -68,7 +68,7 @@ const Map = (props) => {
 
     return (
         <>
-            <Modal open={open} onClose={onCloseModal} center>
+            <Modal open={open} onClose={onCloseModal} showCloseIcon={false} center>
                 <div className={styles.map}>
                     <div className={styles.mapHeader}>
                         <span>{props.modalTitle}</span>

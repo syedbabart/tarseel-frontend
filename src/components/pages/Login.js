@@ -19,7 +19,6 @@ const Login = () => {
 
     const loginUser = (event) => {
         event.preventDefault()
-        console.log(loginForm)
         if (isFormInvalid()) {
             onOpenSnackbar('Please fill in all the fields!')
         } else if (!(loginForm.email.includes('@'))) {

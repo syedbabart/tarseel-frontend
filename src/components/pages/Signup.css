@@ -101,6 +101,13 @@ option {
     width: 100%;
 }
 
+.signup-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1px 12px;
+}
+
 
 @media screen and (max-width: 960px) {
     .card {

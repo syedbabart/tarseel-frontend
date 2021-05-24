@@ -1,11 +1,12 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import './Signup.css'
 import Button from "../Button";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import Map from "../Map";
 import axios from "axios";
 import {rootUrl} from "../../App";
 import Snackbar from "../Snackbar";
+import spinnerWhite from "../../assets/spinnerWhite.svg";
 
 const Signup = () => {
     const [step, setStep] = useState(1)
@@ -13,6 +14,7 @@ const Signup = () => {
     const [message, setMessage] = useState('Sign up snackbar message')
     const [isMapOpen, setIsMapOpen] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+    const history = useHistory()
     const [signupForm, setSignupForm] = useState({
         userType: '',
         name: '',
@@ -32,6 +34,10 @@ const Signup = () => {
     const onMapClose = () => {
         setIsMapOpen(false)
     }
+
+    useEffect(() => {
+        setSignupForm({...signupForm, address: 'Islamabad Capital Territory, Pakistan'})
+    }, [])
 
     const confirmMarkedAddress = (coords) => {
         setSignupForm({
@@ -60,19 +66,20 @@ const Signup = () => {
     }
 
     const submitBioData = () => {
-        console.log('Submit called')
+        setIsLoading(true)
         const config = {
             headers: {
                 'Content-Type': 'application/json',
             },
         };
-        setSignupForm({...signupForm, address: 'NUST Islamabad'})
-
         axios.post(rootUrl + 'user/signup', signupForm, config)
             .then(response => {
                     console.log(response)
+                    setIsLoading(false)
+                    history.push('/login')
                 },
                 error => {
+                    setIsLoading(false)
                     console.log(error)
                 })
     }
@@ -190,29 +197,40 @@ const Signup = () => {
                             <div className={'row button'}>
                                 <Button buttonStyle={'btn--outline'} onClick={prevForm}><i
                                     className="fas fa-arrow-left"/></Button>
-                                <Button buttonStyle={'btn--outline'} onClick={nextForm}><i
-                                    className="fas fa-arrow-right"/></Button>
+                                {!isLoading && <Button buttonStyle={'btn--outline'} onClick={nextForm}><i
+                                    className="fas fa-arrow-right"/></Button>}
+                                {isLoading && <div style={{padding: '0 12px', height: '45px'}}
+                                                   className={'btn btn--outline signup-spinner'}><img
+                                    style={{width: '34px'}} src={spinnerWhite}/></div>}
                             </div>
                         </div>}
 
                         {step === 3 && <div className={'card-content'}>
                             <div className={'row'}>
                                 <div className={'input-field'}>
-                                    <input type={'text'} placeholder={'National Tax Number (NTN)'} value={signupForm.ntn} onChange={e => setSignupForm({...signupForm, ntn: e.target.value})}/>
+                                    <input type={'text'} placeholder={'National Tax Number (NTN)'}
+                                           value={signupForm.ntn}
+                                           onChange={e => setSignupForm({...signupForm, ntn: e.target.value})}/>
                                     <i className="far fa-building"/>
                                 </div>
                                 <div className={'input-field'}>
-                                    <input type={'text'} placeholder={'Sales Tax Registration Number (STRN)'} value={signupForm.strn} onChange={e => setSignupForm({...signupForm, strn: e.target.value})}/>
+                                    <input type={'text'} placeholder={'Sales Tax Registration Number (STRN)'}
+                                           value={signupForm.strn}
+                                           onChange={e => setSignupForm({...signupForm, strn: e.target.value})}/>
                                     <i className="far fa-envelope"/>
                                 </div>
                             </div>
                             <div className={'row'}>
                                 <div className={'input-field'}>
-                                    <input type={'text'} placeholder={'Registration Number'} value={signupForm.regNumber} onChange={e => setSignupForm({...signupForm, regNumber: e.target.value})}/>
+                                    <input type={'text'} placeholder={'Registration Number'}
+                                           value={signupForm.regNumber}
+                                           onChange={e => setSignupForm({...signupForm, regNumber: e.target.value})}/>
                                     <i className="far fa-address-card"/>
                                 </div>
                                 <div className={'input-field'}>
-                                    <input type={'text'} placeholder={'Registered Address'} value={signupForm.regAddress} onChange={e => setSignupForm({...signupForm, regAddress: e.target.value})}/>
+                                    <input type={'text'} placeholder={'Registered Address'}
+                                           value={signupForm.regAddress}
+                                           onChange={e => setSignupForm({...signupForm, regAddress: e.target.value})}/>
                                     <i className="fas fa-map-marker-alt"/>
                                 </div>
                             </div>
@@ -220,8 +238,11 @@ const Signup = () => {
                             <div className={'row button'}>
                                 <Button buttonStyle={'btn--outline'} onClick={prevForm}><i
                                     className="fas fa-arrow-left"/></Button>
-                                <Button buttonStyle={'btn--outline'} onClick={submitCorporateForm}><i
-                                    className="fas fa-arrow-right"/></Button>
+                                {!isLoading && <Button buttonStyle={'btn--outline'} onClick={submitCorporateForm}><i
+                                    className="fas fa-arrow-right"/></Button>}
+                                {isLoading && <div style={{padding: '0 12px', height: '45px'}}
+                                                   className={'btn btn--outline signup-spinner'}><img
+                                    style={{width: '34px'}} src={spinnerWhite}/></div>}
                             </div>
                         </div>}
                     </div>}
