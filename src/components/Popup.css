@@ -2,8 +2,8 @@
     border-radius: 5px;
 }
 
-.react-responsive-modal-closeButton {
-    display: none;
+h2.p-name {
+    color: rgba(37, 116, 169, 1);
 }
 
 .product-quantity-container {
@@ -27,7 +27,7 @@ p {
     border-radius: 2px;
     margin: 0 5px;
     border: 1px solid rgba(36, 36, 36, 0.8);
-    background: rgba(112,128,144, 0.2);
+    background: rgba(112, 128, 144, 0.2);
     color: rgba(36, 36, 36, 0.8);
     transition: all 0.3s ease-in-out;
     cursor: pointer;
@@ -52,7 +52,7 @@ p {
     font-size: 15px;
     border-radius: 5px;
     border: 1px solid rgba(36, 36, 36, 0.8);
-    background: rgba(112,128,144, 0.2);
+    background: rgba(112, 128, 144, 0.2);
     color: rgba(36, 36, 36, 0.8);
     transition: all 0.3s ease-in-out;
     cursor: pointer;
@@ -67,7 +67,10 @@ p {
 }
 
 .modal-price {
-    color: rgba(37, 116, 169, 1);
-    /*background: rgba(37, 116, 169, 0.2);*/
+    color: #ffffff;
+    width: max-content;
+    border-radius: 5px;
+    padding: 5px 10px;
+    background: rgba(37, 116, 169, 1);
 
 }

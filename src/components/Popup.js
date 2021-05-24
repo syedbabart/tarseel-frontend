@@ -16,7 +16,6 @@ const Popup = (props) => {
     }, [props.open])
 
     useEffect(() => {
-        console.log(props.currentProduct.name)
         let q = JSON.parse(localStorage.getItem(props.currentProduct.name))
         if (q) {
             setCurrentQuantity(q)
@@ -53,16 +52,16 @@ const Popup = (props) => {
 
     return (
         <div>
-            <Modal open={open} onClose={onCloseModal} center>
+            <Modal open={open} showCloseIcon={false} onClose={onCloseModal} center>
                 {!isProductAdded && <section>
-                    <h2>{props.currentProduct.name}</h2>
-                    <p className={'modal-price'}>Rs. {props.currentProduct.price}</p>
+                    <h2 className={'p-name'}>{props.currentProduct.name}</h2>
+                    <h3>{props.currentProduct.amount}</h3>
                     <p>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
                         pulvinar risus non risus hendrerit venenatis. Pellentesque sit amet
                         hendrerit risus, sed porttitor quam.
                     </p>
-
+                    <p className={'modal-price'}>Rs. {props.currentProduct.price}</p>
                     <div className={'product-quantity-container'}>
                         Quantity:
                         <button className={'quantity-button'}

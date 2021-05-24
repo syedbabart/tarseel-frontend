@@ -12,6 +12,7 @@ const Signup = () => {
     const [openSnackbar, setOpenSnackbar] = useState(false)
     const [message, setMessage] = useState('Sign up snackbar message')
     const [isMapOpen, setIsMapOpen] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
     const [signupForm, setSignupForm] = useState({
         userType: '',
         name: '',
@@ -78,7 +79,7 @@ const Signup = () => {
 
     const validateBioDataForm = () => {
         if (signupForm.name === undefined || signupForm.email === undefined || signupForm.password === undefined || signupForm.area === undefined || signupForm.phoneNumber === undefined) {
-            onOpenSnackbar('Please fill in all fields!')
+            onOpenSnackbar('Please fill in all the fields!')
         } else if (!(signupForm.email.includes('@'))) {
             onOpenSnackbar('Please enter valid email address!')
         } else {

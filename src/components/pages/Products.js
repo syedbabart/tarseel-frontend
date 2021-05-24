@@ -1,41 +1,87 @@
-import React, {useState} from "react";
+import React, { useEffect, useState} from "react";
 import './Products.css'
 import Popup from "../Popup";
+import axios from "axios";
+import {rootUrl} from "../../App";
+import AddProduct from "../AddProduct";
 
 const Product = () => {
 
+    const [productList, setProductList] = useState([])
+    const [modalType, setModalType] = useState('add')
     const [open, setOpen] = useState(false);
+    const [openAddProduct, setOpenAddProduct] = useState(false)
     const [currentProduct, setCurrentProduct] = useState({
-        id: '',
+        _id: '',
         name: '',
+        amount: '',
         price: ''
     })
 
-    const onOpenModal = (id, name, price) => {
-        setCurrentProduct({...currentProduct,
-            id: id,
+    useEffect(() => {
+        fetchProducts()
+    }, [])
+
+    const fetchProducts = () => {
+        axios.get(rootUrl + 'product/all').then(
+            response => {
+                generateProductList(response.data.products)
+            },
+            error => console.log(error)
+        )
+    }
+
+
+    const onOpenModal = (id, name, amount, price, modalType) => {
+        if (localStorage.getItem('userType') === 'admin') {
+            onOpenAddProductModal(id, name, amount, price, modalType)
+        } else {
+            onOpenProductModal(id, name, amount, price)
+        }
+    }
+
+    const onOpenAddProductModal = (id, name, amount, price, modalType) => {
+        setModalType(modalType)
+        setCurrentProduct({
+            ...currentProduct,
+            _id: id,
             name: name,
+            amount: amount,
             price: price
-    })
+        })
+        setOpenAddProduct(true)
+    }
+
+    const onOpenProductModal = (id, name, amount, price) => {
+        setCurrentProduct({
+            ...currentProduct,
+            _id: id,
+            name: name,
+            amount: amount,
+            price: price
+        })
         setOpen(true)
-    };
-    const onCloseModal = () => setOpen(false);
+    }
 
-    const products = [
-        {id: 1, name: 'Aquafina (12-Liter Bottle)', price: 160},
-        {id: 2, name: 'Aquafina (19-Liter Bottle)', price: 200},
-        {id: 3, name: 'Aquafina (500-mL Bottle - Pack of 12)', price: 180},
-        {id: 4, name: 'Aquafina (1.5-Liter Bottle - Pack of 6)', price: 180},
-        {id: 5, name: 'Aquafina (6-Liter Bottle)', price: 80},
-    ]
+    const onCloseModal = () => {
+        setOpen(false)
+    }
 
-    const productList = products.map((product) =>
-        <div className={'pt-item'} key={product.id} onClick={() => onOpenModal(product.id, product.name, product.price)}>
-            <div className={'item-cell p-sr'}>{product.id}</div>
-            <div className={'item-cell p-name'}>{product.name}</div>
-            <div className={'item-cell p-price'}>{product.price}</div>
-        </div>
-    )
+    const onCloseAddProduct = () => {
+        setOpenAddProduct(false)
+    }
+
+    const generateProductList = (products) => {
+        const pList = products.map((product, index) =>
+            <div className={'pt-item'} key={product._id}
+                 onClick={() => onOpenModal(product._id, product.name, product.amount, product.price, 'edit')}>
+                <div className={'item-cell p-sr'}>{index + 1}</div>
+                <div className={'item-cell p-name'}>{product.name} ({product.amount})</div>
+                <div className={'item-cell p-price'}>{product.price}</div>
+            </div>
+        )
+        setProductList(pList)
+    }
 
     return (
         <>
@@ -46,15 +92,21 @@ const Product = () => {
             <section className={'product-content-container'}>
                 <h1 className={'product-title'}>Available Products</h1>
                 <div className={'pt-header'}>
-                    <div className={'pt-cell p-sr'}>ID</div>
+                    <div className={'pt-cell p-sr'}>SR.</div>
                     <div className={'pt-cell p-name'}>NAME</div>
                     <div className={'pt-cell p-price'}>PRICE</div>
                 </div>
                 {productList}
             </section>
 
-            <Popup open = {open} onClose = {onCloseModal}  currentProduct = {currentProduct}/>
+            {localStorage.getItem('userType') === 'admin' &&
+            <div className={'add-product-button'} onClick={() => onOpenAddProductModal('', '', '', '', 'add')}><span
+                className={'add-button-text'}>Add product </span>
+                <i className="fas fa-plus"/></div>}
 
+            <Popup open={open} onClose={onCloseModal} currentProduct={currentProduct}/>
+            {openAddProduct && <AddProduct open={openAddProduct} onClose={onCloseAddProduct} fetchProducts={fetchProducts} modalType={modalType}
+                         currentProduct={currentProduct}/>}
         </>
     )
 }

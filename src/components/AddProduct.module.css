@@ -1,0 +1,52 @@
+.cardHeader {
+    text-align: center;
+    color: rgba(37, 116, 169, 1);
+}
+
+.addProductContent {
+    text-align: center;
+}
+
+.cardInput {
+    border: none;
+    border-bottom: 2px solid rgba(0,0,0,0.5);
+    outline: none;
+    width: 90%;
+    padding: 5px 0;
+    margin-bottom: 15px;
+    transition: 0.3s;
+}
+
+.cardInput:focus {
+    border-bottom:2px solid rgba(37, 116, 169, 1);
+    transition: 0.3s;
+}
+
+.modalFooter {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 90%;
+    margin: auto;
+}
+
+.modalButton {
+    width: 45%;
+    padding: 8px 20px;
+    font-size: 15px;
+    border-radius: 5px;
+    border: 1px solid rgba(36, 36, 36, 0.8);
+    background: rgba(112, 128, 144, 0.2);
+    color: rgba(36, 36, 36, 0.8);
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    outline: none;
+
+}
+
+.modalButton:hover {
+    background: rgba(36, 36, 36, 0.8);
+    color: #ffffff;
+    transition: all 0.3s ease-in-out;
+}
+

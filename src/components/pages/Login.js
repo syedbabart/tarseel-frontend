@@ -4,6 +4,8 @@ import {Link, useHistory} from "react-router-dom";
 import axios from "axios";
 import Snackbar from "../Snackbar";
 import {rootUrl} from "../../App";
+import auth from "../../auth/auth";
+import spinnerWhite from '../../assets/spinnerWhite.svg'
 
 const Login = () => {
     const [loginForm, setLoginForm] = useState({
@@ -12,6 +14,7 @@ const Login = () => {
     })
     const [openSnackbar, setOpenSnackbar] = useState(false)
     const [message, setMessage] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
     const history = useHistory()
 
     const loginUser = (event) => {
@@ -19,33 +22,26 @@ const Login = () => {
         console.log(loginForm)
         if (isFormInvalid()) {
             onOpenSnackbar('Please fill in all the fields!')
-        }
-        else if (!(loginForm.email.includes('@'))) {
+        } else if (!(loginForm.email.includes('@'))) {
             onOpenSnackbar('Please enter valid email address!')
-        }
-        else {
+        } else {
+            setIsLoading(true)
             const url = rootUrl + 'user/login'
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }
-            axios.post(url, loginForm, config)
+            axios.post(url, loginForm)
                 .then(
                     response => {
-                        console.log(response)
-                        localStorage.setItem('token', response.data.token)
+                        auth.login(response.data.token)
+                        setIsLoading(false)
                         history.push('/')
-                    },
-                    error => {
-                        console.log(error)
-                        if (error.request.status === 401) {
-                            onOpenSnackbar('Invalid Credentials!')
-                        } else if (error.request.status === 500) {
-                            onOpenSnackbar('Something went wrong! Please try again.')
-                        }
-
                     })
+                .catch(error => {
+                    if (error.request.status === 401) {
+                        onOpenSnackbar('Invalid Credentials!')
+                    } else if (error.request.status === 500) {
+                        onOpenSnackbar('Something went wrong! Please try again.')
+                    }
+                    setIsLoading(false)
+                })
         }
     }
 
@@ -91,8 +87,10 @@ const Login = () => {
                         <div className={'login-bottom'}>
                             <span>Don't have an account? <Link to={'/sign-up'}>Get Registered</Link></span>
                             <div className={'login-button'}>
-                                <button className={'btn btn--medium btn--outline'} onClick={loginUser}><i
-                                    className="fas fa-arrow-right"/></button>
+                                {!isLoading && <button className={'btn btn--medium btn--outline'} onClick={loginUser}><i
+                                    className="fas fa-arrow-right"/></button>}
+                                {isLoading && <button className={'btn btn--medium btn--outline login-spinner'}>
+                                    <img style={{width: '34px'}} src={spinnerWhite}/></button>}
                             </div>
                         </div>
 
