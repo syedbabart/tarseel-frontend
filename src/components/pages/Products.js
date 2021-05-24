@@ -4,9 +4,10 @@ import Popup from "../Popup";
 import axios from "axios";
 import {rootUrl} from "../../App";
 import AddProduct from "../AddProduct";
+import spinnerBlue from '../../assets/spinnerBlue.svg'
 
 const Product = () => {
-
+    const [isLoading, setIsLoading] = useState(false)
     const [productList, setProductList] = useState([])
     const [modalType, setModalType] = useState('add')
     const [open, setOpen] = useState(false);
@@ -23,6 +24,7 @@ const Product = () => {
     }, [])
 
     const fetchProducts = () => {
+        setIsLoading(true)
         axios.get(rootUrl + 'product/all').then(
             response => {
                 generateProductList(response.data.products)
@@ -81,6 +83,7 @@ const Product = () => {
             </div>
         )
         setProductList(pList)
+        setIsLoading(false)
     }
 
     return (
@@ -89,7 +92,12 @@ const Product = () => {
                 <span>Products</span>
             </section>
 
-            <section className={'product-content-container'}>
+            {isLoading && <section className={'product-content-container'}>
+                <h1 className={'product-title'}>Available Products</h1>
+                <img alt={'loading'} src={spinnerBlue}/>
+            </section>}
+
+            {!isLoading && <section className={'product-content-container'}>
                 <h1 className={'product-title'}>Available Products</h1>
                 <div className={'pt-header'}>
                     <div className={'pt-cell p-sr'}>SR.</div>
@@ -97,7 +105,7 @@ const Product = () => {
                     <div className={'pt-cell p-price'}>PRICE</div>
                 </div>
                 {productList}
-            </section>
+            </section>}
 
             {localStorage.getItem('userType') === 'admin' &&
             <div className={'add-product-button'} onClick={() => onOpenAddProductModal('', '', '', '', 'add')}><span

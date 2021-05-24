@@ -4,8 +4,12 @@ import styles from './AddProduct.module.css'
 import axios from "axios";
 import {rootUrl} from "../App";
 import auth from "../auth/auth";
+import spinnerBlue from '../assets/spinnerBlue.svg'
 
 const AddProduct = (props) => {
+    const [deleteLoading, setDeleteLoading] = useState(false)
+    const [adding, setAdding] = useState(false)
+    const [updating, setUpdating] = useState(false)
     const [currentProduct, setCurrentProduct] = useState({
         _id: '',
         name: '',
@@ -23,6 +27,7 @@ const AddProduct = (props) => {
     }, [props.currentProduct])
 
     const onAddProduct = () => {
+        setAdding(true)
         const url = rootUrl + 'product/add'
         const body = {
             name: currentProduct.name,
@@ -31,37 +36,45 @@ const AddProduct = (props) => {
         }
         axios.post(url, body, auth.getHeader()).then(
             response => {
+                setAdding(false)
                 props.onClose()
                 props.fetchProducts()
             },
             error => {
                 console.log(error)
+                setAdding(false)
             }
         )
     }
 
     const onDeleteProduct = () => {
+        setDeleteLoading(true)
         const url = `${rootUrl}product/${currentProduct._id}`
         axios.delete(url, auth.getHeader()).then(
             response => {
                 props.onClose()
                 props.fetchProducts()
+                setDeleteLoading(false)
             },
             error => {
                 console.log(error)
+                setDeleteLoading(false)
             }
         )
     }
 
     const onUpdateProduct = () => {
+        setUpdating(true)
         const url = `${rootUrl}product/${currentProduct._id}`
         axios.patch(url, currentProduct, auth.getHeader()).then(
             response => {
                 props.onClose()
                 props.fetchProducts()
+                setUpdating(false)
             },
             error => {
                 console.log(error)
+                setUpdating(false)
             }
         )
     }
@@ -78,12 +91,18 @@ const AddProduct = (props) => {
 
             {props.modalType === 'add' && <div className={styles.modalFooter}>
                 <button className={styles.modalButton} onClick={props.onClose}>Cancel</button>
-                <button className={styles.modalButton} onClick={onAddProduct}>Add Product <i className="fas fa-plus"/></button>
+                {!adding && <button className={styles.modalButton} onClick={onAddProduct}>Add Product <i className="fas fa-plus"/></button>}
+                {adding && <button className={`${styles.modalButton} ${styles.addModalSpinner}`} onClick={onAddProduct}><img alt={'loading'} src={spinnerBlue}/></button>}
             </div>}
 
             {props.modalType === 'edit' && <div className={styles.modalFooter}>
-                <button className={styles.modalButton} onClick={onDeleteProduct}>Delete <i className="fas fa-trash-alt"/></button>
-                <button className={styles.modalButton} onClick={onUpdateProduct}>Update Product <i className="fas fa-upload"/></button>
+                {deleteLoading && <button className={`${styles.modalButton} ${styles.addModalSpinner}`} onClick={onAddProduct}><img alt={'loading'} src={spinnerBlue}/></button>}
+                {!deleteLoading && <button className={styles.modalButton} onClick={onDeleteProduct}>Delete <i
+                    className="fas fa-trash-alt"/></button>}
+
+                {updating && <button className={`${styles.modalButton} ${styles.addModalSpinner}`} onClick={onAddProduct}><img alt={'loading'} src={spinnerBlue}/></button>}
+                {!updating && <button className={styles.modalButton} onClick={onUpdateProduct}>Update Product <i
+                    className="fas fa-upload"/></button>}
             </div>}
         </Modal>
     )

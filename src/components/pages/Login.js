@@ -89,7 +89,7 @@ const Login = () => {
                                 {!isLoading && <button className={'btn btn--medium btn--outline'} onClick={loginUser}><i
                                     className="fas fa-arrow-right"/></button>}
                                 {isLoading && <button className={'btn btn--medium btn--outline login-spinner'}>
-                                    <img style={{width: '34px'}} src={spinnerWhite}/></button>}
+                                    <img alt={'loading'} style={{width: '34px'}} src={spinnerWhite}/></button>}
                             </div>
                         </div>
 

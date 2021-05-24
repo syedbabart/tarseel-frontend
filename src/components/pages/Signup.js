@@ -36,6 +36,7 @@ const Signup = () => {
     }
 
     useEffect(() => {
+        console.log('Address set')
         setSignupForm({...signupForm, address: 'Islamabad Capital Territory, Pakistan'})
     }, [])
 
@@ -50,6 +51,7 @@ const Signup = () => {
 
     const handleUserType = (type) => {
         setSignupForm({
+            ...signupForm,
             userType: type
         })
         setStep(2)
@@ -67,11 +69,13 @@ const Signup = () => {
 
     const submitBioData = () => {
         setIsLoading(true)
+        setSignupForm({...signupForm, address: 'Islamabad Capital Territory, Pakistan'})
         const config = {
             headers: {
                 'Content-Type': 'application/json',
             },
         };
+        console.log(signupForm)
         axios.post(rootUrl + 'user/signup', signupForm, config)
             .then(response => {
                     console.log(response)
@@ -199,9 +203,9 @@ const Signup = () => {
                                     className="fas fa-arrow-left"/></Button>
                                 {!isLoading && <Button buttonStyle={'btn--outline'} onClick={nextForm}><i
                                     className="fas fa-arrow-right"/></Button>}
-                                {isLoading && <div style={{padding: '0 12px', height: '45px'}}
-                                                   className={'btn btn--outline signup-spinner'}><img
-                                    style={{width: '34px'}} src={spinnerWhite}/></div>}
+                                {isLoading && <div className={'btn btn--outline signup-spinner'}>
+                                    <img alt={'loading'} style={{width: '34px'}} src={spinnerWhite}/>
+                                </div>}
                             </div>
                         </div>}
 
@@ -240,9 +244,9 @@ const Signup = () => {
                                     className="fas fa-arrow-left"/></Button>
                                 {!isLoading && <Button buttonStyle={'btn--outline'} onClick={submitCorporateForm}><i
                                     className="fas fa-arrow-right"/></Button>}
-                                {isLoading && <div style={{padding: '0 12px', height: '45px'}}
-                                                   className={'btn btn--outline signup-spinner'}><img
-                                    style={{width: '34px'}} src={spinnerWhite}/></div>}
+                                {isLoading && <div className={'btn btn--outline signup-spinner'}>
+                                    <img alt={'loading'} style={{width: '34px'}} src={spinnerWhite}/>
+                                </div>}
                             </div>
                         </div>}
                     </div>}

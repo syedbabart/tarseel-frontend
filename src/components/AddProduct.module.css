@@ -50,3 +50,11 @@
     transition: all 0.3s ease-in-out;
 }
 
+.addModalSpinner {
+    padding: 4px 20px;
+}
+
+.addModalSpinner > img {
+    width: 24px;
+}
+
