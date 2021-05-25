@@ -27,7 +27,6 @@ class Auth {
     setUserType = (token) => {
         if (token) {
             const url = rootUrl + 'user'
-
             axios.get(url, this.getHeader()).then(
                 response => {
                     localStorage.setItem('userType', response.data.user['userType'])
@@ -37,7 +36,7 @@ class Auth {
                 }
             )
         } else {
-            return null
+            localStorage.removeItem('userType')
         }
     }
 

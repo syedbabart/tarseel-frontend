@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from 'react'
 import {Link} from 'react-router-dom'
 import './Navbar.css';
+import auth from "../auth/auth";
 
 function Navbar() {
     const [click, setClick] = useState(false);
     const [button, setButton] = useState(true);
     const [navClass, setNavClass] = useState('navbar')
+    const [loggedIn, setLoggedIn] = useState()
 
     const handleClick = () => setClick(!click);
     const closeMobileMenu = () => setClick(false);
@@ -21,7 +23,17 @@ function Navbar() {
         }
     };
 
+    const onLogout = () => {
+        auth.logOut()
+        closeMobileMenu()
+    }
+
+    const setStatus = () => {
+        setLoggedIn(auth.isLoggedIn())
+    }
+
     useEffect(() => {
+        setStatus()
         showButton()
     }, [])
 
@@ -55,13 +67,28 @@ function Navbar() {
                             </Link>
                         </li>
 
-                        <li className="nav-item">
+                        {!auth.isLoggedIn() && <li className="nav-item">
                             <Link to='/login' className="nav-links-mobile" onClick={closeMobileMenu}>
                                 Login
                             </Link>
-                        </li>
+                        </li>}
+
+                        {auth.isLoggedIn() && <li className="nav-item">
+                            <Link className="nav-links-mobile" onClick={onLogout}>
+                                Logout
+                            </Link>
+                        </li>}
+
                     </ul>
-                    {button && <Link to={'/login'} className='btn btn--outline btn--medium'>Login</Link>}
+                    {localStorage.getItem('token') ? (button &&
+                    <div className='dropdown '><i className="fas fa-user-tie"/>
+                        <div className="dropdown-content">
+                            <div className={'dropdown-item'} onClick={onLogout}>Logout <i className="fas fa-sign-out-alt"/></div>
+                            <div className={'dropdown-item'}>Cart <i className="fas fa-cart-plus"/></div>
+                            <div className={'dropdown-item'}>Link 3</div>
+                        </div>
+                    </div>) :
+                    (button && <Link to={'/login'} className='btn btn--outline btn--medium'>Login</Link>)}
                 </div>
             </nav>
         </>

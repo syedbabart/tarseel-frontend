@@ -72,12 +72,6 @@
     color: rgba(37, 116, 169, 1);
 }
 
-/*.product-item-wrap {*/
-/*    display: flex;*/
-/*    justify-content: center;*/
-/*    width: 100%;*/
-/*}*/
-
 .pt-cell, .item-cell {
     padding: 20px 20px;
     width: 100%;
@@ -101,7 +95,7 @@
 }
 
 .pt-item:hover {
-    box-shadow: 5px 5px 5px rgba(0,0,0,0.3);
+    /*box-shadow: 5px 5px 5px rgba(0,0,0,0.3);*/
     -webkit-transform: scale(1.04);
     -webkit-transition: 0.3s all ease-in-out;
     -moz-transition: 0.3s all ease-in-out;

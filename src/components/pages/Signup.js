@@ -36,7 +36,6 @@ const Signup = () => {
     }
 
     useEffect(() => {
-        console.log('Address set')
         setSignupForm({...signupForm, address: 'Islamabad Capital Territory, Pakistan'})
     }, [])
 

@@ -35,9 +35,9 @@ const Orders = () => {
 
     const generateProductList = (products) => {
         const pList = products.map(product => {
-                if (localStorage.getItem(product.name)) {
+                if (localStorage.getItem(product._id)) {
                     return (
-                        <div className={'cart-item'} key={product.name}>
+                        <div className={'cart-item'} key={product._id}>
                             <div className={'item-info'}>
                                 <div>{product.name}</div>
                                 <h4>{product.amount}</h4>
@@ -50,13 +50,13 @@ const Orders = () => {
                             </div>
                             <div className={'item-quantity'}>
                                 <div>Quantity</div>
-                                <p>{localStorage.getItem(product.name)}</p>
+                                <p>{localStorage.getItem(product._id)}</p>
                             </div>
                             <div className={'total'}>
                                 <div>Total</div>
-                                <p>Rs. {product.price * (JSON.parse(localStorage.getItem(product.name)))}</p>
+                                <p>Rs. {product.price * (JSON.parse(localStorage.getItem(product._id)))}</p>
                             </div>
-                            <div className={'delete-item'} onClick={() => deleteItem(product.name)}><i
+                            <div className={'delete-item'} onClick={() => deleteItem(product._id)}><i
                                 className="fas fa-trash-alt"/></div>
                             <div className={'confirm-order'} onClick={() => onCheckOut()}>Check out</div>
                         </div>

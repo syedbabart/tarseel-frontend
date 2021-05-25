@@ -8,12 +8,16 @@ import Home from "./components/pages/Home"
 import Products from "./components/pages/Products";
 import ScrollToTop from "./components/ScrollToTop";
 import Orders from "./components/pages/Orders";
-import {createContext} from "react";
+import {useEffect} from "react";
+import auth from "./auth/auth";
 
 export const rootUrl = "http://localhost:3000/api/"
-export const UserContext = createContext(null)
 
 function App() {
+
+    useEffect(() => {
+        auth.setUserType(localStorage.getItem('token'))
+    })
 
     return (
             <Router>
