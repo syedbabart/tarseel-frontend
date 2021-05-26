@@ -7,7 +7,7 @@ import {rootUrl} from "../../App";
 import auth from "../../auth/auth";
 import spinnerWhite from '../../assets/spinnerWhite.svg'
 
-const Login = () => {
+const Login = (props) => {
     const [loginForm, setLoginForm] = useState({
         email: '',
         password: ''
@@ -29,9 +29,12 @@ const Login = () => {
             axios.post(url, loginForm)
                 .then(
                     response => {
-                        auth.login(response.data.token)
-                        setIsLoading(false)
-                        history.push('/')
+                        const loggedIn = auth.login(response.data.token)
+                        if (loggedIn) {
+                            props.rerender()
+                            setIsLoading(false)
+                            history.push('/')
+                        }
                     })
                 .catch(error => {
                     if (error.request.status === 401) {

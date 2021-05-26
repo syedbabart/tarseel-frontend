@@ -5,11 +5,13 @@ class Auth {
     login = (token) => {
         localStorage.setItem('token', token)
         this.setUserType(token)
+        return true
     }
 
     logOut = () => {
         localStorage.removeItem('token')
         localStorage.removeItem('userType')
+        return true
     }
 
     getHeader = () => {

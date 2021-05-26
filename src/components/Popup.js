@@ -16,7 +16,7 @@ const Popup = (props) => {
     }, [props.open])
 
     useEffect(() => {
-        let q = JSON.parse(localStorage.getItem(props.currentProduct.name))
+        let q = JSON.parse(localStorage.getItem(props.currentProduct._id))
         if (q) {
             setCurrentQuantity(q)
         } else {

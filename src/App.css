@@ -27,3 +27,8 @@ body {
     color: #242424;
     outline: none;
 }
+
+Link {
+    text-underline: none;
+    text-underline-style: none;
+}

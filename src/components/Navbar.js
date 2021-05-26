@@ -1,13 +1,15 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useMemo, useState} from 'react'
 import {Link} from 'react-router-dom'
 import './Navbar.css';
 import auth from "../auth/auth";
 
-function Navbar() {
+function Navbar(props) {
     const [click, setClick] = useState(false);
     const [button, setButton] = useState(true);
     const [navClass, setNavClass] = useState('navbar')
-    const [loggedIn, setLoggedIn] = useState()
+    const isLogged = useMemo(() => {
+        return !!localStorage.getItem('token')
+    }, [])
 
     const handleClick = () => setClick(!click);
     const closeMobileMenu = () => setClick(false);
@@ -23,17 +25,15 @@ function Navbar() {
         }
     };
 
-    const onLogout = () => {
-        auth.logOut()
+    const onLogout = async () => {
+        let isLoggedOut = await auth.logOut()
+        if (isLoggedOut) {
+            props.rerender()
+        }
         closeMobileMenu()
     }
 
-    const setStatus = () => {
-        setLoggedIn(auth.isLoggedIn())
-    }
-
     useEffect(() => {
-        setStatus()
         showButton()
     }, [])
 
@@ -42,6 +42,7 @@ function Navbar() {
     }, [navClass])
 
     window.addEventListener('resize', showButton);
+
     return (
         <>
             <nav className={navClass}>
@@ -74,18 +75,18 @@ function Navbar() {
                         </li>}
 
                         {auth.isLoggedIn() && <li className="nav-item">
-                            <Link className="nav-links-mobile" onClick={onLogout}>
+                            <div className="nav-links-mobile" onClick={onLogout}>
                                 Logout
-                            </Link>
+                            </div>
                         </li>}
 
                     </ul>
-                    {localStorage.getItem('token') ? (button &&
+                    {auth.isLoggedIn() ? (button &&
                     <div className='dropdown '><i className="fas fa-user-tie"/>
                         <div className="dropdown-content">
                             <div className={'dropdown-item'} onClick={onLogout}>Logout <i className="fas fa-sign-out-alt"/></div>
-                            <div className={'dropdown-item'}>Cart <i className="fas fa-cart-plus"/></div>
-                            <div className={'dropdown-item'}>Link 3</div>
+                            <Link to={'/cart'} className={'dropdown-item'}>Cart <i className="fas fa-cart-plus"/></Link>
+                            <Link to={'/users'} className={'dropdown-item'}>Users</Link>
                         </div>
                     </div>) :
                     (button && <Link to={'/login'} className='btn btn--outline btn--medium'>Login</Link>)}

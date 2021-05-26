@@ -1,0 +1,32 @@
+.userContentContainer * {
+    font-weight: 200;
+}
+
+.userContentContainer {
+    margin-top: 80px;
+    padding: 50px;
+    background: #fafafa;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.userPageTitle {
+    color: rgba(37, 116, 169, 1);
+    font-weight: 700;
+}
+
+.userName {
+
+}
+
+.userSr {
+    width: 15%;
+    text-align: center;
+}
+
+.userType {
+    width: 20%;
+    text-transform: capitalize;
+}
