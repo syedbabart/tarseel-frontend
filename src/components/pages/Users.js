@@ -97,8 +97,7 @@ const Users = () => {
             }
 
             {
-                openViewUserModal &&
-                <UserPopup open={openViewUserModal} onClose={onCloseViewUserModal} selectedUser={selectedUser}/>
+                openViewUserModal && <UserPopup open={openViewUserModal} onClose={onCloseViewUserModal} reload={fetchUsers} selectedUser={selectedUser}/>
             }
 
             {

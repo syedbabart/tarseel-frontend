@@ -63,3 +63,37 @@
 .addModalSpinner > img {
     width: 24px;
 }
+
+.modalFooter {
+    display: flex;
+    flex-direction: row-reverse;
+    width: 100%;
+}
+
+.modalButton {
+    width: 200px;
+    padding: 8px 20px;
+    font-size: 15px;
+    border-radius: 5px;
+    border: 1px solid rgba(36, 36, 36, 0.8);
+    background: rgba(112, 128, 144, 0.2);
+    color: rgba(36, 36, 36, 0.8);
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    outline: none;
+}
+
+.modalButton:hover {
+    background: rgba(36, 36, 36, 0.8);
+    color: #ffffff;
+    transition: all 0.3s ease-in-out;
+}
+
+.addModalSpinner {
+    padding: 4px 20px;
+}
+
+.addModalSpinner > img {
+    width: 24px;
+}
+
