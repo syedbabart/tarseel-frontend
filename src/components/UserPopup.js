@@ -13,6 +13,7 @@ const UserPopup = (props) => {
 
     useEffect(() => {
         return () => setIsLoading(false)
+        // eslint-disable-next-line
     }, [])
 
     const onDeleteUser = () => {

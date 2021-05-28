@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import './Login.css'
 import {Link, useHistory} from "react-router-dom";
 import axios from "axios";
@@ -17,6 +17,12 @@ const Login = (props) => {
     const [isLoading, setIsLoading] = useState(false)
     const history = useHistory()
 
+    useEffect(() => {
+            return () => setIsLoading(false)
+        },
+        // eslint-disable-next-line
+        [])
+
     const loginUser = (event) => {
         event.preventDefault()
         if (isFormInvalid()) {
@@ -34,11 +40,11 @@ const Login = (props) => {
                             data => {
                                 localStorage.setItem('userType', data.data.user['userType'])
                                 props.rerender()
-                                setIsLoading(false)
                                 history.push('/')
                             },
                             err => {
                                 console.log(err)
+                                setIsLoading(false)
                             }
                         )
                     })

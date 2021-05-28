@@ -39,6 +39,7 @@ const Signup = () => {
     useEffect(() => {
         fetchAreas()
         setSignupForm({...signupForm, address: 'Islamabad Capital Territory, Pakistan'})
+        // eslint-disable-next-line
     }, [])
 
     const fetchAreas = () => {

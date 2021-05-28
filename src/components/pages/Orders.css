@@ -6,6 +6,7 @@
     margin-top: 80px;
     padding: 50px;
     background: #fafafa;
+    min-height: 100vh;
 }
 
 .cart-item {
@@ -70,6 +71,12 @@
     height: max-content;
     cursor: pointer;
     text-align: center;
+}
+
+.empty-cart {
+    display: block;
+    text-align: center;
+    margin: auto;
 }
 
 @media screen and (max-width: 960px) {

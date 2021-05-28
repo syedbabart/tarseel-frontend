@@ -21,6 +21,7 @@ const Product = () => {
 
     useEffect(() => {
         fetchProducts()
+        // eslint-disable-next-line
     }, [])
 
     const fetchProducts = () => {

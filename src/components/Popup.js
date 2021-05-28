@@ -26,12 +26,13 @@ const Popup = (props) => {
 
     useEffect(() => {
         setIsProductAdded(false)
+        return () => setIsProductAdded(false)
+        // eslint-disable-next-line
     }, [])
 
     const onCloseModal = () => {
         props.onClose();
         setOpen(false)
-        setIsProductAdded(false)
     };
 
     const addToCart = () => {
@@ -42,7 +43,6 @@ const Popup = (props) => {
             quantity = 1
 
         localStorage.setItem(props.currentProduct._id, quantity)
-        console.log(`${props.currentProduct._id}: ${quantity}`)
         setIsProductAdded(true)
     }
 

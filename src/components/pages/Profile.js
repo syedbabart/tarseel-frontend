@@ -15,6 +15,7 @@ const Profile = (props) => {
         } else {
             fetchUser()
         }
+        // eslint-disable-next-line
     }, [])
 
     const fetchUser = () => {

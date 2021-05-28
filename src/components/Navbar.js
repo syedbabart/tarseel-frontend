@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Link} from 'react-router-dom'
 import './Navbar.css';
 import auth from "../auth/auth";
@@ -7,9 +7,6 @@ function Navbar(props) {
     const [click, setClick] = useState(false);
     const [button, setButton] = useState(true);
     const [navClass, setNavClass] = useState('navbar')
-    const isLogged = useMemo(() => {
-        return !!localStorage.getItem('token')
-    }, [])
 
     const handleClick = () => setClick(!click);
     const closeMobileMenu = () => setClick(false);

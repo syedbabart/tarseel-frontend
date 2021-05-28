@@ -28,6 +28,7 @@ const AddUser = (props) => {
         return () => {
             setIsLoading(false)
         }
+        // eslint-disable-next-line
     }, [])
 
     useEffect(() => {

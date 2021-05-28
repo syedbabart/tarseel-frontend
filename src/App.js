@@ -9,18 +9,19 @@ import Products from "./components/pages/Products";
 import ScrollToTop from "./components/ScrollToTop";
 import Orders from "./components/pages/Orders";
 import Users from "./components/pages/Users";
-import {useEffect, useReducer, useState} from "react";
+import {useEffect, useReducer} from "react";
 import auth from "./auth/auth";
 import Profile from "./components/pages/Profile";
 
 export const rootUrl = "http://localhost:3000/api/"
 
-function App(props) {
+function App() {
     const [, forceUpdate] = useReducer(x => x + 1, 0);
 
     useEffect(() => {
         auth.setUserType(localStorage.getItem('token'))
-    })
+        // eslint-disable-next-line
+    }, [])
 
     const rerender = () => {
         forceUpdate();
