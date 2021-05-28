@@ -5,18 +5,20 @@ import axios from "axios";
 import {rootUrl} from "../../App";
 import auth from "../../auth/auth";
 import UserPopup from "../UserPopup";
+import AddUser from "../AddUser";
 
 const Users = () => {
 
     const [allUsers, setAllUsers] = useState([])
     const [selectedUser, setSelectedUser] = useState('')
     const [fetchingUsers, setFetchingUsers] = useState(false)
-    const [openModal, setOpenModal] = useState(false)
+    const [openViewUserModal, setOpenViewUserModal] = useState(false)
+    const [openAddUserModal, setOpenAddUserModal] = useState(false)
     let usersArray = []
 
     useEffect(() => {
         fetchUsers()
-    },[])
+    }, [])
 
     const fetchUsers = () => {
         setFetchingUsers(true)
@@ -34,7 +36,7 @@ const Users = () => {
 
     const generateUsersList = (users) => {
         const uList = users.map((user, index) =>
-            <div className={'pt-item'} key={user._id} onClick={() => onOpenModal(user._id)}>
+            <div className={'pt-item'} key={user._id} onClick={() => onOpenViewUserModal(user._id)}>
                 <div className={`item-cell ${styles.userSr}`}>{index + 1}</div>
                 <div className={`item-cell ${styles.userName}`}>{user.name} ({user.email})</div>
                 <div className={`item-cell ${styles.userType}`}>{user.userType}</div>
@@ -44,9 +46,21 @@ const Users = () => {
         setFetchingUsers(false)
     }
 
-    const onOpenModal = (selectedId) => {
+    const onOpenViewUserModal = (selectedId) => {
         onSetSelectedUser(selectedId)
-        setOpenModal(true)
+        setOpenViewUserModal(true)
+    }
+
+    const onCloseViewUserModal = () => {
+        setOpenViewUserModal(false)
+    }
+
+    const onOpenAddUserModal = () => {
+        setOpenAddUserModal(true)
+    }
+
+    const onCloseAddUserModal = () => {
+        setOpenAddUserModal(false)
     }
 
     const onSetSelectedUser = (userID) => {
@@ -54,30 +68,42 @@ const Users = () => {
         setSelectedUser(currentUser)
     }
 
-    const onCloseModal = () => {
-        setOpenModal(false)
-    }
-
     return (
         <>
-            {fetchingUsers && <section className={styles.userContentContainer}>
-                <h1 className={styles.userPageTitle}>Users</h1>
-                <img alt={'loading'} src={spinnerBlue}/>
-            </section>}
+            {
+                fetchingUsers && <section className={styles.userContentContainer}>
+                    <h1 className={styles.userPageTitle}>Users</h1>
+                    <img alt={'loading'} src={spinnerBlue}/>
+                </section>
+            }
 
-            {!fetchingUsers && <section className={styles.userContentContainer}>
-                <h1 className={styles.userPageTitle}>Users</h1>
-                <div className={'pt-header'}>
-                    <div className={`pt-cell ${styles.userSr}`}>SR.</div>
-                    <div className={`pt-cell ${styles.userName}`}>USER</div>
-                    <div className={`pt-cell ${styles.userType}`}>ROLE</div>
-                </div>
+            {
+                !fetchingUsers && <section className={styles.userContentContainer}>
+                    <h1 className={styles.userPageTitle}>Users</h1>
+                    <div className={'pt-header'}>
+                        <div className={`pt-cell ${styles.userSr}`}>SR.</div>
+                        <div className={`pt-cell ${styles.userName}`}>USER</div>
+                        <div className={`pt-cell ${styles.userType}`}>ROLE</div>
+                    </div>
 
-                {allUsers}
+                    {allUsers}
 
-            </section>}
+                </section>}
 
-            {openModal && <UserPopup open={openModal} onClose={onCloseModal} selectedUser={selectedUser}/>}
+            <div className={'add-product-button'} onClick={() => onOpenAddUserModal()}>
+                <span className={'add-button-text'}>Add Employee </span>
+                <i className="fas fa-plus"/>
+            </div>
+            }
+
+            {
+                openViewUserModal &&
+                <UserPopup open={openViewUserModal} onClose={onCloseViewUserModal} selectedUser={selectedUser}/>
+            }
+
+            {
+                openAddUserModal && <AddUser open={openAddUserModal} onClose={onCloseAddUserModal} reload={fetchUsers}/>
+            }
 
         </>
     )

@@ -118,7 +118,6 @@ const Signup = () => {
     }
 
     const submitCorporateForm = () => {
-        console.log(signupForm)
         if (signupForm.ntn === undefined || signupForm.strn === undefined || signupForm.regNumber === undefined || signupForm.regAddress === undefined) {
             onOpenSnackbar('Please fill in all the fields!')
         } else {
@@ -202,7 +201,7 @@ const Signup = () => {
                                             {areas}
                                         </select>
                                     </div>
-                                    <i className="far fa-address-card"/>
+                                    <i className="fas fa-home"/>
                                 </div>
                                 <div className={'input-field'}>
                                     <input type={'text'} placeholder={'Address'}

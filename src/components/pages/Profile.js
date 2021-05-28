@@ -53,7 +53,7 @@ const Profile = (props) => {
 
                 <div className={styles.row}>
                     <div className={styles.dataFieldWrap}>
-                        <div className={styles.labelIcon}><i className="fas fa-phone"/></div>
+                        <div className={styles.labelIcon}><i className={`fas fa-phone`}/></div>
                         <div className={styles.dataField}>
                             <div className={styles.label}>Phone Number</div>
                             <div>{user.phoneNumber}</div>
