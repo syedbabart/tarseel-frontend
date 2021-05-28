@@ -2,10 +2,9 @@ import axios from "axios";
 import {rootUrl} from "../App";
 
 class Auth {
-    login = (token) => {
+    login = async (token) => {
         localStorage.setItem('token', token)
         this.setUserType(token)
-        return true
     }
 
     logOut = () => {

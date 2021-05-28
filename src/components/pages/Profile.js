@@ -3,15 +3,18 @@ import styles from './Profile.module.css'
 import {rootUrl} from "../../App";
 import axios from "axios";
 import auth from "../../auth/auth";
-import userTagSolid from '../../assets/userTagSolid.svg'
 import spinnerBlue from "../../assets/spinnerBlue.svg";
 
-const Profile = () => {
+const Profile = (props) => {
     const [userData, setUserData] = useState()
     const [loadingUser, setLoadingUser] = useState(false)
 
     useEffect(() => {
-        fetchUser()
+        if (props.viewer === 'admin') {
+            generateUserData(props.selectedUser)
+        } else {
+            fetchUser()
+        }
     }, [])
 
     const fetchUser = () => {
@@ -29,7 +32,7 @@ const Profile = () => {
 
     const generateUserData = (user) => {
         const uData =
-            (<section className={styles.profileData}>
+            (<section className={props.viewer === 'admin' ? styles.adminProfileData : styles.profileData}>
                 <div className={styles.row}>
                     <div className={styles.dataFieldWrap}>
                         <div className={styles.labelIcon}><i className="far fa-user"/></div>
@@ -50,7 +53,7 @@ const Profile = () => {
 
                 <div className={styles.row}>
                     <div className={styles.dataFieldWrap}>
-                        <div className={styles.labelIcon}><i className="fas fa-phone-alt"/></div>
+                        <div className={styles.labelIcon}><i className="fas fa-phone"/></div>
                         <div className={styles.dataField}>
                             <div className={styles.label}>Phone Number</div>
                             <div>{user.phoneNumber}</div>
@@ -90,7 +93,7 @@ const Profile = () => {
 
     return (
         <>
-            <div className={styles.profileContainer}>
+            <div className={props.viewer === 'admin' ? styles.adminProfileContainer : styles.profileContainer}>
                 <h2 className={styles.profilePageTitle}>Profile</h2>
                 {loadingUser && <img alt={'loading'} src={spinnerBlue}/>}
 

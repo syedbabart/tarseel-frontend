@@ -2,6 +2,10 @@
     font-weight: 400;
 }
 
+.adminProfileContainer * {
+    font-weight: 400;
+}
+
 .profileContainer {
     margin-top: 80px;
     padding: 50px;
@@ -12,6 +16,17 @@
     justify-content: center;
 }
 
+
+/*User profile*/
+.adminProfileContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 55vw;
+    max-width: 600px;
+}
+
 .profilePageTitle {
     color: rgba(37, 116, 169, 1);
     font-weight: 700;
@@ -19,6 +34,11 @@
 
 .profileData {
     width: 80%;
+}
+
+/*User profile*/
+.adminProfileData {
+    width: 100%;
 }
 
 .row {
@@ -67,6 +87,12 @@
 }
 
 @media screen and (max-width: 960px) {
+
+    /*User profile*/
+    .adminProfileContainer {
+        width: calc(100vw - 100px);
+        max-width: 600px;
+    }
 
     .profileContainer {
         padding: 20px;

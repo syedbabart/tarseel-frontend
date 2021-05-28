@@ -9,9 +9,10 @@ import UserPopup from "../UserPopup";
 const Users = () => {
 
     const [allUsers, setAllUsers] = useState([])
+    const [selectedUser, setSelectedUser] = useState('')
     const [fetchingUsers, setFetchingUsers] = useState(false)
     const [openModal, setOpenModal] = useState(false)
-    const [selectedId, setSelectedId] = useState('')
+    let usersArray = []
 
     useEffect(() => {
         fetchUsers()
@@ -22,6 +23,7 @@ const Users = () => {
         const url = `${rootUrl}user/all`
         axios.get(url, auth.getHeader()).then(
             response => {
+                usersArray = response.data.users
                 generateUsersList(response.data.users)
             },
             error => {
@@ -43,8 +45,13 @@ const Users = () => {
     }
 
     const onOpenModal = (selectedId) => {
-        setSelectedId(selectedId)
+        onSetSelectedUser(selectedId)
         setOpenModal(true)
+    }
+
+    const onSetSelectedUser = (userID) => {
+        const currentUser = usersArray.find(u => u._id === userID)
+        setSelectedUser(currentUser)
     }
 
     const onCloseModal = () => {
@@ -70,7 +77,7 @@ const Users = () => {
 
             </section>}
 
-            {openModal && <UserPopup open={openModal} onClose={onCloseModal} selectedId={selectedId}/>}
+            {openModal && <UserPopup open={openModal} onClose={onCloseModal} selectedUser={selectedUser}/>}
 
         </>
     )

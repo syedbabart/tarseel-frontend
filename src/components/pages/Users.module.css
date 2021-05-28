@@ -30,3 +30,9 @@
     width: 20%;
     text-transform: capitalize;
 }
+
+@media screen and (max-width: 960px) {
+    .userContentContainer {
+        padding: 20px;
+    }
+}

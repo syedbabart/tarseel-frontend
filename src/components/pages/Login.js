@@ -29,12 +29,18 @@ const Login = (props) => {
             axios.post(url, loginForm)
                 .then(
                     response => {
-                        const loggedIn = auth.login(response.data.token)
-                        if (loggedIn) {
-                            props.rerender()
-                            setIsLoading(false)
-                            history.push('/')
-                        }
+                        localStorage.setItem('token', response.data.token)
+                        axios.get(`${rootUrl}user`, auth.getHeader()).then(
+                            data => {
+                                localStorage.setItem('userType', data.data.user['userType'])
+                                props.rerender()
+                                setIsLoading(false)
+                                history.push('/')
+                            },
+                            err => {
+                                console.log(err)
+                            }
+                        )
                     })
                 .catch(error => {
                     if (error.request.status === 401) {

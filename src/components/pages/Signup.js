@@ -15,6 +15,7 @@ const Signup = () => {
     const [isMapOpen, setIsMapOpen] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const history = useHistory()
+    const [areas, setAreas] = useState([])
     const [signupForm, setSignupForm] = useState({
         userType: '',
         name: '',
@@ -36,8 +37,28 @@ const Signup = () => {
     }
 
     useEffect(() => {
+        fetchAreas()
         setSignupForm({...signupForm, address: 'Islamabad Capital Territory, Pakistan'})
     }, [])
+
+    const fetchAreas = () => {
+        const url = `${rootUrl}area/all`
+        axios.get(url).then(
+            response => {
+                generateAddressList(response.data.areas)
+            },
+            error => {
+                console.log(error)
+            }
+        )
+    }
+
+    const generateAddressList = (areas) => {
+        const areaList = areas.map(area =>
+            <option key={area._id} value={area._id}>{area.name}</option>
+        )
+        setAreas(areaList)
+    }
 
     const confirmMarkedAddress = (coords) => {
         setSignupForm({
@@ -77,7 +98,6 @@ const Signup = () => {
         console.log(signupForm)
         axios.post(rootUrl + 'user/signup', signupForm, config)
             .then(response => {
-                    console.log(response)
                     setIsLoading(false)
                     history.push('/login')
                 },
@@ -177,13 +197,9 @@ const Signup = () => {
                                     <div>
                                         <select value={signupForm.area || ''}
                                                 onChange={e => setSignupForm({...signupForm, area: e.target.value})}>
-                                            <option disabled>Areas of Service</option>
                                             <option hidden>Choose your area</option>
-                                            <option defaultChecked value={'Jinnah Garden, Islamabad'}>Jinnah Garden,
-                                                Islamabad
-                                            </option>
-                                            <option value={'River Garden, Islamabad'}>River Garden, Islamabad</option>
-                                            <option value={'Swan Garden, Islamabad'}>Swan Garden, Islamabad</option>
+                                            <option disabled>Areas of Service</option>
+                                            {areas}
                                         </select>
                                     </div>
                                     <i className="far fa-address-card"/>

@@ -1,6 +1,7 @@
 import React from "react";
 import Modal from "react-responsive-modal";
-import styles from "./AddProduct.module.css";
+import styles from "./UserPopup.module.css";
+import Profile from "./pages/Profile";
 
 const UserPopup = (props) => {
 
@@ -10,14 +11,7 @@ const UserPopup = (props) => {
 
     return (
         <Modal open={props.open} onClose={onClose} center>
-            <h2 className={styles.cardHeader}>Add User</h2>
-
-            <section className={styles.addProductContent}>
-                <div className={styles.row}>
-
-                </div>
-
-            </section>
+            <Profile viewer={'admin'} selectedUser={props.selectedUser}/>
         </Modal>
     )
 }
