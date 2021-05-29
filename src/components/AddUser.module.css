@@ -18,7 +18,6 @@
     width: 48%;
     margin-bottom: 10px;
     border-bottom: 2px solid gray;
-
 }
 
 .inputFieldWrap:focus-within {
@@ -81,4 +80,22 @@
 
 .addModalSpinner > img {
     width: 24px;
+}
+
+@media screen and (max-width: 960px) {
+    .addUserContent {
+        width: calc(100vw - 100px);
+    }
+
+    .row {
+        flex-direction: column;
+    }
+
+    .inputFieldWrap {
+        width: 100%;
+    }
+
+    .modalFooter {
+        justify-content: center;
+    }
 }

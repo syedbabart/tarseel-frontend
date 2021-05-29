@@ -12,6 +12,8 @@ import Users from "./components/pages/Users";
 import {useEffect, useReducer} from "react";
 import auth from "./auth/auth";
 import Profile from "./components/pages/Profile";
+import ProtectedRoute from "./components/ProtectedRoute";
+import AdminProtectedRoute from "./components/AdminProtectedRoute";
 
 export const rootUrl = "http://localhost:3000/api/"
 
@@ -37,8 +39,8 @@ function App() {
                     <Route path='/login' component={() => (<Login rerender={rerender} />)}/>
                     <Route path='/products' component={Products} />
                     <Route path='/cart' component={Orders}/>
-                    {auth.getUserType() === 'admin' && <Route path='/users' component={Users}/>}
-                    <Route path='/profile' component={Profile}/>
+                    <AdminProtectedRoute path='/users' component={Users}/>
+                    <ProtectedRoute path='/profile' component={Profile}/>
                 </Switch>
                 <Footer/>
             </Router>
