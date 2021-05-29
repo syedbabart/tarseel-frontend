@@ -91,7 +91,7 @@ function Navbar(props) {
                         </li>}
 
                         {auth.isLoggedIn() && !button &&  <li className="nav-item">
-                            <Link className="nav-links-mobile" onClick={onLogout}>
+                            <Link to={''} className="nav-links-mobile" onClick={onLogout}>
                                 Logout
                             </Link>
                         </li>}

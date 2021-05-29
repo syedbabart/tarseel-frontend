@@ -14,6 +14,7 @@ import auth from "./auth/auth";
 import Profile from "./components/pages/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminProtectedRoute from "./components/AdminProtectedRoute";
+import Contact from "./components/pages/Contact";
 
 export const rootUrl = "http://localhost:3000/api/"
 
@@ -39,6 +40,7 @@ function App() {
                     <Route path='/login' component={() => (<Login rerender={rerender} />)}/>
                     <Route path='/products' component={Products} />
                     <Route path='/cart' component={Orders}/>
+                    <Route path='/contact-us' component={Contact}/>
                     <AdminProtectedRoute path='/users' component={Users}/>
                     <ProtectedRoute path='/profile' component={Profile}/>
                 </Switch>

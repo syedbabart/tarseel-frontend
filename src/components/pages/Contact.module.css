@@ -1,8 +1,8 @@
-.profileContainer, .adminProfileContainer * {
+.contactContainer * {
     font-weight: 400;
 }
 
-.profileContainer {
+.contactContainer {
     margin-top: 80px;
     padding: 50px;
     background: #fafafa;
@@ -12,28 +12,14 @@
     justify-content: center;
 }
 
-/*User profile*/
-.adminProfileContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 55vw;
-    max-width: 600px;
-}
-
-.profilePageTitle {
+.contactPageTitle {
     color: rgba(37, 116, 169, 1);
     font-weight: 700;
 }
 
+
 .profileData {
     width: 80%;
-}
-
-/*User profile*/
-.adminProfileData {
-    width: 100%;
 }
 
 .row {
@@ -66,6 +52,10 @@
     color: rgba(37, 116, 169, 1);
 }
 
+.labelIcon > i {
+    color: rgba(37, 116, 169, 1);
+}
+
 .dataField {
     background: #ffffff;
     width: 85%;
@@ -83,12 +73,6 @@
 
 @media screen and (max-width: 960px) {
 
-    /*User profile*/
-    .adminProfileContainer {
-        width: calc(100vw - 100px);
-        max-width: 600px;
-    }
-
     .profileContainer {
         padding: 20px;
     }
@@ -105,3 +89,4 @@
         width: 100%;
     }
 }
+
