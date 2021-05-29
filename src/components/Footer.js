@@ -30,8 +30,6 @@ function Footer() {
                     <div className='footer-link-items'>
                         <h2>About Us</h2>
                         <Link to='/sign-up'>How it works</Link>
-                        {/*<Link to='/'>Testimonials</Link>*/}
-                        {/*<Link to='/'>Careers</Link>*/}
                         <Link to='/'>Investors</Link>
                         <Link to='/'>Terms of Service</Link>
                     </div>
@@ -40,23 +38,13 @@ function Footer() {
                         <Link to='/'>Contact</Link>
                         <Link to='/'>Support</Link>
                         <Link to='/'>Office</Link>
-                        {/*<Link to='/'>Sponsorships</Link>*/}
                     </div>
                 </div>
                 <div className='footer-link-wrapper'>
-                    {/*<div className='footer-link-items'>*/}
-                    {/*    <h2>Videos</h2>*/}
-                    {/*    <Link to='/'>Submit Video</Link>*/}
-                    {/*    <Link to='/'>Ambassadors</Link>*/}
-                    {/*    <Link to='/'>Agency</Link>*/}
-                    {/*    <Link to='/'>Influencer</Link>*/}
-                    {/*</div>*/}
                     <div className='footer-link-items'>
                         <h2>Social Media</h2>
                         <Link to='/'>Instagram</Link>
                         <Link to='/'>Facebook</Link>
-                        {/*<Link to='/'>Youtube</Link>*/}
-                        {/*<Link to='/'>Twitter</Link>*/}
                     </div>
                 </div>
             </div>
@@ -65,7 +53,7 @@ function Footer() {
                     <div className='footer-logo'>
                         <Link to='/' className='social-logo'>
                             TARSEEL
-                            <i className='fab fa-typo3'/>
+                            <i className="fas fa-tint"/>
                         </Link>
                     </div>
                     <small className='website-rights'>TARSEEL © 2021</small>

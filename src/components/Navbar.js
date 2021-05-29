@@ -32,6 +32,7 @@ function Navbar(props) {
 
     useEffect(() => {
         showButton()
+        // disable-tslint-for-next-line
     }, [])
 
     useEffect(() => {
@@ -44,7 +45,7 @@ function Navbar(props) {
         <>
             <nav className={navClass}>
                 <div className="navbar-container">
-                    <Link to="/" className="navbar-logo">TARSEEL <i className="fab fa-typo3"/></Link>
+                    <Link to="/" className="navbar-logo">TARSEEL <i className="fas fa-tint"/></Link>
                     <div className="menu-icon" onClick={handleClick}>
                         <i className={click ? 'fas fa-times' : 'fas fa-bars'}/>
                     </div>
@@ -71,25 +72,47 @@ function Navbar(props) {
                             </Link>
                         </li>}
 
-                        {auth.isLoggedIn() && <li className="nav-item">
-                            <div className="nav-links-mobile" onClick={onLogout}>
-                                Logout
-                            </div>
+                        {auth.isLoggedIn() && !button && <li className="nav-item">
+                            <Link to={'/cart'} className="nav-links-mobile" onClick={closeMobileMenu}>
+                                Cart
+                            </Link>
                         </li>}
 
-                    </ul>
-                    {auth.isLoggedIn() ? (button &&
-                    <div className='dropdown '><i className="fas fa-user-tie"/>
-                        <div className="dropdown-content">
-                            <Link to={'/cart'} className={'dropdown-item'}><i className="fas fa-shopping-cart"/> <span>Cart</span></Link>
-                            {auth.getUserType() === 'admin' && <Link to={'/users'} className={'dropdown-item'}><i className="fas fa-users"/>
-                                <span>Users</span></Link>}
-                            <Link to={'/profile'} className={'dropdown-item'}><i className="far fa-address-card"/> <span>Profile</span></Link>
-                            <div className={'dropdown-item'} onClick={onLogout}><i className="fas fa-sign-out-alt"/> <span>Logout</span></div>
+                        {auth.isLoggedIn() && !button &&  auth.getUserType() === 'admin' && <li className="nav-item">
+                            <Link to={'/users'} className="nav-links-mobile" onClick={closeMobileMenu}>
+                                Users
+                            </Link>
+                        </li>}
 
-                        </div>
-                    </div>) :
-                    (button && <Link to={'/login'} className='btn btn--outline btn--medium'>Login</Link>)}
+                        {auth.isLoggedIn() && !button &&  <li className="nav-item">
+                            <Link to={'/profile'} className="nav-links-mobile" onClick={closeMobileMenu}>
+                                Profile
+                            </Link>
+                        </li>}
+
+                        {auth.isLoggedIn() && !button &&  <li className="nav-item">
+                            <Link className="nav-links-mobile" onClick={onLogout}>
+                                Logout
+                            </Link>
+                        </li>}
+                    </ul>
+
+                    {auth.isLoggedIn() ? (button &&
+                        <div className='dropdown '><i className="fas fa-user-tie"/>
+                            <div className="dropdown-content">
+                                <Link to={'/cart'} className={'dropdown-item'}><i className="fas fa-shopping-cart"/>
+                                    <span>Cart</span></Link>
+                                {auth.getUserType() === 'admin' &&
+                                <Link to={'/users'} className={'dropdown-item'}><i className="fas fa-users"/>
+                                    <span>Users</span></Link>}
+                                <Link to={'/profile'} className={'dropdown-item'}><i className="far fa-address-card"/>
+                                    <span>Profile</span></Link>
+                                <div className={'dropdown-item'} onClick={onLogout}><i className="fas fa-sign-out-alt"/>
+                                    <span>Logout</span></div>
+
+                            </div>
+                        </div>) :
+                        (button && <Link to={'/login'} className='btn btn--outline btn--medium'>Login</Link>)}
                 </div>
             </nav>
         </>
