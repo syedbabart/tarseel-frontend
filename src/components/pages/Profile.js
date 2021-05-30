@@ -72,7 +72,7 @@ const Profile = (props) => {
 
                 <div className={styles.row}>
                     <div className={styles.dataFieldWrap}>
-                        <div className={styles.labelIcon}><i className="far fa-address-card"/></div>
+                        <div className={styles.labelIcon}><i className="fas fa-home"/></div>
                         <div className={styles.dataField}>
                             <div className={styles.label}>Area</div>
                             <div>{user.area}</div>

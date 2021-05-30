@@ -17,8 +17,8 @@ const GOOGLE_API_KEY = 'AIzaSyAmQ2WFmMKxZI8t7sh79U4Ryy0ZcmXta9s'
 const Map = (props) => {
     const [open, setOpen] = useState(false);
     const [viewport, setViewport] = useState({
-        latitude: 33.6844,
-        longitude: 73.0479,
+        latitude: 33.719361000000006,
+        longitude: 73.07414399999999,
         zoom: 11
     });
 

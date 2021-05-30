@@ -209,7 +209,7 @@ const Signup = () => {
                                 <input type={'text'} placeholder={'Address'}
                                        value={signupForm.address}
                                        onChange={e => setSignupForm({...signupForm, address: e.target.value})}
-                                       onFocus={() => setIsMapOpen(true)}/>
+                                       onClick={() => setIsMapOpen(true)}/>
                                 <i className="fas fa-map-marker-alt"/>
                             </div>
                         </div>
