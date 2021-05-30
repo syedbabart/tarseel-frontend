@@ -141,13 +141,13 @@ const AddProduct = (props) => {
 
             {props.modalType === 'edit' && <div className={styles.modalFooter}>
                 {deleteLoading &&
-                <button className={`${styles.modalButton} ${styles.addModalSpinner}`} onClick={onAddProduct}><img
+                <button className={`${styles.modalButton} ${styles.addModalSpinner}`}><img
                     alt={'loading'} src={spinnerBlue}/></button>}
                 {!deleteLoading && <button className={styles.modalButton} onClick={onDeleteProduct}>Delete <i
                     className="fas fa-trash-alt"/></button>}
 
                 {updating &&
-                <button className={`${styles.modalButton} ${styles.addModalSpinner}`} onClick={onAddProduct}><img
+                <button className={`${styles.modalButton} ${styles.addModalSpinner}`}><img
                     alt={'loading'} src={spinnerBlue}/></button>}
                 {!updating && <button className={styles.modalButton} onClick={onUpdateProduct}>Update Product <i
                     className="fas fa-upload"/></button>}

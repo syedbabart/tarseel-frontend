@@ -53,30 +53,65 @@
     margin: auto;
 }
 
+.cart-buttons-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.cart-buttons-container > div {
+    width: 60px;
+    transition: 0.3s;
+    padding: 5px;
+}
+
+
 .delete-item {
     border-radius: 5px;
-    color: #ffffff;
-    padding: 5px 10px;
+    color: rgba(220,20,60,1);
     height: max-content;
     cursor: pointer;
-    background: red;
+    background: rgba(220,20,60,0.2);
+    border: 1px solid rgba(220,20,60,1);
     text-align: center;
 }
 
-.confirm-order {
-    background: rgba(37, 116, 169, 1);
-    border-radius: 5px;
+.delete-item:hover {
     color: #ffffff;
-    padding: 5px 10px;
+    background: rgba(220,20,60,1);
+}
+
+.select-button {
+    background: rgba(37, 116, 169, 0.2);
+    border-radius: 5px;
+    border: 1px solid rgba(37, 116, 169, 1);
+    color: rgba(37, 116, 169, 1);
     height: max-content;
     cursor: pointer;
     text-align: center;
+    margin-bottom: 5px;
+}
+
+.select-button:hover {
+    background: rgba(37, 116, 169, 1);
+    color: #ffffff;
+}
+
+.deselect-button {
+    background: rgba(0,0,0,0.2);
+    color: rgba(0,0,0,0.6);
+    border: 1px solid rgba(0,0,0,0.6);
+}
+
+.deselect-button:hover {
+    background: rgba(0,0,0,0.6);
+    color: #ffffff;
 }
 
 .empty-cart {
     display: block;
     text-align: center;
     margin: auto;
+    color: gray;
 }
 
 @media screen and (max-width: 960px) {
@@ -108,5 +143,14 @@
 
     .item-info > p {
         margin-bottom: 10px;
+    }
+
+    .cart-buttons-container {
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
+
+    .cart-buttons-container > div {
+        width: 48%;
     }
 }

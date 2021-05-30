@@ -25,7 +25,6 @@ const Popup = (props) => {
     }, [props.currentProduct])
 
     useEffect(() => {
-        setIsProductAdded(false)
         return () => setIsProductAdded(false)
         // eslint-disable-next-line
     }, [])

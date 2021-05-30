@@ -1,20 +1,25 @@
 import React, {useEffect, useState} from "react";
 import './Orders.css'
-import Map from "../Map";
 import axios from "axios";
 import {rootUrl} from "../../App";
 import spinnerBlue from "../../assets/spinnerBlue.svg";
 import PlaceOrder from "../PlaceOrder";
+import Snackbar from "../Snackbar";
 
 const Orders = () => {
-    const [open, setOpen] = useState(false);
-    const [openPlaceOrder, setOpenPlaceOrder]  = useState(false)
+    const [openPlaceOrder, setOpenPlaceOrder] = useState(false)
     const [productList, setProductList] = useState([])
     const [loadingCart, setLoadingCart] = useState(false)
+    const [openSnackbar, setOpenSnackbar] = useState(false)
     let products = []
-    const [orders, setOrders] = useState([])
+    const [orders] = useState([])
 
     useEffect(() => {
+        fetchProducts()
+        // eslint-disable-next-line
+    }, [])
+
+    const fetchProducts = () => {
         setLoadingCart(true)
         axios.get(rootUrl + 'product/all').then(
             response => {
@@ -26,8 +31,7 @@ const Orders = () => {
                 console.log(error)
             }
         )
-        // eslint-disable-next-line
-    }, [])
+    }
 
     const generateProductList = (products) => {
         const pList = products
@@ -55,10 +59,23 @@ const Orders = () => {
                                     <div>Total</div>
                                     <p>Rs. {product.price * (JSON.parse(localStorage.getItem(product._id)))}</p>
                                 </div>
-                                <div className={'delete-item'} onClick={() => deleteItem(product._id)}><i
-                                    className="fas fa-trash-alt"/></div>
-                                <div className={'confirm-order'} onClick={() => onMapOpen()}><i className="fas fa-check"/></div>
-                                <div className={'confirm-order'} onClick={() => onOrderOpen()}><i className="fas fa-times"/></div>
+
+                                <div className={'cart-buttons-container'}>
+                                    {isAddedToBuyingList(product._id) ?
+                                        (<div className={'select-button deselect-button'}
+                                              onClick={() => onDeselectOrder(product._id)}>
+                                            <i className="fas fa-times"/>
+                                        </div>) :
+                                        (<div className={'select-button'}
+                                              onClick={() => onSelectOrder(product._id, product.price)}>
+                                            <i className="fas fa-check"/>
+                                        </div>)
+                                    }
+
+                                    <div className={'delete-item'} onClick={() => deleteItem(product._id)}>
+                                        <i className="fas fa-trash-alt"/>
+                                    </div>
+                                </div>
                             </div>
                         )
                     }
@@ -68,32 +85,60 @@ const Orders = () => {
         setLoadingCart(false)
     }
 
-
-    const onPlaceOrder = () => {
-        setOpen(false)
-        console.log("Order has been placed.")
-    }
-
     const deleteItem = (id) => {
         localStorage.removeItem(id)
         generateProductList(products)
     }
 
+    const isAddedToBuyingList = (productId) => {
+        for (let i = 0; i < orders.length; i++) {
+            if (orders[i]._id === productId) {
+                return true
+            }
+        }
+        return false
+    }
+
+    const onSelectOrder = (productId, productPrice) => {
+        if (!isAddedToBuyingList(productId)) {
+            const currentOrder = {
+                _id: productId,
+                quantity: localStorage.getItem(productId),
+                productTotal: JSON.parse(localStorage.getItem(productId)) * productPrice
+            }
+            orders.push(currentOrder)
+            generateProductList(products)
+        }
+    }
+
+    const onDeselectOrder = (productId) => {
+        if (isAddedToBuyingList(productId)) {
+            const removeIndex = orders.map(product => {
+                return product._id
+            }).indexOf(productId)
+            orders.splice(removeIndex, 1)
+            generateProductList(products)
+        }
+    }
+
     const onOrderOpen = () => {
-        setOpenPlaceOrder(true)
+        if (orders.length > 0) {
+            setOpenPlaceOrder(true)
+        }
     }
 
     const onOrderClose = () => {
         setOpenPlaceOrder(false)
     }
 
-    const onMapOpen = () => {
-        setOpen(true)
+    const onOpenSnackbar = () => {
+        setOpenSnackbar(true)
+        setTimeout(
+            () => setOpenSnackbar(false),
+            3000
+        )
     }
 
-    const onMapClose = () => {
-        setOpen(false)
-    }
 
     return (
         <section className={'cart-section-container'}>
@@ -110,14 +155,15 @@ const Orders = () => {
                 Cart is empty
             </div>}
 
-            <div className={'add-product-button'}>
-                <span className={'add-button-text'}>Check out </span>
+            <div className={'add-product-button'} onClick={onOrderOpen}>
+                <span className={'add-button-text'}>Checkout </span>
             </div>
 
-            <PlaceOrder open={openPlaceOrder} onClose={onOrderClose}  />
+            {openPlaceOrder &&
+            <PlaceOrder open={openPlaceOrder} onClose={onOrderClose} selectedOrders={orders} reload={fetchProducts}
+                        openSnackbar={onOpenSnackbar}/>}
 
-            <Map open={open} onClose={onMapClose} modalTitle={"Confirm delivery address"} modalButton={"Place Order"}
-                 onConfirm={onPlaceOrder}/>
+            {openSnackbar && <Snackbar message={'Order placed successfully!'}/>}
 
         </section>
     )

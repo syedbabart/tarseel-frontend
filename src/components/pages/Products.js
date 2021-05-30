@@ -113,7 +113,7 @@ const Product = () => {
                 className={'add-button-text'}>Add product </span>
                 <i className="fas fa-plus"/></div>}
 
-            <Popup open={open} onClose={onCloseModal} currentProduct={currentProduct}/>
+            {open && <Popup open={open} onClose={onCloseModal} currentProduct={currentProduct}/>}
             {openAddProduct && <AddProduct open={openAddProduct} onClose={onCloseAddProduct} fetchProducts={fetchProducts} modalType={modalType}
                          currentProduct={currentProduct}/>}
         </>

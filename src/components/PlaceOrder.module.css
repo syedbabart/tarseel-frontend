@@ -1,0 +1,106 @@
+.cardHeader {
+    text-align: center;
+    color: rgba(37, 116, 169, 1);
+}
+
+.cardContent {
+    text-align: center;
+    width: 50vw;
+}
+
+.orderPrice {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.orderPrice > div {
+    color: rgba(0,0,0,0.6);
+    margin-bottom: 5px;
+}
+
+.totalPrice {
+    background: rgba(37, 116, 169, 1);
+    border-radius: 5px;
+    color: #ffffff;
+    padding: 5px 10px;
+}
+
+.inputFieldWrap {
+    margin: 0 auto 10px;
+    width: 90%;
+    border-bottom: 2px solid gray;
+}
+
+.inputFieldWrap:focus-within {
+    border-bottom-color: rgba(37, 116, 169, 1);
+    transition: 0.3s;
+}
+
+.inputFieldWrap:focus-within > i {
+    transition: 0.3s;
+    color: rgba(37, 116, 169, 1);
+}
+
+.inputFieldWrap > input, .inputFieldWrap > select {
+    width: calc(100% - 20px);
+    outline: none;
+    border: none;
+    background: none;
+    padding: 10px 0;
+}
+
+.inputFieldWrap > select > option {
+    background: none;
+    color: black;
+}
+
+.inputFieldWrap > i {
+    width: 20px;
+    text-align: center;
+}
+
+.modalFooter {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 90%;
+    margin: auto;
+}
+
+.modalButton {
+    width: 45%;
+    padding: 8px 20px;
+    font-size: 15px;
+    border-radius: 5px;
+    border: 1px solid rgba(36, 36, 36, 0.8);
+    background: rgba(112, 128, 144, 0.2);
+    color: rgba(36, 36, 36, 0.8);
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    outline: none;
+}
+
+.modalButton:hover {
+    background: rgba(36, 36, 36, 0.8);
+    color: #ffffff;
+    transition: all 0.3s ease-in-out;
+}
+
+.addModalSpinner {
+    padding: 4px 20px;
+}
+
+.addModalSpinner > img {
+    width: 24px;
+}
+
+@media screen and (max-width: 960px) {
+    .cardContent {
+        width: calc(100vw - 100px);
+    }
+}
+
+
