@@ -39,7 +39,7 @@ const Users = () => {
         const uList = users.map((user, index) =>
             <div className={'pt-item'} key={user._id} onClick={() => onOpenViewUserModal(user._id)}>
                 <div className={`item-cell ${styles.userSr}`}>{index + 1}</div>
-                <div className={`item-cell ${styles.userName}`}>{user.name} ({user.email})</div>
+                <div className={`item-cell ${styles.userName}`}>{user.name} <br className={styles.lineBr}/> <span>({user.email})</span></div>
                 <div className={`item-cell ${styles.userType}`}>{user.userType}</div>
             </div>
         )
@@ -95,7 +95,7 @@ const Users = () => {
                 <span className={'add-button-text'}>Add Employee </span>
                 <i className="fas fa-plus"/>
             </div>
-            }
+
 
             {
                 openViewUserModal && <UserPopup open={openViewUserModal} onClose={onCloseViewUserModal} reload={fetchUsers} selectedUser={selectedUser}/>

@@ -83,6 +83,10 @@
     text-align: center;
 }
 
+.p-name > span {
+    color: rgba(0,0,0,0.6);
+}
+
 .pt-item {
     border: 1px solid rgba(37, 116, 169, 1);
     border-radius: 5px;
@@ -116,6 +120,10 @@
     box-shadow: 0 3px 15px rgba(0,0,0,0.5);
 }
 
+.lineBr {
+    display: none;
+}
+
 @media screen and (max-width: 960px){
     .pt-header, .pt-item {
         width: 100%;
@@ -126,6 +134,10 @@
     }
     .product-content-container {
         padding: 20px;
+    }
+
+    .lineBr {
+        display: block;
     }
 
 }

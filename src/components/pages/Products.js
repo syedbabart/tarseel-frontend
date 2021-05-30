@@ -79,7 +79,7 @@ const Product = () => {
             <div className={'pt-item'} key={product._id}
                  onClick={() => onOpenModal(product._id, product.name, product.amount, product.price, 'edit')}>
                 <div className={'item-cell p-sr'}>{index + 1}</div>
-                <div className={'item-cell p-name'}>{product.name} ({product.amount})</div>
+                <div className={'item-cell p-name'}>{product.name} <br className={'lineBr'}/> <span>({product.amount})</span></div>
                 <div className={'item-cell p-price'}>{product.price}</div>
             </div>
         )

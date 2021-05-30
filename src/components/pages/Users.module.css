@@ -17,8 +17,8 @@
     font-weight: 700;
 }
 
-.userName {
-
+.userName > span {
+    color: gray;
 }
 
 .userSr {
@@ -31,8 +31,16 @@
     text-transform: capitalize;
 }
 
+.lineBr {
+    display: none;
+}
+
 @media screen and (max-width: 960px) {
     .userContentContainer {
         padding: 20px;
+    }
+
+    .lineBr {
+        display: block;
     }
 }
