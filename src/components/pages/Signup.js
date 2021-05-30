@@ -24,12 +24,17 @@ const Signup = () => {
         password: '',
         area: '',
         address: '',
-        latitude: '',
-        longitude: '',
-        ntn: '',
-        strn: '',
-        regNumber: '',
-        regAddress: ''
+        corporateCustomer: {
+            ntn: '',
+            strn: '',
+            regNumber: '',
+            regAddress: '',
+            discountedPrice: '',
+            isApproved: false
+        },
+        employee: {
+            cashBack: 0
+        }
     })
 
     const onMapClose = () => {
@@ -38,7 +43,6 @@ const Signup = () => {
 
     useEffect(() => {
         fetchAreas()
-        setSignupForm({...signupForm, address: 'Islamabad Capital Territory, Pakistan'})
         // eslint-disable-next-line
     }, [])
 
@@ -61,11 +65,10 @@ const Signup = () => {
         setAreas(areaList)
     }
 
-    const confirmMarkedAddress = (coords) => {
+    const confirmMarkedAddress = (formattedAddress) => {
         setSignupForm({
             ...signupForm,
-            longitude: coords.longitude,
-            latitude: coords.latitude
+            address: formattedAddress
         })
         setIsMapOpen(false)
     }
@@ -90,7 +93,6 @@ const Signup = () => {
 
     const submitBioData = () => {
         setIsLoading(true)
-        setSignupForm({...signupForm, address: 'Islamabad Capital Territory, Pakistan'})
         const config = {
             headers: {
                 'Content-Type': 'application/json',
@@ -150,127 +152,125 @@ const Signup = () => {
 
     return (
         <>
-            <form>
-                <div className={'signup-container'}>
-                    {!isMapOpen && <div className={'card'}>
-                        <div className={'card-header'}>
-                            <span>Sign up</span>
-                        </div>
+            <div className={'signup-container'}>
+                {!isMapOpen && <div className={'card'}>
+                    <div className={'card-header'}>
+                        <span>Sign up</span>
+                    </div>
 
-                        {step === 1 && <div className={'card-content'}>
-                            <Button buttonStyle={'btn--outline'} onClick={() => handleUserType('customer')}>Sign up as
-                                Regular Customer <i
-                                    className="fas fa-chevron-right"/></Button>
-                            <Button buttonStyle={'btn--outline'} onClick={() => handleUserType('corporate')}>Sign up as
-                                Corporate Customer <i
-                                    className="fas fa-chevron-right"/></Button>
-                            <span>Already have an account? <Link to={'/login'}>Login</Link></span>
-                        </div>}
-
-                        {step === 2 && <div className={'card-content'}>
-                            <div className={'row'}>
-                                <div className={'input-field'}>
-                                    <input type={'text'} placeholder={'Name'} value={signupForm.name || ''}
-                                           onChange={e => setSignupForm({...signupForm, name: e.target.value})}/>
-                                    <i className="far fa-user"/>
-                                </div>
-                                <div className={'input-field'}>
-                                    <input type={'email'} placeholder={'Email'} value={signupForm.email || ''}
-                                           onChange={e => setSignupForm({...signupForm, email: e.target.value})}/>
-                                    <i className="far fa-envelope"/>
-                                </div>
-                            </div>
-                            <div className={'row'}>
-                                <div className={'input-field'}>
-                                    <input type={'password'} placeholder={'Password'} value={signupForm.password || ''}
-                                           onChange={e => setSignupForm({...signupForm, password: e.target.value})}/>
-                                    <i className="fas fa-lock"/>
-                                </div>
-                                <div className={'input-field'}>
-                                    <input type={'text'} placeholder={'Phone'} value={signupForm.phoneNumber || ''}
-                                           onChange={onNumberChangeHandler}/>
-                                    <i className="fas fa-phone-alt"/>
-                                </div>
-                            </div>
-                            <div className={'row'}>
-                                <div className={'input-field'}>
-                                    <div>
-                                        <select value={signupForm.area || ''}
-                                                onChange={e => setSignupForm({...signupForm, area: e.target.value})}>
-                                            <option hidden>Choose your area</option>
-                                            <option disabled>Areas of Service</option>
-                                            {areas}
-                                        </select>
-                                    </div>
-                                    <i className="fas fa-home"/>
-                                </div>
-                                <div className={'input-field'}>
-                                    <input type={'text'} placeholder={'Address'}
-                                        // value={`Lat: ${signupForm.latitude}, Long: ${signupForm.longitude}` || ''}
-                                           onChange={e => setSignupForm({...signupForm, address: e.target.value})}
-                                           onFocus={() => setIsMapOpen(true)}/>
-                                    <i className="fas fa-map-marker-alt"/>
-                                </div>
-                            </div>
-
-                            <div className={'row button'}>
-                                <Button buttonStyle={'btn--outline'} onClick={prevForm}><i
-                                    className="fas fa-arrow-left"/></Button>
-                                {!isLoading && <Button buttonStyle={'btn--outline'} onClick={nextForm}><i
-                                    className="fas fa-arrow-right"/></Button>}
-                                {isLoading && <div className={'btn btn--outline signup-spinner'}>
-                                    <img alt={'loading'} style={{width: '34px'}} src={spinnerWhite}/>
-                                </div>}
-                            </div>
-                        </div>}
-
-                        {step === 3 && <div className={'card-content'}>
-                            <div className={'row'}>
-                                <div className={'input-field'}>
-                                    <input type={'text'} placeholder={'National Tax Number (NTN)'}
-                                           value={signupForm.ntn}
-                                           onChange={e => setSignupForm({...signupForm, ntn: e.target.value})}/>
-                                    <i className="far fa-building"/>
-                                </div>
-                                <div className={'input-field'}>
-                                    <input type={'text'} placeholder={'Sales Tax Registration Number (STRN)'}
-                                           value={signupForm.strn}
-                                           onChange={e => setSignupForm({...signupForm, strn: e.target.value})}/>
-                                    <i className="far fa-envelope"/>
-                                </div>
-                            </div>
-                            <div className={'row'}>
-                                <div className={'input-field'}>
-                                    <input type={'text'} placeholder={'Registration Number'}
-                                           value={signupForm.regNumber}
-                                           onChange={e => setSignupForm({...signupForm, regNumber: e.target.value})}/>
-                                    <i className="far fa-address-card"/>
-                                </div>
-                                <div className={'input-field'}>
-                                    <input type={'text'} placeholder={'Registered Address'}
-                                           value={signupForm.regAddress}
-                                           onChange={e => setSignupForm({...signupForm, regAddress: e.target.value})}/>
-                                    <i className="fas fa-map-marker-alt"/>
-                                </div>
-                            </div>
-
-                            <div className={'row button'}>
-                                <Button buttonStyle={'btn--outline'} onClick={prevForm}><i
-                                    className="fas fa-arrow-left"/></Button>
-                                {!isLoading && <Button buttonStyle={'btn--outline'} onClick={submitCorporateForm}><i
-                                    className="fas fa-arrow-right"/></Button>}
-                                {isLoading && <div className={'btn btn--outline signup-spinner'}>
-                                    <img alt={'loading'} style={{width: '34px'}} src={spinnerWhite}/>
-                                </div>}
-                            </div>
-                        </div>}
+                    {step === 1 && <div className={'card-content'}>
+                        <Button buttonStyle={'btn--outline'} onClick={() => handleUserType('customer')}>Sign up as
+                            Regular Customer <i
+                                className="fas fa-chevron-right"/></Button>
+                        <Button buttonStyle={'btn--outline'} onClick={() => handleUserType('corporate')}>Sign up as
+                            Corporate Customer <i
+                                className="fas fa-chevron-right"/></Button>
+                        <span>Already have an account? <Link to={'/login'}>Login</Link></span>
                     </div>}
 
-                    <Map open={isMapOpen} onClose={onMapClose} modalTitle={"Mark your address"} modalButton={"Submit"}
-                         onConfirm={confirmMarkedAddress}/>
+                    {step === 2 && <div className={'card-content'}>
+                        <div className={'row'}>
+                            <div className={'input-field'}>
+                                <input type={'text'} placeholder={'Name'} value={signupForm.name || ''}
+                                       onChange={e => setSignupForm({...signupForm, name: e.target.value})}/>
+                                <i className="far fa-user"/>
+                            </div>
+                            <div className={'input-field'}>
+                                <input type={'email'} placeholder={'Email'} value={signupForm.email || ''}
+                                       onChange={e => setSignupForm({...signupForm, email: e.target.value})}/>
+                                <i className="far fa-envelope"/>
+                            </div>
+                        </div>
+                        <div className={'row'}>
+                            <div className={'input-field'}>
+                                <input type={'password'} placeholder={'Password'} value={signupForm.password || ''}
+                                       onChange={e => setSignupForm({...signupForm, password: e.target.value})}/>
+                                <i className="fas fa-lock"/>
+                            </div>
+                            <div className={'input-field'}>
+                                <input type={'text'} placeholder={'Phone'} value={signupForm.phoneNumber || ''}
+                                       onChange={onNumberChangeHandler}/>
+                                <i className="fas fa-phone-alt"/>
+                            </div>
+                        </div>
+                        <div className={'row'}>
+                            <div className={'input-field'}>
+                                <div>
+                                    <select value={signupForm.area || ''}
+                                            onChange={e => setSignupForm({...signupForm, area: e.target.value})}>
+                                        <option hidden>Choose your area</option>
+                                        <option disabled>Areas of Service</option>
+                                        {areas}
+                                    </select>
+                                </div>
+                                <i className="fas fa-home"/>
+                            </div>
+                            <div className={'input-field'}>
+                                <input type={'text'} placeholder={'Address'}
+                                       value={signupForm.address}
+                                       onChange={e => setSignupForm({...signupForm, address: e.target.value})}
+                                       onFocus={() => setIsMapOpen(true)}/>
+                                <i className="fas fa-map-marker-alt"/>
+                            </div>
+                        </div>
 
-                </div>
-            </form>
+                        <div className={'row button'}>
+                            <Button buttonStyle={'btn--outline'} onClick={prevForm}><i
+                                className="fas fa-arrow-left"/></Button>
+                            {!isLoading && <Button buttonStyle={'btn--outline'} onClick={nextForm}><i
+                                className="fas fa-arrow-right"/></Button>}
+                            {isLoading && <div className={'btn btn--outline signup-spinner'}>
+                                <img alt={'loading'} style={{width: '34px'}} src={spinnerWhite}/>
+                            </div>}
+                        </div>
+                    </div>}
+
+                    {step === 3 && <div className={'card-content'}>
+                        <div className={'row'}>
+                            <div className={'input-field'}>
+                                <input type={'text'} placeholder={'National Tax Number (NTN)'}
+                                       value={signupForm.ntn}
+                                       onChange={e => setSignupForm({...signupForm, ntn: e.target.value})}/>
+                                <i className="far fa-building"/>
+                            </div>
+                            <div className={'input-field'}>
+                                <input type={'text'} placeholder={'Sales Tax Registration Number (STRN)'}
+                                       value={signupForm.strn}
+                                       onChange={e => setSignupForm({...signupForm, strn: e.target.value})}/>
+                                <i className="far fa-envelope"/>
+                            </div>
+                        </div>
+                        <div className={'row'}>
+                            <div className={'input-field'}>
+                                <input type={'text'} placeholder={'Registration Number'}
+                                       value={signupForm.regNumber}
+                                       onChange={e => setSignupForm({...signupForm, regNumber: e.target.value})}/>
+                                <i className="far fa-address-card"/>
+                            </div>
+                            <div className={'input-field'}>
+                                <input type={'text'} placeholder={'Registered Address'}
+                                       value={signupForm.regAddress}
+                                       onChange={e => setSignupForm({...signupForm, regAddress: e.target.value})}/>
+                                <i className="fas fa-map-marker-alt"/>
+                            </div>
+                        </div>
+
+                        <div className={'row button'}>
+                            <Button buttonStyle={'btn--outline'} onClick={prevForm}><i
+                                className="fas fa-arrow-left"/></Button>
+                            {!isLoading && <Button buttonStyle={'btn--outline'} onClick={submitCorporateForm}><i
+                                className="fas fa-arrow-right"/></Button>}
+                            {isLoading && <div className={'btn btn--outline signup-spinner'}>
+                                <img alt={'loading'} style={{width: '34px'}} src={spinnerWhite}/>
+                            </div>}
+                        </div>
+                    </div>}
+                </div>}
+
+                <Map open={isMapOpen} onClose={onMapClose} modalTitle={"Mark your address"} modalButton={"Submit"}
+                     onConfirm={confirmMarkedAddress}/>
+
+            </div>
             {openSnackbar && <Snackbar message={message}/>}
         </>
     )

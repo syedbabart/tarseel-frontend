@@ -5,8 +5,10 @@ import {rootUrl} from "../App";
 import axios from "axios";
 import spinnerBlue from "../assets/spinnerBlue.svg";
 import Snackbar from "./Snackbar";
+import Map from "./Map";
 
 const AddUser = (props) => {
+    const [openMap, setOpenMap] = useState(false)
     const [areas, setAreas] = useState([])
     const [message, setMessage] = useState('')
     const [openSnackbar, setOpenSnackbar] = useState(false)
@@ -19,6 +21,9 @@ const AddUser = (props) => {
         phoneNumber: '',
         area: '',
         address: '',
+        employee: {
+            cashBack: 0
+        }
     })
 
     useEffect(() => {
@@ -31,17 +36,11 @@ const AddUser = (props) => {
         // eslint-disable-next-line
     }, [])
 
-    useEffect(() => {
-        return () => {
-            setIsLoading(false)
-        }
-    }, [])
-
     const fetchAreas = () => {
         const url = `${rootUrl}area/all`
         axios.get(url).then(
             response => {
-                generateAddressList(response.data.areas)
+                generateAreasList(response.data.areas)
             },
             error => {
                 console.log(error)
@@ -49,7 +48,7 @@ const AddUser = (props) => {
         )
     }
 
-    const generateAddressList = (areas) => {
+    const generateAreasList = (areas) => {
         const areaList = areas.map(area =>
             <option key={area._id} value={area._id}>{area.name}</option>
         )
@@ -67,6 +66,7 @@ const AddUser = (props) => {
     }
 
     const submitBioData = () => {
+        console.log(signupForm)
         if (validateBioDataForm()) {
             setIsLoading(true)
             const config = {
@@ -95,6 +95,22 @@ const AddUser = (props) => {
         } else {
             return true
         }
+    }
+
+    const onOpenMap = () => {
+        setOpenMap(true)
+    }
+
+    const onCloseMap = () => {
+        setOpenMap(false)
+    }
+
+    const confirmMarkedAddress = (formattedAddress) => {
+        setSignupForm({
+            ...signupForm,
+            address: formattedAddress
+        })
+        setOpenMap(false)
     }
 
     const onOpenSnackbar = (message) => {
@@ -149,7 +165,8 @@ const AddUser = (props) => {
                     </div>
                     <div className={styles.inputFieldWrap}>
                         <input placeholder={'Address'} type={'text'} value={signupForm.address || ''}
-                               onChange={e => setSignupForm({...signupForm, address: e.target.value})}/>
+                               onChange={e => setSignupForm({...signupForm, address: e.target.value})}
+                                onClick={onOpenMap} />
                         <i className="fas fa-map-marker-alt"/>
                     </div>
                 </div>
@@ -162,6 +179,9 @@ const AddUser = (props) => {
                 </div>
 
             </section>
+
+            {openMap && <Map open={openMap} onClose={onCloseMap} modalTitle={"Mark address"} modalButton={"Submit"}
+                  onConfirm={confirmMarkedAddress}/>}
 
             {openSnackbar && <Snackbar message={message}/>}
         </Modal>

@@ -4,12 +4,15 @@ import Map from "../Map";
 import axios from "axios";
 import {rootUrl} from "../../App";
 import spinnerBlue from "../../assets/spinnerBlue.svg";
+import PlaceOrder from "../PlaceOrder";
 
 const Orders = () => {
     const [open, setOpen] = useState(false);
+    const [openPlaceOrder, setOpenPlaceOrder]  = useState(false)
     const [productList, setProductList] = useState([])
     const [loadingCart, setLoadingCart] = useState(false)
     let products = []
+    const [orders, setOrders] = useState([])
 
     useEffect(() => {
         setLoadingCart(true)
@@ -25,16 +28,6 @@ const Orders = () => {
         )
         // eslint-disable-next-line
     }, [])
-
-
-    const onMapClose = () => {
-        setOpen(false)
-    }
-
-    const onPlaceOrder = () => {
-        setOpen(false)
-        console.log("Order has been placed.")
-    }
 
     const generateProductList = (products) => {
         const pList = products
@@ -64,7 +57,8 @@ const Orders = () => {
                                 </div>
                                 <div className={'delete-item'} onClick={() => deleteItem(product._id)}><i
                                     className="fas fa-trash-alt"/></div>
-                                <div className={'confirm-order'} onClick={() => onCheckOut()}>Check out</div>
+                                <div className={'confirm-order'} onClick={() => onMapOpen()}><i className="fas fa-check"/></div>
+                                <div className={'confirm-order'} onClick={() => onOrderOpen()}><i className="fas fa-times"/></div>
                             </div>
                         )
                     }
@@ -75,13 +69,30 @@ const Orders = () => {
     }
 
 
-    const deleteItem = (name) => {
-        localStorage.removeItem(name)
+    const onPlaceOrder = () => {
+        setOpen(false)
+        console.log("Order has been placed.")
+    }
+
+    const deleteItem = (id) => {
+        localStorage.removeItem(id)
         generateProductList(products)
     }
 
-    const onCheckOut = () => {
+    const onOrderOpen = () => {
+        setOpenPlaceOrder(true)
+    }
+
+    const onOrderClose = () => {
+        setOpenPlaceOrder(false)
+    }
+
+    const onMapOpen = () => {
         setOpen(true)
+    }
+
+    const onMapClose = () => {
+        setOpen(false)
     }
 
     return (
@@ -98,6 +109,12 @@ const Orders = () => {
             {productList.length === 0 && !loadingCart && <div className={'cart-item empty-cart'}>
                 Cart is empty
             </div>}
+
+            <div className={'add-product-button'}>
+                <span className={'add-button-text'}>Check out </span>
+            </div>
+
+            <PlaceOrder open={openPlaceOrder} onClose={onOrderClose}  />
 
             <Map open={open} onClose={onMapClose} modalTitle={"Confirm delivery address"} modalButton={"Place Order"}
                  onConfirm={onPlaceOrder}/>

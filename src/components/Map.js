@@ -1,16 +1,18 @@
 import React, {useEffect, useState,useRef, useCallback} from 'react';
 import 'react-responsive-modal/styles.css';
 import {Modal} from 'react-responsive-modal';
-
 import 'mapbox-gl/dist/mapbox-gl.css'
 import 'react-map-gl-geocoder/dist/mapbox-gl-geocoder.css'
 import MapGL, {Marker} from 'react-map-gl'
 import Geocoder from 'react-map-gl-geocoder'
-
 import styles from './Map.module.css'
+import axios from "axios";
 
 const MAPBOX_TOKEN = 'pk.eyJ1IjoicmFtaXNoMjc1MCIsImEiOiJja25sbHY0Y24wODZvMm9reDQybmRjOWFmIn0.e11jMwucWn5X5_V9gK4a7A'
-
+// eslint-disable-next-line
+const GOOGLE_MAPS_URL = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=33.6844,73.0479&key=AIzaSyAmQ2WFmMKxZI8t7sh79U4Ryy0ZcmXta9s'
+const RG_URL = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='
+const GOOGLE_API_KEY = 'AIzaSyAmQ2WFmMKxZI8t7sh79U4Ryy0ZcmXta9s'
 
 const Map = (props) => {
     const [open, setOpen] = useState(false);
@@ -20,6 +22,11 @@ const Map = (props) => {
         zoom: 11
     });
 
+    const [marker, setMarker] = useState({
+        latitude: viewport.latitude,
+        longitude: viewport.longitude
+    });
+
     useEffect(() => {
         setOpen(props.open)
     }, [props.open])
@@ -27,6 +34,22 @@ const Map = (props) => {
     const onCloseModal = () => {
         props.onClose()
         setOpen(false)
+    }
+
+    const onSubmitAddress = () => {
+        getFormattedAddress()
+    }
+
+    const getFormattedAddress = () => {
+        const url = `${RG_URL}${marker.latitude},${marker.longitude}&key=${GOOGLE_API_KEY}`
+        axios.get(url).then(
+            response => {
+                props.onConfirm(response.data.results[0].formatted_address)
+            },
+            error => {
+                console.log(error)
+            }
+        )
     }
 
     const geocoderContainerRef = useRef();
@@ -42,10 +65,6 @@ const Map = (props) => {
         []
     );
 
-    const [marker, setMarker] = useState({
-        latitude: viewport.latitude,
-        longitude: viewport.longitude
-    });
     // eslint-disable-next-line no-unused-vars
     const [events, logEvents] = useState({});
 
@@ -59,7 +78,6 @@ const Map = (props) => {
 
     const onMarkerDragEnd = useCallback(event => {
         logEvents(_events => ({..._events, onDragEnd: event.lngLat}));
-        console.log(event)
         setMarker({
             longitude: event.lngLat[0],
             latitude: event.lngLat[1]
@@ -72,7 +90,7 @@ const Map = (props) => {
                 <div className={styles.map}>
                     <div className={styles.mapHeader}>
                         <span>{props.modalTitle}</span>
-                        <button className={'btn btn--small'} onClick={() => props.onConfirm(marker)}>{props.modalButton} <i
+                        <button className={'btn btn--small'} onClick={onSubmitAddress}>{props.modalButton} <i
                             className="fas fa-arrow-right"/></button>
                     </div>
                     <div className={styles.mapOuterContainer}>
