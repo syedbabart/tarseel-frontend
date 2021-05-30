@@ -28,6 +28,15 @@ const AddProduct = (props) => {
         })
     }, [props.currentProduct])
 
+    useEffect(() => {
+        return () => {
+            setDeleteLoading(false)
+            setUpdating(false)
+            setAdding(false)
+        }
+        // eslint-disable-next-line
+    }, [])
+
     const onAddProduct = () => {
         if (validateForm()) {
             setAdding(true)
@@ -39,7 +48,6 @@ const AddProduct = (props) => {
             }
             axios.post(url, body, auth.getHeader()).then(
                 response => {
-                    setAdding(false)
                     props.onClose()
                     props.fetchProducts()
                 },
@@ -58,7 +66,6 @@ const AddProduct = (props) => {
                 response => {
                     props.onClose()
                     props.fetchProducts()
-                    setDeleteLoading(false)
                 },
                 error => {
                     console.log(error)
@@ -75,7 +82,6 @@ const AddProduct = (props) => {
                 response => {
                     props.onClose()
                     props.fetchProducts()
-                    setUpdating(false)
                 },
                 error => {
                     console.log(error)

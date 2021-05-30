@@ -36,8 +36,8 @@ function Footer() {
                     <div className='footer-link-items'>
                         <h2>Contact Us</h2>
                         <Link to='/contact-us'>Contact</Link>
-                        <Link to='/'>Support</Link>
-                        <Link to='/'>Office</Link>
+                        <Link to='/contact-us'>Support</Link>
+                        <Link to='/contact-us'>Office</Link>
                     </div>
                 </div>
                 <div className='footer-link-wrapper'>

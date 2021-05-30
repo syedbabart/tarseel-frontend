@@ -1,8 +1,61 @@
 .processContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     padding: 100px;
-    background: #fafafa;
+    background: #ffffff;
+    /*width: 70%;*/
 }
 
 .step {
+    position: relative;
     display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: #fafafa;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    width: 23%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+
+}
+
+.stepNumber {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    background: rgba(37, 116, 169, 1);
+    color: white;
+    border-radius: 5px;
+    padding: 10px 30px;
+    font-size: 20px;
+    /*clip-path: polygon(75% 0%, 100% 50%, 75% 100%, 0% 100%, 25% 50%, 0% 0%);*/
+}
+
+.step > h3 {
+    color: rgba(37, 116, 169, 1);
+    font-size: 22px;
+    -webkit-box-reflect: below -5px linear-gradient(to bottom, transparent, rgba(0,0,0,0.3));
+}
+
+.stepIcon > i, .stepIcon > img {
+    width: 100px;
+    opacity: 0.5;
+}
+
+@media screen and (max-width: 960px) {
+    .processContainer {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 100px 20px;
+    }
+
+    .step {
+        width: calc(100%);
+        max-width: 320px;
+        margin-bottom: 20px;
+    }
 }

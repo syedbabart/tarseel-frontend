@@ -57,6 +57,10 @@
 }
 
 .dataField {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
     background: #ffffff;
     width: 85%;
     border-radius: 0 5px 5px 0;

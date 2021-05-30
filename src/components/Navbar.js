@@ -32,7 +32,7 @@ function Navbar(props) {
 
     useEffect(() => {
         showButton()
-        // disable-tslint-for-next-line
+        // eslint-disable-next-line
     }, [])
 
     useEffect(() => {
