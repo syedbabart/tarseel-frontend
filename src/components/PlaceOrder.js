@@ -69,21 +69,23 @@ const PlaceOrder = (props) => {
     }
 
     const onPlaceOrder = () => {
-        setIsLoading(true)
-        const url = `${rootUrl}order/add`
-        axios.post(url, orderForm, auth.getHeader()).then(
-            response => {
-                removeFromCart()
-                props.onClose()
-                props.reload()
-                props.openSnackbar()
-            },
-            error => {
-                console.log(error)
-                setIsLoading(false)
-            }
+        if (validateOrderForm()) {
+            setIsLoading(true)
+            const url = `${rootUrl}order/add`
+            axios.post(url, orderForm, auth.getHeader()).then(
+                response => {
+                    removeFromCart()
+                    props.onClose()
+                    props.reload()
+                    props.openSnackbar('Order placed successfully')
+                },
+                error => {
+                    console.log(error)
+                    setIsLoading(false)
+                }
 
-        )
+            )
+        }
     }
 
     const confirmMarkedAddress = (formattedAddress) => {
@@ -92,6 +94,15 @@ const PlaceOrder = (props) => {
             deliveryAddress: formattedAddress
         })
         setOpen(false)
+    }
+
+    const validateOrderForm = () => {
+        if (orderForm.deliveryAddress.length === 0 || orderForm.deliveryArea.length === 0) {
+            props.openSnackbar('Please fill in all the fields!')
+            return false
+        } else {
+            return true
+        }
     }
 
     const onMapOpen = () => {

@@ -5,14 +5,18 @@ import {rootUrl} from "../../App";
 import spinnerBlue from "../../assets/spinnerBlue.svg";
 import PlaceOrder from "../PlaceOrder";
 import Snackbar from "../Snackbar";
+import auth from "../../auth/auth";
+import {useHistory} from "react-router-dom";
 
 const Orders = () => {
     const [openPlaceOrder, setOpenPlaceOrder] = useState(false)
     const [productList, setProductList] = useState([])
     const [loadingCart, setLoadingCart] = useState(false)
     const [openSnackbar, setOpenSnackbar] = useState(false)
+    const [snackbarMessage, setSnackbarMessage] = useState('')
     let products = []
     const [orders] = useState([])
+    const history = useHistory()
 
     useEffect(() => {
         fetchProducts()
@@ -122,8 +126,14 @@ const Orders = () => {
     }
 
     const onOrderOpen = () => {
-        if (orders.length > 0) {
-            setOpenPlaceOrder(true)
+        if (auth.isLoggedIn()) {
+            if (orders.length > 0) {
+                setOpenPlaceOrder(true)
+            } else {
+                onOpenSnackbar('Select at least one product to proceed!')
+            }
+        } else {
+            history.push('/login')
         }
     }
 
@@ -131,8 +141,9 @@ const Orders = () => {
         setOpenPlaceOrder(false)
     }
 
-    const onOpenSnackbar = () => {
+    const onOpenSnackbar = (message) => {
         setOpenSnackbar(true)
+        setSnackbarMessage(message)
         setTimeout(
             () => setOpenSnackbar(false),
             3000
@@ -163,7 +174,7 @@ const Orders = () => {
             <PlaceOrder open={openPlaceOrder} onClose={onOrderClose} selectedOrders={orders} reload={fetchProducts}
                         openSnackbar={onOpenSnackbar}/>}
 
-            {openSnackbar && <Snackbar message={'Order placed successfully!'}/>}
+            {openSnackbar && <Snackbar message={snackbarMessage}/>}
 
         </section>
     )

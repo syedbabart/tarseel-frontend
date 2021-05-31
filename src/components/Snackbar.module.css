@@ -12,6 +12,7 @@
     width: max-content;
     max-width: calc(100vw - 30px);
     font-weight: 100;
+    z-index: 10000;
 }
 
 @keyframes fade-in {
