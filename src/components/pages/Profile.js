@@ -10,19 +10,21 @@ const Profile = (props) => {
     const [loadingUser, setLoadingUser] = useState(false)
 
     useEffect(() => {
-        if (props.viewer === 'admin') {
-            generateUserData(props.selectedUser)
-        } else {
-            fetchAreas()
-        }
+        fetchAreas()
+        return () => setLoadingUser(false)
         // eslint-disable-next-line
     }, [])
 
     const fetchAreas = () => {
+        setLoadingUser(true)
         const areasUrl = `${rootUrl}area/all`
         axios.get(areasUrl).then(
             areas => {
-                fetchUser(areas.data.areas)
+                if (props.viewer === 'admin') {
+                    generateUserData(props.selectedUser, areas.data.areas)
+                } else {
+                    fetchUser(areas.data.areas)
+                }
             },
             error => {
                 console.log(error)
@@ -32,6 +34,7 @@ const Profile = (props) => {
     }
 
     const fetchUser = (areas) => {
+        setLoadingUser(true)
         const url = `${rootUrl}user`
         setLoadingUser(true)
         axios.get(url, auth.getHeader()).then(
@@ -97,7 +100,7 @@ const Profile = (props) => {
                         <div className={styles.labelIcon}><i className="fas fa-home"/></div>
                         <div className={styles.dataField}>
                             <div className={styles.label}>Area</div>
-                            <div>{getArea(areas, user.area).name}</div>
+                            <div>{(getArea(areas, user.area)) !== undefined ? getArea(areas, user.area).name : 'User registered before areas integration'}</div>
                         </div>
                     </div>
 

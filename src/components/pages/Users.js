@@ -9,11 +9,13 @@ import AddUser from "../AddUser";
 
 const Users = () => {
 
-    const [allUsers, setAllUsers] = useState([])
+    const [customers, setCustomers] = useState([])
+    const [employees, setEmployees] = useState([])
     const [selectedUser, setSelectedUser] = useState('')
     const [fetchingUsers, setFetchingUsers] = useState(false)
     const [openViewUserModal, setOpenViewUserModal] = useState(false)
     const [openAddUserModal, setOpenAddUserModal] = useState(false)
+    const [showCustomers, setShowCustomers] = useState(true)
     let usersArray = []
 
     useEffect(() => {
@@ -27,7 +29,8 @@ const Users = () => {
         axios.get(url, auth.getHeader()).then(
             response => {
                 usersArray = response.data.users
-                generateUsersList(response.data.users)
+                generateCustomersList(response.data.users)
+                generateEmployeesList(response.data.users)
             },
             error => {
                 console.log(error)
@@ -35,15 +38,31 @@ const Users = () => {
         )
     }
 
-    const generateUsersList = (users) => {
-        const uList = users.map((user, index) =>
-            <div className={'pt-item'} key={user._id} onClick={() => onOpenViewUserModal(user._id)}>
-                <div className={`item-cell ${styles.userSr}`}>{index + 1}</div>
-                <div className={`item-cell ${styles.userName}`}>{user.name} <br className={styles.lineBr}/> <span>({user.email})</span></div>
-                <div className={`item-cell ${styles.userType}`}>{user.userType}</div>
-            </div>
-        )
-        setAllUsers(uList)
+    const generateCustomersList = (users) => {
+        const customerList = users.filter(user => (user.userType !== 'employee' && user.userType !== 'admin'))
+            .map((user, index) =>
+                <div className={'pt-item'} key={user._id} onClick={() => onOpenViewUserModal(user._id)}>
+                    <div className={`item-cell ${styles.userSr}`}>{index + 1}</div>
+                    <div className={`item-cell ${styles.userName}`}>{user.name} <br className={styles.lineBr}/>
+                        <span>({user.email})</span></div>
+                    <div className={`item-cell ${styles.userType}`}>{user.userType}</div>
+                </div>
+            )
+        setCustomers(customerList)
+        setFetchingUsers(false)
+    }
+
+    const generateEmployeesList = (users) => {
+        const empList = users.filter(user => (user.userType === 'employee'))
+            .map((user, index) =>
+                <div className={'pt-item'} key={user._id} onClick={() => onOpenViewUserModal(user._id)}>
+                    <div className={`item-cell ${styles.userSr}`}>{index + 1}</div>
+                    <div className={`item-cell ${styles.userName}`}>{user.name} <br className={styles.lineBr}/>
+                        <span>({user.email})</span></div>
+                    <div className={`item-cell ${styles.userType}`}>{user.userType}</div>
+                </div>
+            )
+        setEmployees(empList)
         setFetchingUsers(false)
     }
 
@@ -72,24 +91,33 @@ const Users = () => {
     return (
         <>
             {
-                fetchingUsers && <section className={styles.userContentContainer}>
-                    <h1 className={styles.userPageTitle}>Users</h1>
-                    <img alt={'loading'} src={spinnerBlue}/>
-                </section>
+                fetchingUsers ? <section className={styles.userContentContainer}>
+                        <h1 className={styles.userPageTitle}>Users</h1>
+                        <img alt={'loading'} src={spinnerBlue}/>
+                    </section> :
+
+                    !fetchingUsers && <section className={styles.userContentContainer}>
+                        <h1 className={styles.userPageTitle}>Users</h1>
+
+                        <div className={`${styles.userTabs}`}>
+                            <div className={`${styles.customer} ${showCustomers && styles.activeTab}`}
+                                 onClick={() => setShowCustomers(true)}>Customers
+                            </div>
+                            <div className={`${styles.employee} ${!showCustomers && styles.activeTab}`}
+                                 onClick={() => setShowCustomers(false)}>Employees
+                            </div>
+                        </div>
+
+                        <div className={'pt-header'}>
+                            <div className={`pt-cell ${styles.userSr}`}>SR.</div>
+                            <div className={`pt-cell ${styles.userName}`}>USER</div>
+                            <div className={`pt-cell ${styles.userType}`}>ROLE</div>
+                        </div>
+
+                        {showCustomers ? customers : employees}
+
+                    </section>
             }
-
-            {
-                !fetchingUsers && <section className={styles.userContentContainer}>
-                    <h1 className={styles.userPageTitle}>Users</h1>
-                    <div className={'pt-header'}>
-                        <div className={`pt-cell ${styles.userSr}`}>SR.</div>
-                        <div className={`pt-cell ${styles.userName}`}>USER</div>
-                        <div className={`pt-cell ${styles.userType}`}>ROLE</div>
-                    </div>
-
-                    {allUsers}
-
-                </section>}
 
             <div className={'add-product-button'} onClick={() => onOpenAddUserModal()}>
                 <span className={'add-button-text'}>Add Employee </span>
@@ -98,7 +126,9 @@ const Users = () => {
 
 
             {
-                openViewUserModal && <UserPopup open={openViewUserModal} onClose={onCloseViewUserModal} reload={fetchUsers} selectedUser={selectedUser}/>
+                openViewUserModal &&
+                <UserPopup open={openViewUserModal} onClose={onCloseViewUserModal} reload={fetchUsers}
+                           selectedUser={selectedUser}/>
             }
 
             {

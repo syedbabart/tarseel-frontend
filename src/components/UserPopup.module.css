@@ -97,7 +97,7 @@
     width: 24px;
 }
 
-@media screen {
+@media screen and (max-width: 960px) {
     .modalFooter {
         justify-content: center;
     }

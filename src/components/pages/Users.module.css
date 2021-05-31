@@ -17,6 +17,37 @@
     font-weight: 700;
 }
 
+.userTabs {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    width: 250px;
+    background: rgba(0,0,0,0.1);
+    color: rgba(0,0,0,0.5);
+    padding: 2px;
+    border: 1px solid rgba(0,0,0,0.6);
+}
+
+.customer:hover, .employee:hover {
+    color: #ffffff;
+}
+
+.customer, .employee {
+    padding: 5px 10px ;
+    width: 50%;
+    text-align: center;
+    transition: 0.3s;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.activeTab {
+    background: rgba(37, 116, 169, 1);
+    color: #ffffff;
+    transition: 0.3s;
+}
+
 .userName > span {
     color: gray;
 }

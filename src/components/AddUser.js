@@ -66,7 +66,6 @@ const AddUser = (props) => {
     }
 
     const submitBioData = () => {
-        console.log(signupForm)
         if (validateBioDataForm()) {
             setIsLoading(true)
             const config = {
