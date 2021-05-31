@@ -105,6 +105,9 @@ function Navbar(props) {
                                 {auth.getUserType() === 'admin' &&
                                 <Link to={'/users'} className={'dropdown-item'}><i className="fas fa-users"/>
                                     <span>Users</span></Link>}
+                                {auth.getUserType() === 'admin' &&
+                                <Link to={'/all-orders'} className={'dropdown-item'}><i className="fas fa-folder-open"/>
+                                    <span>Orders</span></Link>}
                                 <Link to={'/profile'} className={'dropdown-item'}><i className="far fa-address-card"/>
                                     <span>Profile</span></Link>
                                 <div className={'dropdown-item'} onClick={onLogout}><i className="fas fa-sign-out-alt"/>
