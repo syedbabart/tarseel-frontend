@@ -1,0 +1,124 @@
+.pageContainer {
+    margin-top: 80px;
+    padding: 50px;
+    background: #fafafa;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.pageTitle {
+    color: rgba(37, 116, 169, 1);
+    font-weight: 700;
+}
+
+.item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 70%;
+    margin: 0 auto 10px;
+    border: 1px solid rgba(37, 116, 169, 1);
+    border-radius: 5px;
+    -webkit-transition: 0.3s all ease-in-out;
+    -moz-transition: 0.3s all ease-in-out;
+    transition: 0.3s all ease-in-out;
+    background: #ffffff;
+    padding: 30px;
+}
+
+.item * {
+    font-weight: 400;
+}
+
+.itemWrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.itemHeader {
+    display: flex;
+    flex-direction: row-reverse;
+    margin-bottom: 5px;
+}
+
+.completeButton {
+    padding: 5px 10px;
+    background: rgba(37, 116, 169, 0.2);
+    border: 1px solid rgba(37, 116, 169, 1);
+    border-radius: 5px;
+    color: rgba(37, 116, 169, 1);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.completeButton:hover {
+    background: rgba(37, 116, 169, 1);
+    color: #ffffff;
+    transition: 0.3s;
+}
+
+.products, .details {
+    width: 45%;
+}
+
+.label, .productQuantity > span {
+    color: gray;
+    text-decoration: underline;
+}
+
+.productName {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color: rgba(37, 116, 169, 1);
+    margin: 15px 0 5px;
+}
+
+.productAmount {
+    color: black;
+}
+
+.grandTotal {
+    color: rgba(220,20,60,1);
+}
+
+.productDetails {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.productPrice {
+    background: rgba(37, 116, 169, 1);
+    border-radius: 5px;
+    color: #ffffff;
+    padding: 5px 10px;
+}
+
+.area, .address {
+    margin-bottom: 10px;
+}
+
+@media screen {
+    .pageContainer {
+        padding: 20px;
+    }
+
+    .item {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .products, .details {
+        width: 100%;
+    }
+
+    .itemWrap {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
