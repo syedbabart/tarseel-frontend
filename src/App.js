@@ -41,9 +41,9 @@ function App() {
                     <Route path='/login' component={() => (<Login rerender={rerender} />)}/>
                     <Route path='/products' component={Products} />
                     <Route path='/cart' component={Orders}/>
+                    <Route path='/all-orders' component={AllOrders}/>
                     <Route path='/contact-us' component={Contact}/>
                     <AdminProtectedRoute path='/users' component={Users}/>
-                    <AdminProtectedRoute path='/all-orders' component={AllOrders}/>
                     <ProtectedRoute path='/profile' component={Profile}/>
                 </Switch>
                 <Footer/>

@@ -13,25 +13,47 @@ const Profile = (props) => {
         if (props.viewer === 'admin') {
             generateUserData(props.selectedUser)
         } else {
-            fetchUser()
+            fetchAreas()
         }
         // eslint-disable-next-line
     }, [])
 
-    const fetchUser = () => {
-        const url = `${rootUrl}user`
-        setLoadingUser(true)
-        axios.get(url, auth.getHeader()).then(
-            response => {
-                generateUserData(response.data.user)
+    const fetchAreas = () => {
+        const areasUrl = `${rootUrl}area/all`
+        axios.get(areasUrl).then(
+            areas => {
+                fetchUser(areas.data.areas)
             },
             error => {
                 console.log(error)
+                setLoadingUser(false)
             }
         )
     }
 
-    const generateUserData = (user) => {
+    const fetchUser = (areas) => {
+        const url = `${rootUrl}user`
+        setLoadingUser(true)
+        axios.get(url, auth.getHeader()).then(
+            response => {
+                generateUserData(response.data.user, areas)
+            },
+            error => {
+                console.log(error)
+                setLoadingUser(false)
+            }
+        )
+    }
+
+    const getArea = (areas, areaId) => {
+        for (let i = 0; i < areas.length; i++) {
+            if (areas[i]._id === areaId) {
+                return areas[i]
+            }
+        }
+    }
+
+    const generateUserData = (user, areas) => {
         const uData =
             (<section className={props.viewer === 'admin' ? styles.adminProfileData : styles.profileData}>
                 <div className={styles.row}>
@@ -75,7 +97,7 @@ const Profile = (props) => {
                         <div className={styles.labelIcon}><i className="fas fa-home"/></div>
                         <div className={styles.dataField}>
                             <div className={styles.label}>Area</div>
-                            <div>{user.area}</div>
+                            <div>{getArea(areas, user.area).name}</div>
                         </div>
                     </div>
 
