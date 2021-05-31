@@ -72,9 +72,15 @@ function Navbar(props) {
                             </Link>
                         </li>}
 
-                        {auth.isLoggedIn() && !button && <li className="nav-item">
+                        {auth.isLoggedIn() && auth.getUserType() !== 'admin' && auth.getUserType() !== 'employee' && !button && <li className="nav-item">
                             <Link to={'/cart'} className="nav-links-mobile" onClick={closeMobileMenu}>
                                 Cart
+                            </Link>
+                        </li>}
+
+                        {auth.isLoggedIn() && !button && <li className="nav-item">
+                            <Link to={'/orders'} className="nav-links-mobile" onClick={closeMobileMenu}>
+                                Orders
                             </Link>
                         </li>}
 
@@ -100,9 +106,9 @@ function Navbar(props) {
                     {auth.isLoggedIn() ? (button &&
                         <div className='dropdown '><i className="fas fa-user-tie"/>
                             <div className="dropdown-content">
-                                <Link to={'/cart'} className={'dropdown-item'}><i className="fas fa-shopping-cart"/>
-                                    <span>Cart</span></Link>
-                                <Link to={'/all-orders'} className={'dropdown-item'}><i className="fas fa-folder-open"/>
+                                {auth.getUserType() !== 'admin' && auth.getUserType() !== 'employee' && <Link to={'/cart'} className={'dropdown-item'}><i className="fas fa-shopping-cart"/>
+                                    <span>Cart</span></Link>}
+                                <Link to={'/orders'} className={'dropdown-item'}><i className="fas fa-folder-open"/>
                                     <span>Orders</span></Link>
                                 {auth.getUserType() === 'admin' &&
                                 <Link to={'/users'} className={'dropdown-item'}><i className="fas fa-users"/>

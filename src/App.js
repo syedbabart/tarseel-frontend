@@ -41,10 +41,10 @@ function App() {
                     <Route path='/login' component={() => (<Login rerender={rerender} />)}/>
                     <Route path='/products' component={Products} />
                     <Route path='/cart' component={Orders}/>
-                    <Route path='/all-orders' component={AllOrders}/>
                     <Route path='/contact-us' component={Contact}/>
                     <AdminProtectedRoute path='/users' component={Users}/>
                     <ProtectedRoute path='/profile' component={Profile}/>
+                    <ProtectedRoute path='/orders' component={AllOrders}/>
                 </Switch>
                 <Footer/>
             </Router>
