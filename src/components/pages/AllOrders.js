@@ -6,7 +6,9 @@ import auth from "../../auth/auth";
 import spinnerBlue from '../../assets/spinnerBlue.svg'
 
 const AllOrders = () => {
-    const [allOrdersList, setAllOrdersList] = useState()
+    const [deliveredOrders, setDeliveredOrders] = useState([])
+    const [unDeliveredOrders, setUndeliveredOrders] = useState([])
+    const [showDeliveredOrder, setShowDeliveredOrders] = useState(false)
     let [allAreas] = useState([])
     let [allProducts] = useState([])
     const [fetchingOrders, setFetchingOrders] = useState(false)
@@ -105,40 +107,73 @@ const AllOrders = () => {
 
     const generateOrdersList = (orders, products, areas) => {
         setFetchingOrders(true)
-        const oList = orders.map((order) => {
-                return (
-                    <div className={styles.item} key={order._id}>
-                        <div className={styles.itemHeader}>
-                            <span className={styles.completeButton} onClick={() => onCompleteOrder(order._id)}>Mark as completed</span>
-                        </div>
-                        <div className={styles.itemWrap}>
-                            <div className={styles.products}>
-                                <span className={styles.label}>Products</span> ({order.products.length})
-                                {generateProductsList(order.products, products)}
-                                <div className={styles.grandTotal}>Total: {getGrandTotal(order.products, products)}</div>
-                            </div>
-                            <div className={styles.details}>
-                                <div className={styles.area}>
-                                    <span className={styles.label}>Area</span>
-                                    <div>{(getArea(areas, order.deliveryArea).name)}</div>
+        const deliveredOrdersList = orders.filter(order => (order.isDelivered))
+            .map((order) => {
+                    return (
+                        <div className={styles.item} key={order._id}>
+                            <div className={styles.itemWrap}>
+                                <div className={styles.products}>
+                                    <span className={styles.label}>Products</span> ({order.products.length})
+                                    {generateProductsList(order.products, products)}
+                                    <div
+                                        className={styles.grandTotal}>Total: {getGrandTotal(order.products, products)}</div>
                                 </div>
-                                <div className={styles.address}>
-                                    <span className={styles.label}>Address</span>
-                                    <div>{order.deliveryAddress}</div>
+                                <div className={styles.details}>
+                                    <div className={styles.area}>
+                                        <span className={styles.label}>Area</span>
+                                        <div>{getArea(areas, order.deliveryArea) && (getArea(areas, order.deliveryArea).name)}</div>
+                                    </div>
+                                    <div className={styles.address}>
+                                        <span className={styles.label}>Address</span>
+                                        <div>{order.deliveryAddress}</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                )
-            }
-        )
-        setAllOrdersList(oList)
+                    )
+                }
+            )
+        const unDeliveredOrdersList = orders.filter(order => (!order.isDelivered))
+            .map((order) => {
+                    return (
+                        <div className={styles.item} key={order._id}>
+                            <div className={styles.itemHeader}>
+                                {auth.getUserType() === 'employee' &&
+                                <span className={styles.completeButton} onClick={() => onDeliverOrder(order._id)}>Mark as delivered</span>}
+                            </div>
+                            <div className={styles.itemWrap}>
+                                <div className={styles.products}>
+                                    <span className={styles.label}>Products</span> ({order.products.length})
+                                    {generateProductsList(order.products, products)}
+                                    <div
+                                        className={styles.grandTotal}>Total: {getGrandTotal(order.products, products)}</div>
+                                </div>
+                                <div className={styles.details}>
+                                    <div className={styles.area}>
+                                        <span className={styles.label}>Area</span>
+                                        <div>{getArea(areas, order.deliveryArea) && (getArea(areas, order.deliveryArea).name)}</div>
+                                    </div>
+                                    <div className={styles.address}>
+                                        <span className={styles.label}>Address</span>
+                                        <div>{order.deliveryAddress}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )
+                }
+            )
+        setDeliveredOrders(deliveredOrdersList)
+        setUndeliveredOrders(unDeliveredOrdersList)
         setFetchingOrders(false)
     }
 
-    const onCompleteOrder = (orderId) => {
+    const onDeliverOrder = (orderId) => {
         const url = `${rootUrl}order/${orderId}`
-        axios.delete(url, auth.getHeader()).then(
+        const order = {
+            isDelivered: true
+        }
+        axios.patch(url, order, auth.getHeader()).then(
             response => {
                 fetchAllOrders(allProducts, allAreas)
             },
@@ -150,11 +185,27 @@ const AllOrders = () => {
 
     return (
         <section className={styles.pageContainer}>
-            <h2 className={styles.pageTitle}>All Orders</h2>
+            <h2 className={styles.pageTitle}>Orders</h2>
+            <div className={`${styles.userTabs}`}>
+                <div className={`${styles.firstTab} ${!showDeliveredOrder && styles.activeTab}`}
+                     onClick={() => setShowDeliveredOrders(false)}>Undelivered
+                </div>
+                <div className={`${styles.secondTab} ${showDeliveredOrder && styles.activeTab}`}
+                     onClick={() => setShowDeliveredOrders(true)}>Delivered
+                </div>
+            </div>
 
             {fetchingOrders ?
                 <img alt={'loading'} src={spinnerBlue}/> :
-                allOrdersList
+                (
+                    showDeliveredOrder ? (
+                        deliveredOrders.length > 0 ? deliveredOrders :
+                            <div className={`${styles.item} empty-cart`}>No delivered orders</div>
+                    ) : (
+                        unDeliveredOrders.length > 0 ? unDeliveredOrders :
+                            <div className={`${styles.item} empty-cart`}>No undelivered orders</div>
+                    )
+                )
             }
 
         </section>

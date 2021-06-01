@@ -1,8 +1,8 @@
 import React from "react";
 import {Route, Redirect} from "react-router-dom";
-import auth from "../auth/auth";
+import auth from "./auth";
 
-const ProtectedRoute = ({
+const AdminProtectedRoute = ({
                             component: Component,
                             ...rest
                         }) => {
@@ -10,13 +10,13 @@ const ProtectedRoute = ({
         <Route
             {...rest}
             render={props => {
-                if (auth.isLoggedIn()) {
+                if (auth.isLoggedIn() && auth.getUserType() === 'admin') {
                     return <Component {...props} />;
                 } else {
                     return (
                         <Redirect
                             to={{
-                                pathname: "/login",
+                                pathname: "/",
                                 state: {
                                     from: props.location
                                 }
@@ -28,4 +28,4 @@ const ProtectedRoute = ({
         />
     );
 };
-export default ProtectedRoute
+export default AdminProtectedRoute

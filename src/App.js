@@ -7,15 +7,16 @@ import Login from "./components/pages/Login";
 import Home from "./components/pages/Home"
 import Products from "./components/pages/Products";
 import ScrollToTop from "./components/ScrollToTop";
-import Orders from "./components/pages/Orders";
+import Cart from "./components/pages/Cart";
 import Users from "./components/pages/Users";
 import {useEffect, useReducer} from "react";
 import auth from "./auth/auth";
 import Profile from "./components/pages/Profile";
-import ProtectedRoute from "./components/ProtectedRoute";
-import AdminProtectedRoute from "./components/AdminProtectedRoute";
+import ProtectedRoute from "./auth/ProtectedRoute";
+import AdminProtectedRoute from "./auth/AdminProtectedRoute";
 import Contact from "./components/pages/Contact";
 import AllOrders from "./components/pages/AllOrders";
+import CustomerOnlyRoute from "./auth/CustomerOnlyRoute";
 
 export const rootUrl = "http://localhost:3000/api/"
 
@@ -40,8 +41,8 @@ function App() {
                     <Route path='/sign-up' component={Signup}/>
                     <Route path='/login' component={() => (<Login rerender={rerender} />)}/>
                     <Route path='/products' component={Products} />
-                    <Route path='/cart' component={Orders}/>
                     <Route path='/contact-us' component={Contact}/>
+                    <CustomerOnlyRoute path='/cart' component={Cart}/>
                     <AdminProtectedRoute path='/users' component={Users}/>
                     <ProtectedRoute path='/profile' component={Profile}/>
                     <ProtectedRoute path='/orders' component={AllOrders}/>

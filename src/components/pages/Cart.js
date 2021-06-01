@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import './Orders.css'
+import './Cart.css'
 import axios from "axios";
 import {rootUrl} from "../../App";
 import spinnerBlue from "../../assets/spinnerBlue.svg";
@@ -8,7 +8,7 @@ import Snackbar from "../Snackbar";
 import auth from "../../auth/auth";
 import {useHistory} from "react-router-dom";
 
-const Orders = () => {
+const Cart = () => {
     const [openPlaceOrder, setOpenPlaceOrder] = useState(false)
     const [productList, setProductList] = useState([])
     const [loadingCart, setLoadingCart] = useState(false)
@@ -179,4 +179,4 @@ const Orders = () => {
         </section>
     )
 }
-export default Orders
+export default Cart
