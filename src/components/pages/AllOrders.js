@@ -204,14 +204,14 @@ const AllOrders = () => {
     return (
         <section className={styles.pageContainer}>
             <h2 className={styles.pageTitle}>Orders</h2>
-            <div className={`${styles.userTabs}`}>
+            {!fetchingOrders && <div className={`${styles.userTabs}`}>
                 <div className={`${styles.firstTab} ${!showDeliveredOrder && styles.activeTab}`}
                      onClick={() => setShowDeliveredOrders(false)}>Undelivered
                 </div>
                 <div className={`${styles.secondTab} ${showDeliveredOrder && styles.activeTab}`}
                      onClick={() => setShowDeliveredOrders(true)}>Delivered
                 </div>
-            </div>
+            </div>}
 
             {fetchingOrders ?
                 <img alt={'loading'} src={spinnerBlue}/> :

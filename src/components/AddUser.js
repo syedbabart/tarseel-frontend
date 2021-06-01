@@ -6,6 +6,7 @@ import axios from "axios";
 import spinnerBlue from "../assets/spinnerBlue.svg";
 import Snackbar from "./Snackbar";
 import Map from "./Map";
+import {areasList} from "../auth/data";
 
 const AddUser = (props) => {
     const [openMap, setOpenMap] = useState(false)
@@ -37,15 +38,19 @@ const AddUser = (props) => {
     }, [])
 
     const fetchAreas = () => {
-        const url = `${rootUrl}area/all`
-        axios.get(url).then(
-            response => {
-                generateAreasList(response.data.areas)
-            },
-            error => {
-                console.log(error)
-            }
-        )
+        if (areasList === undefined) {
+            const url = `${rootUrl}area/all`
+            axios.get(url).then(
+                response => {
+                    generateAreasList(response.data.areas)
+                },
+                error => {
+                    console.log(error)
+                }
+            )
+        } else {
+            generateAreasList(areasList)
+        }
     }
 
     const generateAreasList = (areas) => {

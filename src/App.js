@@ -6,7 +6,7 @@ import Signup from "./components/pages/Signup";
 import Login from "./components/pages/Login";
 import Home from "./components/pages/Home"
 import Products from "./components/pages/Products";
-import ScrollToTop from "./components/ScrollToTop";
+import Services from "./components/pages/Services";
 import Cart from "./components/pages/Cart";
 import Users from "./components/pages/Users";
 import {useEffect, useReducer} from "react";
@@ -37,13 +37,13 @@ function App() {
 
     return (
             <Router>
-                <ScrollToTop/>
                 <Navbar rerender={rerender} />
                 <Switch>
                     <Route path='/' exact component={Home}/>
                     <Route path='/sign-up' component={Signup}/>
                     <Route path='/login' component={() => (<Login rerender={rerender} />)}/>
                     <Route path='/products' component={Products} />
+                    <Route path={'/services'} component={Services} />
                     <Route path='/contact-us' component={Contact}/>
                     <CustomerOnlyRoute path='/cart' component={Cart}/>
                     <AdminProtectedRoute path='/users' component={Users}/>

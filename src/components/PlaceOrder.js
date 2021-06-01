@@ -6,6 +6,7 @@ import styles from './PlaceOrder.module.css'
 import spinnerBlue from "../assets/spinnerBlue.svg";
 import Map from "./Map";
 import auth from "../auth/auth";
+import {areasList} from "../auth/data";
 
 const PlaceOrder = (props) => {
     const [areas, setAreas] = useState([])
@@ -44,15 +45,19 @@ const PlaceOrder = (props) => {
     }
 
     const fetchAreas = () => {
-        const url = `${rootUrl}area/all`
-        axios.get(url).then(
-            response => {
-                generateAreasList(response.data.areas)
-            },
-            error => {
-                console.log(error)
-            }
-        )
+        if (areasList) {
+            const url = `${rootUrl}area/all`
+            axios.get(url).then(
+                response => {
+                    generateAreasList(response.data.areas)
+                },
+                error => {
+                    console.log(error)
+                }
+            )
+        } else {
+            generateAreasList(areasList)
+        }
     }
 
     const generateAreasList = (areas) => {
@@ -83,7 +88,6 @@ const PlaceOrder = (props) => {
                     console.log(error)
                     setIsLoading(false)
                 }
-
             )
         }
     }
@@ -124,7 +128,8 @@ const PlaceOrder = (props) => {
                 </div>
 
                 <div className={styles.inputFieldWrap}>
-                    <select value={orderForm.deliveryArea} onChange={event => setOrderForm({...orderForm, deliveryArea: event.target.value})}>
+                    <select value={orderForm.deliveryArea}
+                            onChange={event => setOrderForm({...orderForm, deliveryArea: event.target.value})}>
                         <option hidden>Choose your area</option>
                         <option disabled>Areas of Service</option>
                         {areas}
@@ -134,7 +139,8 @@ const PlaceOrder = (props) => {
 
                 <div className={styles.inputFieldWrap}>
                     <input placeholder={'Delivery Address'} type={'text'} onClick={onMapOpen}
-                        value={orderForm.deliveryAddress} onChange={event => setOrderForm({...orderForm, deliveryAddress: event.target.value})}
+                           value={orderForm.deliveryAddress}
+                           onChange={event => setOrderForm({...orderForm, deliveryAddress: event.target.value})}
                     />
                     <i className="fas fa-map-marker-alt"/>
                 </div>
@@ -150,8 +156,9 @@ const PlaceOrder = (props) => {
                 </div>
             </section>
 
-            {open && <Map open={open} onClose={onMapClose} modalTitle={"Confirm delivery address"} modalButton={"Place Order"}
-                  onConfirm={confirmMarkedAddress}/>}
+            {open &&
+            <Map open={open} onClose={onMapClose} modalTitle={"Confirm delivery address"} modalButton={"Place Order"}
+                 onConfirm={confirmMarkedAddress}/>}
 
         </Modal>
     )

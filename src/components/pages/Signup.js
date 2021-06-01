@@ -7,6 +7,7 @@ import axios from "axios";
 import {rootUrl} from "../../App";
 import Snackbar from "../Snackbar";
 import spinnerWhite from "../../assets/spinnerWhite.svg";
+import {areasList} from "../../auth/data";
 
 const Signup = () => {
     const [step, setStep] = useState(1)
@@ -47,15 +48,19 @@ const Signup = () => {
     }, [])
 
     const fetchAreas = () => {
-        const url = `${rootUrl}area/all`
-        axios.get(url).then(
-            response => {
-                generateAddressList(response.data.areas)
-            },
-            error => {
-                console.log(error)
-            }
-        )
+        if (areasList === undefined) {
+            const url = `${rootUrl}area/all`
+            axios.get(url).then(
+                response => {
+                    generateAddressList(response.data.areas)
+                },
+                error => {
+                    console.log(error)
+                }
+            )
+        } else {
+            generateAddressList(areasList)
+        }
     }
 
     const generateAddressList = (areas) => {
