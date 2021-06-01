@@ -5,6 +5,7 @@ import axios from "axios";
 import {rootUrl} from "../../App";
 import AddProduct from "../AddProduct";
 import spinnerBlue from '../../assets/spinnerBlue.svg'
+import auth from "../../auth/auth";
 
 const Product = () => {
     const [isLoading, setIsLoading] = useState(false)
@@ -56,14 +57,16 @@ const Product = () => {
     }
 
     const onOpenProductModal = (id, name, amount, price) => {
-        setCurrentProduct({
-            ...currentProduct,
-            _id: id,
-            name: name,
-            amount: amount,
-            price: price
-        })
-        setOpen(true)
+        if (auth.getUserType() !== 'employee' && auth.getUserType() !== 'admin') {
+            setCurrentProduct({
+                ...currentProduct,
+                _id: id,
+                name: name,
+                amount: amount,
+                price: price
+            })
+            setOpen(true)
+        }
     }
 
     const onCloseModal = () => {

@@ -11,7 +11,7 @@ const CustomerOnlyRoute = ({
         <Route
             {...rest}
             render={props => {
-                if (!auth.isLoggedIn() || (auth.isLoggedIn() && auth.getUserType() !== 'admin')) {
+                if (!auth.isLoggedIn() || (auth.isLoggedIn() && auth.getUserType() !== 'admin' && auth.getUserType() !== 'employee')) {
                     return <Component {...props} />;
                 } else {
                     return (

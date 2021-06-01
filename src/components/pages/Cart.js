@@ -155,10 +155,7 @@ const Cart = () => {
         <section className={'cart-section-container'}>
             <h1 className={'product-title'}>Cart</h1>
 
-
-            {loadingCart && <div className={'cart-item empty-cart'}>
-                <img src={spinnerBlue} alt={'Loading'}/>
-            </div>}
+            {loadingCart && <img src={spinnerBlue} alt={'Loading'}/>}
 
             {!loadingCart && productList}
 
