@@ -4,6 +4,7 @@ import {rootUrl} from "../../App";
 import axios from "axios";
 import auth from "../../auth/auth";
 import spinnerBlue from '../../assets/spinnerBlue.svg'
+import {areasList, productsList} from "../../auth/data";
 
 const AllOrders = () => {
     const [deliveredOrders, setDeliveredOrders] = useState([])
@@ -14,7 +15,19 @@ const AllOrders = () => {
     const [fetchingOrders, setFetchingOrders] = useState(false)
 
     useEffect(() => {
-        fetchProducts()
+        if (productsList !== undefined && areasList !== undefined) {
+            // eslint-disable-next-line
+            allProducts = productsList
+            // eslint-disable-next-line
+            allAreas = areasList
+            fetchAllOrders(productsList, areasList)
+        } else if (productsList === undefined) {
+            fetchProducts()
+        } else if (areasList === undefined) {
+            // eslint-disable-next-line
+            allProducts = productsList
+            fetchAreas(productsList)
+        }
         return () => {
             setFetchingOrders(false)
         }
@@ -28,7 +41,11 @@ const AllOrders = () => {
         axios.get(productsUrl).then(
             products => {
                 allProducts = products.data.products
-                fetchAreas(products.data.products)
+                if (areasList === undefined) {
+                    fetchAreas(products.data.products)
+                } else {
+                    fetchAllOrders(products.data.products, areasList)
+                }
             },
             error => {
                 console.log(error)
@@ -38,6 +55,7 @@ const AllOrders = () => {
     }
 
     const fetchAreas = (products) => {
+        setFetchingOrders(true)
         const areasUrl = `${rootUrl}area/all`
         axios.get(areasUrl).then(
             areas => {
@@ -52,6 +70,7 @@ const AllOrders = () => {
     }
 
     const fetchAllOrders = (products, areas) => {
+        setFetchingOrders(true)
         const url = `${rootUrl}order/all`
         axios.get(url, auth.getHeader()).then(
             orders => {

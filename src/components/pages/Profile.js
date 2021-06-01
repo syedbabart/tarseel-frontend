@@ -4,13 +4,22 @@ import {rootUrl} from "../../App";
 import axios from "axios";
 import auth from "../../auth/auth";
 import spinnerBlue from "../../assets/spinnerBlue.svg";
+import {areasList} from "../../auth/data";
 
 const Profile = (props) => {
     const [userData, setUserData] = useState()
     const [loadingUser, setLoadingUser] = useState(false)
 
     useEffect(() => {
-        fetchAreas()
+        if (areasList === undefined) {
+            fetchAreas()
+        } else {
+            if (props.viewer === 'admin') {
+                generateUserData(props.selectedUser, areasList)
+            } else {
+                fetchUser(areasList)
+            }
+        }
         return () => setLoadingUser(false)
         // eslint-disable-next-line
     }, [])

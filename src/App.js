@@ -17,6 +17,7 @@ import AdminProtectedRoute from "./auth/AdminProtectedRoute";
 import Contact from "./components/pages/Contact";
 import AllOrders from "./components/pages/AllOrders";
 import CustomerOnlyRoute from "./auth/CustomerOnlyRoute";
+import data from "./auth/data";
 
 export const rootUrl = "http://localhost:3000/api/"
 
@@ -25,6 +26,8 @@ function App() {
 
     useEffect(() => {
         auth.setUserType(localStorage.getItem('token'))
+        data.fetchAreas()
+        data.fetchProducts()
         // eslint-disable-next-line
     }, [])
 
