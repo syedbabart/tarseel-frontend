@@ -104,7 +104,10 @@ function Navbar(props) {
                     </ul>
 
                     {auth.isLoggedIn() ? (button &&
-                        <div className='dropdown '><i className="fas fa-user-tie"/>
+                        <div className='dropdown'>
+                            {(auth.getUserType() === 'admin' || auth.getUserType() === 'employee') ?
+                                <i className="fas fa-user-tie"/> : <i className="fas fa-user-alt"/>
+                            }
                             <div className="dropdown-content">
                                 {auth.getUserType() !== 'admin' && auth.getUserType() !== 'employee' && <Link to={'/cart'} className={'dropdown-item'}><i className="fas fa-shopping-cart"/>
                                     <span>Cart</span></Link>}

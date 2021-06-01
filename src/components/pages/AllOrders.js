@@ -137,10 +137,9 @@ const AllOrders = () => {
             .map((order) => {
                     return (
                         <div className={styles.item} key={order._id}>
-                            <div className={styles.itemHeader}>
-                                {auth.getUserType() === 'employee' &&
-                                <span className={styles.completeButton} onClick={() => onDeliverOrder(order._id)}>Mark as delivered</span>}
-                            </div>
+                            {auth.getUserType() === 'employee' && <div className={styles.itemHeader}>
+                                <span className={styles.completeButton} onClick={() => onDeliverOrder(order._id)}>Mark as delivered</span>
+                            </div>}
                             <div className={styles.itemWrap}>
                                 <div className={styles.products}>
                                     <span className={styles.label}>Products</span> ({order.products.length})

@@ -114,7 +114,15 @@ const Users = () => {
                             <div className={`pt-cell ${styles.userType}`}>ROLE</div>
                         </div>
 
-                        {showCustomers ? customers : employees}
+                        {showCustomers ?
+                            (
+                                customers.length > 0 ? customers :
+                                    <div className={`${styles.emptyUser} pt-item`}>No customer found.</div>
+                            ) : (
+                                employees.length > 0 ? employees :
+                                    <div className={`${styles.emptyUser} pt-item`}>No employee found.</div>
+                            )
+                        }
 
                     </section>
             }

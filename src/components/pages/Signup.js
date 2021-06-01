@@ -98,7 +98,6 @@ const Signup = () => {
                 'Content-Type': 'application/json',
             },
         };
-        console.log(signupForm)
         axios.post(rootUrl + 'user/signup', signupForm, config)
             .then(response => {
                     setIsLoading(false)

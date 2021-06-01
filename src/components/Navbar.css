@@ -97,24 +97,30 @@
     position: relative;
     color: white;
     cursor: pointer;
+    display: flex;
+    padding: 20px 0;
 }
 
-.dropdown:hover .dropdown-content {
+.dropdown > i {
+    font-size: 25px;
+}
+
+.dropdown:hover > .dropdown-content {
     display: flex;
 }
 
 .dropdown-content {
+    display: none;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     position: absolute;
     left: 50%;
-    top: calc(100% + 2px);
+    top: 80%;
     transform: translate(-50%, 0);
     background: rgba(0,0,0,0.7);
     min-width: 130px;
     border-radius: 5px;
-    display: none;
     border: 1px solid white;
     box-shadow: 0 3px 15px rgba(0,0,0,0.5);
 }
@@ -153,6 +159,7 @@
 .dropdown-item:last-child {
     border-radius: 0 0 5px 5px;
 }
+
 
 @media screen and (max-width: 960px) {
     .NavbarItems {
