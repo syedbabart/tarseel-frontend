@@ -121,6 +121,42 @@ const Profile = (props) => {
                         </div>
                     </div>
                 </div>
+
+                {user.userType === 'corporate' && <div className={styles.row}>
+                    <div className={styles.dataFieldWrap}>
+                        <div className={styles.labelIcon}><i className="far fa-building"/></div>
+                        <div className={styles.dataField}>
+                            <div className={styles.label}>National Tax Number (NTN)</div>
+                            <div>{user.ntn}</div>
+                        </div>
+                    </div>
+
+                    <div className={styles.dataFieldWrap}>
+                        <div className={styles.labelIcon}><i className="far fa-envelope"/></div>
+                        <div className={styles.dataField}>
+                            <div className={styles.label}>Sales Tax Registration Number (STRN)</div>
+                            <div>{user.strn}</div>
+                        </div>
+                    </div>
+                </div>}
+
+                {user.userType === 'corporate' && <div className={styles.row}>
+                    <div className={styles.dataFieldWrap}>
+                        <div className={styles.labelIcon}><i className="far fa-address-card"/></div>
+                        <div className={styles.dataField}>
+                            <div className={styles.label}>Registration Number</div>
+                            <div>{user.regNumber}</div>
+                        </div>
+                    </div>
+
+                    <div className={styles.dataFieldWrap}>
+                        <div className={styles.labelIcon}><i className="fas fa-map-marker-alt"/></div>
+                        <div className={styles.dataField}>
+                            <div className={styles.label}>Registered Address</div>
+                            <div>{user.regAddress}</div>
+                        </div>
+                    </div>
+                </div>}
             </section>)
         setUserData(uData)
         setLoadingUser(false)
