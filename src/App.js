@@ -28,6 +28,7 @@ function App() {
         auth.setUserType(localStorage.getItem('token'))
         data.fetchAreas()
         data.fetchProducts()
+        data.fetchUsers()
         // eslint-disable-next-line
     }, [])
 

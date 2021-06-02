@@ -1,8 +1,10 @@
 import {rootUrl} from "../App";
 import axios from "axios";
+import auth from "./auth";
 
 export let areasList;
 export let productsList;
+export let usersList;
 
 class Data {
     fetchAreas = () => {
@@ -28,6 +30,20 @@ class Data {
                 console.log(error)
             }
         )
+    }
+
+    fetchUsers = () => {
+        if (auth.getUserType() === 'admin' || auth.getUserType() === 'employee') {
+            const usersUrl = `${rootUrl}user/all`
+            axios.get(usersUrl, auth.getHeader()).then(
+                users => {
+                    usersList = users.data.users
+                },
+                error => {
+                    console.log(error)
+                }
+            )
+        }
     }
 }
 export default new Data()

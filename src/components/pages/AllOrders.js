@@ -4,7 +4,7 @@ import {rootUrl} from "../../App";
 import axios from "axios";
 import auth from "../../auth/auth";
 import spinnerBlue from '../../assets/spinnerBlue.svg'
-import {areasList, productsList} from "../../auth/data";
+import {areasList, productsList, usersList} from "../../auth/data";
 
 const AllOrders = () => {
     const [deliveredOrders, setDeliveredOrders] = useState([])
@@ -15,18 +15,20 @@ const AllOrders = () => {
     const [fetchingOrders, setFetchingOrders] = useState(false)
 
     useEffect(() => {
-        if (productsList !== undefined && areasList !== undefined) {
+        if (productsList !== undefined && areasList !== undefined && usersList !== undefined) {
             // eslint-disable-next-line
             allProducts = productsList
             // eslint-disable-next-line
             allAreas = areasList
-            fetchAllOrders(productsList, areasList)
+            fetchAllOrders(productsList, areasList, usersList)
         } else if (productsList === undefined) {
             fetchProducts()
         } else if (areasList === undefined) {
             // eslint-disable-next-line
             allProducts = productsList
             fetchAreas(productsList)
+        } else if (usersList === undefined) {
+            fetchUsers(productsList, areasList)
         }
         return () => {
             setFetchingOrders(false)
@@ -44,7 +46,7 @@ const AllOrders = () => {
                 if (areasList === undefined) {
                     fetchAreas(products.data.products)
                 } else {
-                    fetchAllOrders(products.data.products, areasList)
+                    fetchUsers(products.data.products, areasList)
                 }
             },
             error => {
@@ -60,7 +62,11 @@ const AllOrders = () => {
         axios.get(areasUrl).then(
             areas => {
                 allAreas = areas.data.areas
-                fetchAllOrders(products, areas.data.areas)
+                if (usersList === undefined) {
+                    fetchUsers(products, areas.data.areas)
+                } else {
+                    fetchAllOrders(products, areas.data.areas, usersList)
+                }
             },
             error => {
                 console.log(error)
@@ -69,12 +75,28 @@ const AllOrders = () => {
         )
     }
 
-    const fetchAllOrders = (products, areas) => {
+    const fetchUsers = (products, areas) => {
+        if (auth.getUserType() === 'admin' || auth.getUserType() === 'employee') {
+            const usersUrl = `${rootUrl}user/all`
+            axios.get(usersUrl, auth.getHeader()).then(
+                users => {
+                    fetchAllOrders(products, areas, users.data.users)
+                },
+                error => {
+                    console.log(error)
+                }
+            )
+        } else {
+            fetchAllOrders(products, areas, null)
+        }
+    }
+
+    const fetchAllOrders = (products, areas, users) => {
         setFetchingOrders(true)
         const url = `${rootUrl}order/all`
         axios.get(url, auth.getHeader()).then(
             orders => {
-                generateOrdersList(orders.data.orders, products, areas)
+                generateOrdersList(orders.data.orders, products, areas, users)
             },
             error => {
                 console.log(error)
@@ -108,11 +130,19 @@ const AllOrders = () => {
         return sum
     }
 
+    const getUser = (userId, users) => {
+        for (let i = 0; i < users.length; i++) {
+            if (users[i]._id === userId) {
+                return users[i]
+            }
+        }
+    }
+
     const generateProductsList = (orderProducts, products) => {
         return orderProducts.map(product =>
             <div key={product.productId}>
                 <div className={styles.productName}>
-                    <span>{(getProduct(products, product.productId)).name}</span>
+                    <span>{getProduct(products, product.productId) && (getProduct(products, product.productId)).name}</span>
                     <span className={styles.productAmount}>({(getProduct(products, product.productId)).amount})</span>
                 </div>
                 <div className={styles.productDetails}>
@@ -124,7 +154,7 @@ const AllOrders = () => {
         )
     }
 
-    const generateOrdersList = (orders, products, areas) => {
+    const generateOrdersList = (orders, products, areas, users) => {
         setFetchingOrders(true)
         const deliveredOrdersList = orders.filter(order => (order.isDelivered))
             .map((order) => {
@@ -138,6 +168,10 @@ const AllOrders = () => {
                                         className={styles.grandTotal}>Total: {getGrandTotal(order.products, products)}</div>
                                 </div>
                                 <div className={styles.details}>
+                                    {(auth.getUserType() === 'admin' || auth.getUserType() === 'employee') && <div className={styles.area}>
+                                        <span className={styles.label}>Customer</span>
+                                        <div>{(getUser(order.userId, users)) && (getUser(order.userId, users)).name}</div>
+                                    </div>}
                                     <div className={styles.area}>
                                         <span className={styles.label}>Area</span>
                                         <div>{getArea(areas, order.deliveryArea) && (getArea(areas, order.deliveryArea).name)}</div>
@@ -167,6 +201,11 @@ const AllOrders = () => {
                                         className={styles.grandTotal}>Total: {getGrandTotal(order.products, products)}</div>
                                 </div>
                                 <div className={styles.details}>
+                                    {(auth.getUserType() === 'admin' || auth.getUserType() === 'employee') && <div className={styles.area}>
+                                        <span className={styles.label}>Customer</span>
+                                        {/*{console.log(users)}*/}
+                                        <div>{(getUser(order.userId, users)).name}</div>
+                                    </div>}
                                     <div className={styles.area}>
                                         <span className={styles.label}>Area</span>
                                         <div>{getArea(areas, order.deliveryArea) && (getArea(areas, order.deliveryArea).name)}</div>
@@ -193,7 +232,7 @@ const AllOrders = () => {
         }
         axios.patch(url, order, auth.getHeader()).then(
             response => {
-                fetchAllOrders(allProducts, allAreas)
+                fetchAllOrders(allProducts, allAreas, usersList)
             },
             error => {
                 console.log(error)
