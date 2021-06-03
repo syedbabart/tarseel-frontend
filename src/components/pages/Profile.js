@@ -48,6 +48,7 @@ const Profile = (props) => {
         setLoadingUser(true)
         axios.get(url, auth.getHeader()).then(
             response => {
+                console.log(response.data.user)
                 generateUserData(response.data.user, areas)
             },
             error => {

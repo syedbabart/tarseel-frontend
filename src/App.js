@@ -18,6 +18,7 @@ import Contact from "./components/pages/Contact";
 import AllOrders from "./components/pages/AllOrders";
 import CustomerOnlyRoute from "./auth/CustomerOnlyRoute";
 import data from "./auth/data";
+import Areas from "./components/pages/Areas";
 
 export const rootUrl = "http://localhost:3000/api/"
 
@@ -48,6 +49,7 @@ function App() {
                     <Route path='/contact-us' component={Contact}/>
                     <CustomerOnlyRoute path='/cart' component={Cart}/>
                     <AdminProtectedRoute path='/users' component={Users}/>
+                    <AdminProtectedRoute path='/areas' component={Areas}/>
                     <ProtectedRoute path='/profile' component={Profile}/>
                     <ProtectedRoute path='/orders' component={AllOrders}/>
                 </Switch>

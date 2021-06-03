@@ -1,3 +1,41 @@
+
+
+.userContentContainer {
+    margin-top: 80px;
+    padding: 50px;
+    background: #fafafa;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.userPageTitle {
+    color: rgba(37, 116, 169, 1);
+    font-weight: 700;
+}
+
+.areaItem {
+    width: 70%;
+    padding: 20px;
+    border: 1px solid rgba(37, 116, 169, 1);
+    border-radius: 5px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    -webkit-transition: 0.3s all ease-in-out;
+    -moz-transition: 0.3s all ease-in-out;
+    transition: 0.3s all ease-in-out;
+    background: #ffffff;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.delButton {
+    padding: 5px 15px;
+}
+
 .cardHeader {
     text-align: center;
     color: rgba(37, 116, 169, 1);
@@ -8,15 +46,9 @@
     width: 50vw;
 }
 
-.row {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
 .inputFieldWrap {
-    width: 48%;
-    margin-bottom: 10px;
+    width: 100%;
+    margin: 0 auto 10px;
     border-bottom: 2px solid gray;
 }
 
@@ -73,25 +105,18 @@
     transition: all 0.3s ease-in-out;
 }
 
-.addModalSpinner {
-    padding: 4px 20px;
-}
-
-.addModalSpinner > img {
-    width: 24px;
-}
 
 @media screen and (max-width: 960px) {
+    .userContentContainer {
+        padding: 20px;
+    }
+
+    .areaItem {
+        width: 100%;
+    }
+
     .addUserContent {
         width: calc(100vw - 100px);
-    }
-
-    .row {
-        flex-direction: column;
-    }
-
-    .inputFieldWrap {
-        width: 100%;
     }
 
     .modalFooter {

@@ -37,6 +37,14 @@ const Signup = () => {
             cashBack: 0
         }
     })
+    const [corporateForm, setCorporateForm] = useState({
+        ntn: '',
+        strn: '',
+        regNumber: '',
+        regAddress: '',
+        discountedPrice: '',
+        isApproved: false
+    })
 
     const onMapClose = () => {
         setIsMapOpen(false)
@@ -103,6 +111,7 @@ const Signup = () => {
                 'Content-Type': 'application/json',
             },
         };
+        console.log(signupForm)
         axios.post(rootUrl + 'user/signup', signupForm, config)
             .then(response => {
                     setIsLoading(false)
@@ -125,9 +134,12 @@ const Signup = () => {
     }
 
     const submitCorporateForm = () => {
-        if (signupForm.ntn === undefined || signupForm.strn === undefined || signupForm.regNumber === undefined || signupForm.regAddress === undefined) {
+        if (corporateForm.ntn === undefined || corporateForm.strn === undefined || corporateForm.regNumber === undefined || corporateForm.regAddress === undefined) {
             onOpenSnackbar('Please fill in all the fields!')
         } else {
+            signupForm.corporateCustomer = corporateForm
+            console.log(signupForm)
+
             submitBioData()
         }
     }
@@ -233,28 +245,28 @@ const Signup = () => {
                         <div className={'row'}>
                             <div className={'input-field'}>
                                 <input type={'text'} placeholder={'National Tax Number (NTN)'}
-                                       value={signupForm.ntn}
-                                       onChange={e => setSignupForm({...signupForm, ntn: e.target.value})}/>
+                                       value={corporateForm.ntn || ''}
+                                       onChange={e => setCorporateForm({...corporateForm, ntn: e.target.value})}/>
                                 <i className="far fa-building"/>
                             </div>
                             <div className={'input-field'}>
                                 <input type={'text'} placeholder={'Sales Tax Registration Number (STRN)'}
-                                       value={signupForm.strn}
-                                       onChange={e => setSignupForm({...signupForm, strn: e.target.value})}/>
+                                       value={corporateForm.strn || ''}
+                                       onChange={e => setCorporateForm({...corporateForm, strn: e.target.value})}/>
                                 <i className="far fa-envelope"/>
                             </div>
                         </div>
                         <div className={'row'}>
                             <div className={'input-field'}>
                                 <input type={'text'} placeholder={'Registration Number'}
-                                       value={signupForm.regNumber}
-                                       onChange={e => setSignupForm({...signupForm, regNumber: e.target.value})}/>
+                                       value={corporateForm.regNumber || ''}
+                                       onChange={e => setCorporateForm({...corporateForm, regNumber: e.target.value})}/>
                                 <i className="far fa-address-card"/>
                             </div>
                             <div className={'input-field'}>
                                 <input type={'text'} placeholder={'Registered Address'}
-                                       value={signupForm.regAddress}
-                                       onChange={e => setSignupForm({...signupForm, regAddress: e.target.value})}/>
+                                       value={corporateForm.regAddress || ''}
+                                       onChange={e => setCorporateForm({...corporateForm, regAddress: e.target.value})}/>
                                 <i className="fas fa-map-marker-alt"/>
                             </div>
                         </div>

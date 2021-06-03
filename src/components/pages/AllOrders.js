@@ -77,6 +77,7 @@ const AllOrders = () => {
 
     const fetchUsers = (products, areas) => {
         if (auth.getUserType() === 'admin' || auth.getUserType() === 'employee') {
+            setFetchingOrders(true)
             const usersUrl = `${rootUrl}user/all`
             axios.get(usersUrl, auth.getHeader()).then(
                 users => {
