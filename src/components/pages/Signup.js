@@ -111,7 +111,6 @@ const Signup = () => {
                 'Content-Type': 'application/json',
             },
         };
-        console.log(signupForm)
         axios.post(rootUrl + 'user/signup', signupForm, config)
             .then(response => {
                     setIsLoading(false)
@@ -134,12 +133,10 @@ const Signup = () => {
     }
 
     const submitCorporateForm = () => {
-        if (corporateForm.ntn === undefined || corporateForm.strn === undefined || corporateForm.regNumber === undefined || corporateForm.regAddress === undefined) {
+        if (corporateForm.ntn.length === 0 || corporateForm.strn === undefined || corporateForm.regNumber === undefined || corporateForm.regAddress === undefined) {
             onOpenSnackbar('Please fill in all the fields!')
         } else {
             signupForm.corporateCustomer = corporateForm
-            console.log(signupForm)
-
             submitBioData()
         }
     }

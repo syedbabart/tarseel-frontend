@@ -34,9 +34,9 @@ const Areas = () => {
 
     const generateAreasList = (areas) => {
         const aList = areas.map(area =>
-            <div className={styles.areaItem} key={area._id} onClick={() => onDeleteArea(area._id)}>
+            <div className={styles.areaItem} key={area._id} >
                 <span>{area.name}</span>
-                <div className={`delete-item ${styles.delButton}`}>
+                <div className={`delete-item ${styles.delButton}`} onClick={() => onDeleteArea(area._id)}>
                     <i className="fas fa-trash-alt"/>
                 </div>
             </div>
@@ -49,7 +49,6 @@ const Areas = () => {
         const url = `${rootUrl}area/${areaId}`
         axios.delete(url, auth.getHeader()).then(
             response => {
-                console.log(response)
                 fetchAreas()
             },
             error => {

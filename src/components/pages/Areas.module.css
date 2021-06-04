@@ -1,5 +1,3 @@
-
-
 .userContentContainer {
     margin-top: 80px;
     padding: 50px;
@@ -32,8 +30,12 @@
     align-items: center;
 }
 
+.areaItem > span {
+    font-weight: 200;
+}
+
 .delButton {
-    padding: 5px 15px;
+    padding: 5px 20px;
 }
 
 .cardHeader {

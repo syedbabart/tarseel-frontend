@@ -12,7 +12,6 @@ class Data {
         axios.get(areasUrl).then(
             areas => {
                 areasList = areas.data.areas
-
             },
             error => {
                 console.log(error)

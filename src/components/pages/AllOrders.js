@@ -144,10 +144,10 @@ const AllOrders = () => {
             <div key={product.productId}>
                 <div className={styles.productName}>
                     <span>{getProduct(products, product.productId) && (getProduct(products, product.productId)).name}</span>
-                    <span className={styles.productAmount}>({(getProduct(products, product.productId)).amount})</span>
+                    <span className={styles.productAmount}>({getProduct(products, product.productId) && (getProduct(products, product.productId)).amount})</span>
                 </div>
                 <div className={styles.productDetails}>
-                    <div className={styles.productPrice}>Rs. {(getProduct(products, product.productId)).price}</div>
+                    <div className={styles.productPrice}>Rs. {getProduct(products, product.productId) && (getProduct(products, product.productId)).price}</div>
                     <div className={styles.productQuantity}><span>Quantity:</span> {product.quantity}</div>
                 </div>
                 <hr/>
@@ -204,8 +204,7 @@ const AllOrders = () => {
                                 <div className={styles.details}>
                                     {(auth.getUserType() === 'admin' || auth.getUserType() === 'employee') && <div className={styles.area}>
                                         <span className={styles.label}>Customer</span>
-                                        {/*{console.log(users)}*/}
-                                        <div>{(getUser(order.userId, users)).name}</div>
+                                        <div>{getUser(order.userId, users) && (getUser(order.userId, users)).name}</div>
                                     </div>}
                                     <div className={styles.area}>
                                         <span className={styles.label}>Area</span>
