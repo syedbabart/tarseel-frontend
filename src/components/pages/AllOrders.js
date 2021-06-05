@@ -126,7 +126,10 @@ const AllOrders = () => {
         let sum = 0;
         // eslint-disable-next-line
         orderProducts.map(product => {
-            sum += (JSON.parse(getProduct(products, product.productId).price) * JSON.parse(product.quantity))
+            console.log()
+            if (getProduct(products, product.productId)) {
+                sum += (JSON.parse(getProduct(products, product.productId).price) * JSON.parse(product.quantity))
+            }
         })
         return sum
     }
