@@ -107,17 +107,21 @@ const AllOrders = () => {
     }
 
     const getArea = (areas, areaId) => {
-        for (let i = 0; i < areas.length; i++) {
-            if (areas[i]._id === areaId) {
-                return areas[i]
+        if (areas) {
+            for (let i = 0; i < areas.length; i++) {
+                if (areas[i]._id === areaId) {
+                    return areas[i]
+                }
             }
         }
     }
 
     const getProduct = (products, productId) => {
-        for (let i = 0; i < products.length; i++) {
-            if (products[i]._id === productId) {
-                return products[i]
+        if (products) {
+            for (let i = 0; i < products.length; i++) {
+                if (products[i]._id === productId) {
+                    return products[i]
+                }
             }
         }
     }
@@ -135,9 +139,11 @@ const AllOrders = () => {
     }
 
     const getUser = (userId, users) => {
-        for (let i = 0; i < users.length; i++) {
-            if (users[i]._id === userId) {
-                return users[i]
+        if (users) {
+            for (let i = 0; i < users.length; i++) {
+                if (users[i]._id === userId) {
+                    return users[i]
+                }
             }
         }
     }
@@ -146,11 +152,11 @@ const AllOrders = () => {
         return orderProducts.map(product =>
             <div key={product.productId}>
                 <div className={styles.productName}>
-                    <span>{getProduct(products, product.productId) && (getProduct(products, product.productId)).name}</span>
-                    <span className={styles.productAmount}>({getProduct(products, product.productId) && (getProduct(products, product.productId)).amount})</span>
+                    <span>{getProduct(products, product.productId) ? (getProduct(products, product.productId)).name : 'N/A'}</span>
+                    <span className={styles.productAmount}>({getProduct(products, product.productId) ? (getProduct(products, product.productId)).amount : 'N/A'})</span>
                 </div>
                 <div className={styles.productDetails}>
-                    <div className={styles.productPrice}>Rs. {getProduct(products, product.productId) && (getProduct(products, product.productId)).price}</div>
+                    <div className={styles.productPrice}>Rs. {getProduct(products, product.productId) ? (getProduct(products, product.productId)).price : 'N/A'}</div>
                     <div className={styles.productQuantity}><span>Quantity:</span> {product.quantity}</div>
                 </div>
                 <hr/>
@@ -174,11 +180,11 @@ const AllOrders = () => {
                                 <div className={styles.details}>
                                     {(auth.getUserType() === 'admin' || auth.getUserType() === 'employee') && <div className={styles.area}>
                                         <span className={styles.label}>Customer</span>
-                                        <div>{(getUser(order.userId, users)) && (getUser(order.userId, users)).name}</div>
+                                        <div>{(getUser(order.userId, users)) ? (getUser(order.userId, users)).name : 'N/A'}</div>
                                     </div>}
                                     <div className={styles.area}>
                                         <span className={styles.label}>Area</span>
-                                        <div>{getArea(areas, order.deliveryArea) && (getArea(areas, order.deliveryArea).name)}</div>
+                                        <div>{getArea(areas, order.deliveryArea) ? (getArea(areas, order.deliveryArea).name) : 'N/A'}</div>
                                     </div>
                                     <div className={styles.address}>
                                         <span className={styles.label}>Address</span>
@@ -207,11 +213,11 @@ const AllOrders = () => {
                                 <div className={styles.details}>
                                     {(auth.getUserType() === 'admin' || auth.getUserType() === 'employee') && <div className={styles.area}>
                                         <span className={styles.label}>Customer</span>
-                                        <div>{getUser(order.userId, users) && (getUser(order.userId, users)).name}</div>
+                                        <div>{getUser(order.userId, users) ? (getUser(order.userId, users)).name : 'N/A'}</div>
                                     </div>}
                                     <div className={styles.area}>
                                         <span className={styles.label}>Area</span>
-                                        <div>{getArea(areas, order.deliveryArea) && (getArea(areas, order.deliveryArea).name)}</div>
+                                        <div>{getArea(areas, order.deliveryArea) ? (getArea(areas, order.deliveryArea).name) : 'N/A'}</div>
                                     </div>
                                     <div className={styles.address}>
                                         <span className={styles.label}>Address</span>
