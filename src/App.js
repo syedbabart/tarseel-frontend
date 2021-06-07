@@ -27,9 +27,9 @@ function App() {
 
     useEffect(() => {
         auth.setUserType(localStorage.getItem('token'))
+        data.fetchUsers()
         data.fetchAreas()
         data.fetchProducts()
-        data.fetchUsers()
         // eslint-disable-next-line
     }, [])
 
@@ -45,7 +45,7 @@ function App() {
                     <Route path='/sign-up' component={Signup}/>
                     <Route path='/login' component={() => (<Login rerender={rerender} />)}/>
                     <Route path='/products' component={Products} />
-                    <Route path={'/services'} component={Services} />
+                    <Route path='/services' component={Services} />
                     <Route path='/contact-us' component={Contact}/>
                     <CustomerOnlyRoute path='/cart' component={Cart}/>
                     <AdminProtectedRoute path='/users' component={Users}/>

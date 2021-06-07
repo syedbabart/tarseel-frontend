@@ -123,7 +123,7 @@ const Signup = () => {
     }
 
     const validateBioDataForm = () => {
-        if (signupForm.name === undefined || signupForm.email === undefined || signupForm.password === undefined || signupForm.area === undefined || signupForm.phoneNumber === undefined) {
+        if (signupForm.name.length === 0 || signupForm.email.length === 0 || signupForm.password.length === 0 || signupForm.area.length === 0 || signupForm.phoneNumber.length === 0 || signupForm.address.length === 0 ) {
             onOpenSnackbar('Please fill in all the fields!')
         } else if (!(signupForm.email.includes('@'))) {
             onOpenSnackbar('Please enter valid email address!')
@@ -133,7 +133,7 @@ const Signup = () => {
     }
 
     const submitCorporateForm = () => {
-        if (corporateForm.ntn.length === 0 || corporateForm.strn === undefined || corporateForm.regNumber === undefined || corporateForm.regAddress === undefined) {
+        if (corporateForm.ntn.length === 0 || corporateForm.strn.length === 0 || corporateForm.regNumber.length === 0 || corporateForm.regAddress.length === 0) {
             onOpenSnackbar('Please fill in all the fields!')
         } else {
             signupForm.corporateCustomer = corporateForm
